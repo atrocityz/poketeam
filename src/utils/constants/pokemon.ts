@@ -1,0 +1,1 @@
+export const POKEMONS_QUERY_LIMIT = 40
