@@ -2,7 +2,7 @@ import React from "react"
 
 import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
 
-import { usePokemonQuery } from "@/utils/api/hooks"
+import { useRequestPokemonQuery } from "@/utils/api/hooks"
 import { dbPokemonToPokemonEntity } from "@/utils/helpers"
 
 interface UsePokemonDialog {
@@ -10,17 +10,17 @@ interface UsePokemonDialog {
 }
 
 export const usePokemonDialog = ({ pokemonId }: UsePokemonDialog) => {
-  const { data: pokemonQueryData, isLoading: isPokemonQueryLoading } =
-    usePokemonQuery({ id: pokemonId })
+  const requestPokemonQuery = useRequestPokemonQuery({ id: pokemonId })
   const dialogRef = React.useRef<HTMLDialogElement>(null)
 
   const pokemon =
-    pokemonQueryData && dbPokemonToPokemonEntity(pokemonQueryData.data)
+    requestPokemonQuery.data &&
+    dbPokemonToPokemonEntity(requestPokemonQuery.data.data)
 
   return {
     state: {
       pokemon,
-      isPokemonQueryLoading,
+      isPokemonQueryLoading: requestPokemonQuery.isLoading,
       dialogRef,
     },
   }

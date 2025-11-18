@@ -3,17 +3,12 @@ import React from "react"
 import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
 import type { NamedApiResource } from "@/../@types/Utility/NamedApiResourceList"
 
-import { usePokemonInfiniteQuery } from "@/utils/api/hooks"
+import { useRequestPokemonInfiniteQuery } from "@/utils/api/hooks"
 import { POKEMONS_QUERY_LIMIT } from "@/utils/constants/pokemon"
 import { useInView } from "@/utils/hooks"
 
 export const usePokemonsPage = () => {
-  const {
-    data: infiniteQueryData,
-    isPending: isInfiniteQueryPending,
-    fetchNextPage: fetchNextInfiniteQueryPage,
-    isFetchingNextPage: isFetchingNextInfiniteQueryPage,
-  } = usePokemonInfiniteQuery({
+  const requestPokemonInfiniteQuery = useRequestPokemonInfiniteQuery({
     limit: POKEMONS_QUERY_LIMIT,
   })
   const { ref, isInView } = useInView()
@@ -21,7 +16,7 @@ export const usePokemonsPage = () => {
     Pokemon["id"] | null
   >(null)
 
-  const pokemons = infiniteQueryData?.pages.reduce(
+  const pokemons = requestPokemonInfiniteQuery.data?.pages.reduce(
     (array: NamedApiResource[], page) => [...array, ...page.data.results],
     [],
   )
@@ -30,7 +25,7 @@ export const usePokemonsPage = () => {
 
   React.useEffect(() => {
     if (isInView) {
-      fetchNextInfiniteQueryPage()
+      requestPokemonInfiniteQuery.fetchNextPage()
     }
   }, [isInView])
 
@@ -38,9 +33,9 @@ export const usePokemonsPage = () => {
     state: {
       pokemons,
       selectedPokemonId,
-      isInfiniteQueryLoading: isInfiniteQueryPending,
+      isInfiniteQueryLoading: requestPokemonInfiniteQuery.isPending,
       loadMoreRef: ref,
-      isFetchingNextInfiniteQueryPage,
+      isFetchingNextPokemonPage: requestPokemonInfiniteQuery.isFetchingNextPage,
     },
     functions: {
       selectPokemon,

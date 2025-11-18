@@ -1,17 +1,17 @@
 import { useParams } from "react-router"
 
-import { usePokemonQuery } from "@/utils/api/hooks"
+import { useRequestPokemonQuery } from "@/utils/api/hooks"
 import { dbPokemonToPokemonEntity } from "@/utils/helpers"
 
 export const usePokemonPage = () => {
   const params = useParams()
-  const { data: pokemonQueryData, isLoading: isPokemonQueryLoading } =
-    usePokemonQuery({
-      id: +(params.pokemonId as string),
-    })
+  const requestPokemonQuery = useRequestPokemonQuery({
+    id: +(params.pokemonId as string),
+  })
 
   const pokemon =
-    pokemonQueryData && dbPokemonToPokemonEntity(pokemonQueryData.data)
+    requestPokemonQuery.data &&
+    dbPokemonToPokemonEntity(requestPokemonQuery.data.data)
 
   const prevPokemonId = pokemon && Math.max(1, pokemon.id - 1)
   const nextPokemonId = pokemon && pokemon.id + 1
@@ -19,7 +19,7 @@ export const usePokemonPage = () => {
   return {
     state: {
       pokemon,
-      isPokemonQueryLoading,
+      isPokemonQueryLoading: requestPokemonQuery.isLoading,
       prevPokemonId,
       nextPokemonId,
     },

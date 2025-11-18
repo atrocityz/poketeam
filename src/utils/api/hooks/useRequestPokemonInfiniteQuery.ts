@@ -2,11 +2,13 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { getPokemons } from "../requests"
 
-interface UsePokemonInfiniteQuery {
+interface UseRequestPokemonInfiniteQuery {
   limit: number
 }
 
-export const usePokemonInfiniteQuery = ({ limit }: UsePokemonInfiniteQuery) =>
+export const useRequestPokemonInfiniteQuery = ({
+  limit,
+}: UseRequestPokemonInfiniteQuery) =>
   useInfiniteQuery({
     queryKey: ["pokemons"],
     queryFn: ({ pageParam }) =>

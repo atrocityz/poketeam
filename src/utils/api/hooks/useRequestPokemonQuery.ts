@@ -4,11 +4,11 @@ import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
 
 import { getPokemon } from "../requests/pokemon/id"
 
-interface UsePokemonQuery {
+interface UseRequestPokemonQuery {
   id: Pokemon["id"]
 }
 
-export const usePokemonQuery = ({ id }: UsePokemonQuery) =>
+export const useRequestPokemonQuery = ({ id }: UseRequestPokemonQuery) =>
   useQuery({
     queryKey: ["pokemon", id],
     queryFn: () => getPokemon({ params: { id } }),
