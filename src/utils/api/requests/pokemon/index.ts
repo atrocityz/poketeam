@@ -12,11 +12,8 @@ export interface GetPokemonsRequestConfig {
 
 export type GetPokemonsConfig = AxiosRequestConfig<GetPokemonsRequestConfig>
 
-export const getPokemons = async ({ config, params }: GetPokemonsConfig) => {
-  const response = await api.get<NamedApiResourceList<NamedApiResource>>(
+export const getPokemons = ({ config, params }: GetPokemonsConfig) =>
+  api.get<NamedApiResourceList<NamedApiResource>>(
     `pokemon?offset=${params.offset}&limit=${params.limit}`,
     config,
   )
-
-  return response.data
-}

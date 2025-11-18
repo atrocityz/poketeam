@@ -8,8 +8,5 @@ interface GetPokemonRequestConfig {
 
 export type GetPokemonConfig = AxiosRequestConfig<GetPokemonRequestConfig>
 
-export const getPokemon = async ({ config, params }: GetPokemonConfig) => {
-  const response = await api.get<Pokemon>(`pokemon/${params.id}`, config)
-
-  return response.data
-}
+export const getPokemon = ({ config, params }: GetPokemonConfig) =>
+  api.get<Pokemon>(`pokemon/${params.id}`, config)
