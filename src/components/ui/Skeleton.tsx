@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react"
 
-import { cn } from "@/utils/lib/cn"
+import { cn } from "@/utils/lib"
 
 interface SkeletonProps extends ComponentProps<"div"> {
   children?: ReactNode
