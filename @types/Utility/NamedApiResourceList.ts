@@ -1,4 +1,4 @@
-export interface NamedApiResource {
+export interface NamedApiResource<T> {
   name: string
   url: string
 }

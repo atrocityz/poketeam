@@ -9,6 +9,7 @@ import {
   PokemonCardSkeletonImage,
   PokemonCardSkeletonName,
   PokemonCardSkeletonNumber,
+  PokemonCardTypes,
 } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
 import { cn } from "@/utils/lib"
@@ -22,7 +23,7 @@ export const PokemonPage = () => {
   return (
     <Layout>
       <div className="flex h-screen flex-col items-center justify-center gap-6">
-        <PokemonCard className="relative grid h-[460px] w-[320px] grid-rows-[240px_1fr] gap-5">
+        <PokemonCard className="grid h-[460px] w-[320px] grid-rows-[280px_1fr] gap-5">
           {!state.pokemon || state.isPokemonQueryLoading ? (
             <>
               <PokemonCardSkeletonImage />
@@ -33,7 +34,13 @@ export const PokemonPage = () => {
             </>
           ) : (
             <>
-              <PokemonCardImage imgSrc={state.pokemon.img} />
+              <div className="relative flex shrink-0 justify-center">
+                <PokemonCardImage className="" imgSrc={state.pokemon.img} />
+                <PokemonCardTypes
+                  className="absolute top-0 left-0"
+                  types={state.pokemon.types}
+                />
+              </div>
               <PokemonCardContent>
                 <PokemonCardNumber>
                   {formatPokemonId(state.pokemon.id)}

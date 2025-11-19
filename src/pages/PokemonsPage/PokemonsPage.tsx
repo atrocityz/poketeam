@@ -67,7 +67,7 @@ export const PokemonsPage = () => {
             pokemonId={state.selectedPokemonId}
           />
         )}
-        {state.isFetchingNextInfiniteQueryPage ? (
+        {state.isFetchingNextPokemonPage ? (
           Array.from({ length: POKEMONS_QUERY_LIMIT }).map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <PokemonCard key={index} className="flex justify-between gap-4">
