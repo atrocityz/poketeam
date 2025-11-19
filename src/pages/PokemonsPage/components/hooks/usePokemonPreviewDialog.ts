@@ -5,11 +5,7 @@ import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
 import { useRequestPokemonQuery } from "@/utils/api/hooks"
 import { dbPokemonToPokemonEntity } from "@/utils/helpers"
 
-interface UsePokemonDialog {
-  pokemonId: Pokemon["id"]
-}
-
-export const usePokemonDialog = ({ pokemonId }: UsePokemonDialog) => {
+export const usePokemonPreviewDialog = (pokemonId: Pokemon["id"]) => {
   const requestPokemonQuery = useRequestPokemonQuery({ id: pokemonId })
   const dialogRef = React.useRef<HTMLDialogElement>(null)
 

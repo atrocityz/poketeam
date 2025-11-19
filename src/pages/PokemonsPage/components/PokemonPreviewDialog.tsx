@@ -15,26 +15,30 @@ import {
   PokemonCardTypes,
 } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
+import { cn } from "@/utils/lib"
 
-import { usePokemonDialog } from "./hooks/usePokemonDialog"
+import { usePokemonPreviewDialog } from "./hooks/usePokemonPreviewDialog"
 
 interface PokemonDialogProps {
   pokemonId: Pokemon["id"]
   onClose: () => void
 }
 
-export const PokemonDialog = ({ pokemonId, onClose }: PokemonDialogProps) => {
-  const { state } = usePokemonDialog({ pokemonId })
+export const PokemonPreviewDialog = ({
+  pokemonId,
+  onClose,
+}: PokemonDialogProps) => {
+  const { state } = usePokemonPreviewDialog(pokemonId)
 
   return (
     <Dialog
       ref={state.dialogRef}
-      className="flex h-[420px] w-[320px] flex-col rounded-xl border bg-white p-9"
+      className="flex flex-col rounded-xl border bg-white p-9"
       isOpen={!!pokemonId}
       closedby="any"
       onClose={onClose}
     >
-      <div className="grid grid-rows-[240px_1fr] gap-4 text-black">
+      <div className="relative grid gap-4 text-black">
         {(state.isPokemonQueryLoading || !state.pokemon) && (
           <>
             <PokemonCardSkeletonImage />
@@ -47,13 +51,11 @@ export const PokemonDialog = ({ pokemonId, onClose }: PokemonDialogProps) => {
 
         {state.pokemon && (
           <>
-            <div className="relative">
-              <PokemonCardImage imgSrc={state.pokemon.img} />
-              <PokemonCardTypes
-                className="absolute top-0 left-0"
-                types={state.pokemon.types}
-              />
-            </div>
+            <PokemonCardImage src={state.pokemon.img} />
+            <PokemonCardTypes
+              className="absolute top-0 left-0"
+              types={state.pokemon.types}
+            />
             <PokemonCardContent>
               <PokemonCardNumber>
                 {formatPokemonId(state.pokemon.id)}
@@ -62,13 +64,19 @@ export const PokemonDialog = ({ pokemonId, onClose }: PokemonDialogProps) => {
             </PokemonCardContent>
           </>
         )}
+
+        <Link
+          className={cn(
+            "mt-auto w-full rounded-xl border border-cyan-800 bg-cyan-500 p-3 text-center text-lg font-medium text-white transition-colors duration-250 hover:border-cyan-700 hover:bg-cyan-400",
+            {
+              "pointer-events-none opacity-10": state.isPokemonQueryLoading,
+            },
+          )}
+          to={`/pokemon/${pokemonId}`}
+        >
+          More info
+        </Link>
       </div>
-      <Link
-        className="mt-auto w-full rounded-xl border border-cyan-800 bg-cyan-500 p-3 text-center text-lg font-medium text-white transition-colors duration-250 hover:border-cyan-700 hover:bg-cyan-400"
-        to={`/pokemon/${pokemonId}`}
-      >
-        More info
-      </Link>
 
       <button
         aria-label="Close"

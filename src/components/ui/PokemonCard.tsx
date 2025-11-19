@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps } from "react"
 
 import { cva } from "class-variance-authority"
 
@@ -8,11 +8,11 @@ import { cn } from "@/utils/lib"
 
 import { Skeleton } from "./Skeleton"
 
-interface PokemonCardProps extends ComponentProps<"div"> {
-  children: ReactNode
-}
-
-const PokemonCard = ({ children, className, ...props }: PokemonCardProps) => (
+const PokemonCard = ({
+  children,
+  className,
+  ...props
+}: ComponentProps<"div">) => (
   <div
     className={cn(
       "overflow-hidden rounded-xl border-2 border-gray-200 p-5 shadow-xl",
@@ -24,45 +24,36 @@ const PokemonCard = ({ children, className, ...props }: PokemonCardProps) => (
   </div>
 )
 
-interface PokemonCardImageProps {
-  className?: string
-  imgSrc: string
-}
-
-const PokemonCardImage = ({ imgSrc, className }: PokemonCardImageProps) => (
+const PokemonCardImage = ({ className, ...props }: ComponentProps<"img">) => (
   <img
+    className={cn(
+      "pixelated-image mx-auto h-60 w-60 object-contain",
+      className,
+    )}
     alt=""
-    className={cn("pixelated-image mx-auto min-h-60", className)}
-    src={imgSrc}
+    {...props}
   />
 )
 
-const PokemonCardSkeletonImage = () => (
-  <Skeleton className="min-h-60 min-w-full" />
-)
+const PokemonCardSkeletonImage = () => <Skeleton className="h-60 w-60" />
 
-interface PokemonCardNameProps {
-  children: ReactNode
-  className?: string
-}
-
-const PokemonCardName = ({ children, className }: PokemonCardNameProps) => (
-  <span className={cn("text-xl font-medium capitalize", className)}>
+const PokemonCardName = ({
+  children,
+  className,
+  ...props
+}: ComponentProps<"span">) => (
+  <span className={cn("text-xl font-medium capitalize", className)} {...props}>
     {children}
   </span>
 )
 
 const PokemonCardSkeletonName = () => <Skeleton className="h-7 w-25" />
 
-interface PokemonCardNumberProps extends ComponentProps<"span"> {
-  children: ReactNode
-}
-
 const PokemonCardNumber = ({
   className,
   children,
   ...props
-}: PokemonCardNumberProps) => (
+}: ComponentProps<"span">) => (
   <span className={className} {...props}>
     {children}
   </span>
@@ -70,15 +61,11 @@ const PokemonCardNumber = ({
 
 const PokemonCardSkeletonNumber = () => <Skeleton className="h-6 w-9" />
 
-interface PokemonCardContentProps extends ComponentProps<"div"> {
-  children: ReactNode
-}
-
 const PokemonCardContent = ({
   children,
   className,
   ...props
-}: PokemonCardContentProps) => (
+}: ComponentProps<"div">) => (
   <div
     className={cn("flex max-h-max items-center gap-2", className)}
     {...props}

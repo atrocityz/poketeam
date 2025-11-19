@@ -23,7 +23,7 @@ export const PokemonPage = () => {
   return (
     <Layout>
       <div className="flex h-screen flex-col items-center justify-center gap-6">
-        <PokemonCard className="grid h-[460px] w-[320px] grid-rows-[280px_1fr] gap-5">
+        <PokemonCard className="grid gap-5">
           {!state.pokemon || state.isPokemonQueryLoading ? (
             <>
               <PokemonCardSkeletonImage />
@@ -35,7 +35,7 @@ export const PokemonPage = () => {
           ) : (
             <>
               <div className="relative flex shrink-0 justify-center">
-                <PokemonCardImage className="" imgSrc={state.pokemon.img} />
+                <PokemonCardImage src={state.pokemon.img} />
                 <PokemonCardTypes
                   className="absolute top-0 left-0"
                   types={state.pokemon.types}

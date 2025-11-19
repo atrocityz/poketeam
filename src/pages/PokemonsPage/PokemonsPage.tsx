@@ -11,7 +11,7 @@ import { POKEMONS_QUERY_LIMIT } from "@/utils/constants"
 import { formatPokemonId } from "@/utils/helpers"
 
 import { Layout } from "../Layout"
-import { PokemonDialog } from "./components/PokemonDialog"
+import { PokemonPreviewDialog } from "./components/PokemonPreviewDialog"
 import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
 export const PokemonsPage = () => {
@@ -62,7 +62,7 @@ export const PokemonsPage = () => {
               )
             })}
         {state.selectedPokemonId && (
-          <PokemonDialog
+          <PokemonPreviewDialog
             onClose={() => functions.selectPokemon(null)}
             pokemonId={state.selectedPokemonId}
           />
