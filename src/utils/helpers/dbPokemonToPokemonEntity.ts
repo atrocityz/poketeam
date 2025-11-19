@@ -12,7 +12,8 @@ export const dbPokemonToPokemonEntity = (
 ): PokemonEntity => ({
   name: pokemonData.name,
   id: pokemonData.id,
-  img: pokemonData.sprites.versions["generation-v"]["black-white"].animated
-    .front_default,
+  img:
+    pokemonData.sprites.versions["generation-v"]["black-white"].animated
+      .front_default ?? pokemonData.sprites.front_default,
   types: pokemonData.types,
 })

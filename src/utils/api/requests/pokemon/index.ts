@@ -5,15 +5,18 @@ import type {
 
 import { api } from "../../instance"
 
-export interface GetPokemonsRequestConfig {
+export interface GetPokemonsParams {
   limit: number
   offset: number
 }
 
-export type GetPokemonsConfig = AxiosRequestConfig<GetPokemonsRequestConfig>
+export type GetPokemonsRequestConfig = AxiosRequestConfig<GetPokemonsParams>
 
-export const getPokemons = ({ config, params }: GetPokemonsConfig) =>
-  api.get<NamedApiResourceList<NamedApiResource>>(
-    `pokemon?offset=${params.offset}&limit=${params.limit}`,
-    config,
-  )
+export const getPokemons = ({ config, params }: GetPokemonsRequestConfig) =>
+  api.get<NamedApiResourceList<NamedApiResource>>(`pokemon`, {
+    ...config,
+    params: {
+      ...params,
+      ...config?.params,
+    },
+  })

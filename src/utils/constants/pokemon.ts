@@ -1,1 +1,4 @@
-export const POKEMONS_QUERY_LIMIT = 40
+export const POKEMONS_QUERY = {
+  LIMIT: 40,
+  OFFSET: 0,
+}

@@ -2,13 +2,11 @@ import { useQueries } from "@tanstack/react-query"
 
 import { getPokemon } from "../requests"
 
-interface UseRequestPokemonQueries {
+interface UseGetPokemonQueries {
   offset: number
 }
 
-export const useRequestPokemonQueries = ({
-  offset,
-}: UseRequestPokemonQueries) =>
+export const useGetPokemonQueries = ({ offset }: UseGetPokemonQueries) =>
   useQueries({
     queries: Array.from({ length: offset }).map((_item, index) => {
       const pokemonId = index + 1

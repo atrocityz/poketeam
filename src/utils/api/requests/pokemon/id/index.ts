@@ -2,11 +2,11 @@ import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
 
 import { api } from "../../../instance"
 
-interface GetPokemonRequestConfig {
+export interface GetPokemonParams {
   id: Pokemon["id"]
 }
 
-export type GetPokemonConfig = AxiosRequestConfig<GetPokemonRequestConfig>
+export type GetPokemonRequestConfig = AxiosRequestConfig<GetPokemonParams>
 
-export const getPokemon = ({ config, params }: GetPokemonConfig) =>
+export const getPokemon = ({ config, params }: GetPokemonRequestConfig) =>
   api.get<Pokemon>(`pokemon/${params.id}`, config)

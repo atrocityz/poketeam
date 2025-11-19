@@ -1,3 +1,3 @@
-export * from "./useRequestPokemonInfiniteQuery"
-export * from "./useRequestPokemonQueries"
-export * from "./useRequestPokemonQuery"
+export * from "./useGetPokemonInfiniteQuery"
+export * from "./useGetPokemonQueries"
+export * from "./useGetPokemonQuery"
