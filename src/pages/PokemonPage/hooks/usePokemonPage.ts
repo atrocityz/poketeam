@@ -9,6 +9,8 @@ export const usePokemonPage = () => {
     id: +(params.pokemonId as string),
   })
 
+  console.log(requestPokemonQuery.data?.data)
+
   const pokemon =
     requestPokemonQuery.data &&
     dbPokemonToPokemonEntity(requestPokemonQuery.data.data)
