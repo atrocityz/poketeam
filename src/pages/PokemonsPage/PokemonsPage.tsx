@@ -42,25 +42,23 @@ export const PokemonsPage = () => {
               const id = index + 1
 
               return (
-                <PokemonCard
+                <button
                   key={id}
-                  className="cursor-pointer"
-                  tabIndex={0}
+                  aria-label="Open pokemon preview"
+                  className="relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 hover:animate-pulse"
+                  title="Open pokemon preview"
+                  type="button"
                   onClick={() => {
                     functions.selectPokemon(id)
                   }}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      functions.selectPokemon(id)
-                    }
-                  }}
-                  role="button"
                 >
-                  <div className="flex items-center justify-between">
-                    <PokemonCardName>{pokemon.name}</PokemonCardName>
-                    <PokemonCardNumber>{formatPokemonId(id)}</PokemonCardNumber>
-                  </div>
-                </PokemonCard>
+                  <PokemonCardName className="z-1">
+                    {pokemon.name}
+                  </PokemonCardName>
+                  <PokemonCardNumber className="z-1">
+                    {formatPokemonId(id)}
+                  </PokemonCardNumber>
+                </button>
               )
             })}
         {state.selectedPokemonId && (

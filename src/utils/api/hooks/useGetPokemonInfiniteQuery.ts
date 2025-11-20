@@ -10,7 +10,6 @@ export const useGetPokemonInfiniteQuery = (
 ) =>
   useInfiniteQuery({
     queryKey: ["pokemons"],
-    // @ts-ignore
     queryFn: ({ pageParam }) =>
       getPokemons({
         params: {
@@ -21,7 +20,6 @@ export const useGetPokemonInfiniteQuery = (
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
-      // @ts-ignore
       if (lastPage.data.next) {
         return pages.length * params.limit
       }

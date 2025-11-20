@@ -3,7 +3,7 @@ type AxiosRequestConfig<Params = undefined> = Params extends undefined
   : { params: Params; config?: import("axios").AxiosRequestConfig }
 
 interface QuerySettings<Func = unknown> {
-  config?: ApiRequestOptions
+  config?: import("axios").AxiosRequestConfig
   options?: Omit<
     import("@tanstack/react-query").UseQueryOptions<
       Awaited<ReturnType<Func>>,
@@ -16,14 +16,14 @@ interface QuerySettings<Func = unknown> {
 }
 
 interface InfinityQuerySettings<Func = unknown> {
-  config?: ApiRequestOptions
+  config?: import("axios").AxiosRequestConfig
   options?: Omit<
     import("@tanstack/react-query").UseInfiniteQueryOptions<
-      import("@tanstack/react-query").InfiniteData<Awaited<ReturnType<Func>>>,
+      Awaited<ReturnType<Func>>,
       any,
       import("@tanstack/react-query").InfiniteData<Awaited<ReturnType<Func>>>,
       any
     >,
-    "getNextPageParam" | "initialPageParam" | "queryFn" | "queryKey"
+    "getNextPageParam" | "initialPageParam" | "queryKey"
   >
 }
