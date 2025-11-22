@@ -1,6 +1,7 @@
 import { Link } from "react-router"
 
 import {
+  Button,
   PokemonCard,
   PokemonCardContent,
   PokemonCardImage,
@@ -52,23 +53,27 @@ export const PokemonPage = () => {
         </PokemonCard>
 
         <div className="flex gap-4">
-          <Link
-            className={cn({
-              "pointer-events-none opacity-15":
-                state.prevPokemonId === state.pokemon?.id,
-            })}
-            to={`/pokemon/${state.prevPokemonId}`}
-          >
-            Prev
-          </Link>
-          <Link
-            className={cn({
-              "pointer-events-none opacity-15": !state.nextPokemonId,
-            })}
-            to={`/pokemon/${state.nextPokemonId}`}
-          >
-            Next
-          </Link>
+          <Button asChild>
+            <Link
+              className={cn({
+                "pointer-events-none opacity-15":
+                  state.prevPokemonId === state.pokemon?.id,
+              })}
+              to={`/pokemon/${state.prevPokemonId}`}
+            >
+              Prev
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link
+              className={cn({
+                "pointer-events-none opacity-15": !state.nextPokemonId,
+              })}
+              to={`/pokemon/${state.nextPokemonId}`}
+            >
+              Next
+            </Link>
+          </Button>
         </div>
       </div>
     </Layout>

@@ -33,7 +33,7 @@ export const Dialog = ({
     <dialog
       ref={ref}
       className={cn(
-        "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent",
+        "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
         className,
       )}
       onClose={onClose}

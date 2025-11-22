@@ -27,7 +27,7 @@ const PokemonCard = ({
 const PokemonCardImage = ({ className, ...props }: ComponentProps<"img">) => (
   <img
     className={cn(
-      "pixelated-image mx-auto h-60 w-60 object-contain",
+      "pixelated-image mx-auto h-60 w-60 max-w-none object-contain",
       className,
     )}
     alt=""

@@ -11,7 +11,7 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-      <header className="fixed top-0 flex w-full items-center justify-between gap-4 border-b border-gray-400 bg-white px-8 py-4 shadow-2xs">
+      <header className="fixed top-0 z-50 flex w-full items-center justify-between gap-4 border-b border-gray-400 bg-white px-8 py-4 shadow-2xs">
         <Link className="flex items-center gap-3" to={ROUTES.POKEMONS}>
           <img
             alt=""

@@ -43,7 +43,7 @@ export const Button = ({
 
   return (
     <Component
-      className={cn(buttonVariants({ variant, className }))}
+      className={cn(buttonVariants({ variant }), className)}
       {...props}
     >
       {children}
