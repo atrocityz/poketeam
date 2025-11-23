@@ -1,2 +1,6 @@
+export * from "./auth/login"
+export * from "./auth/logout"
+export * from "./auth/me"
+export * from "./auth/register"
 export * from "./pokemon"
 export * from "./pokemon/id"

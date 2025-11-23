@@ -1,4 +1,4 @@
-import type { Pokemon, PokemonType } from "@/../@types/Pokemon/Pokemon"
+import type { Pokemon, PokemonType } from "@/../@types/pokeapi"
 
 interface PokemonEntity {
   id: Pokemon["id"]

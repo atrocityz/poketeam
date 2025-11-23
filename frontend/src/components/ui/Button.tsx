@@ -10,12 +10,13 @@ import type { AsChildProps } from "./Slot"
 import { Slot } from "./Slot"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md cursor-pointer",
+  "inline-flex items-center justify-center rounded-md cursor-pointer gap-1 disabled:pointer-events-none disabled:opacity-30",
   {
     variants: {
       variant: {
         default: "border border-gray-200 px-3 py-2 bg-gray-200",
         ghost: "border border-gray-200 px-3 py-2",
+        link: "hover:underline",
       },
     },
     defaultVariants: {

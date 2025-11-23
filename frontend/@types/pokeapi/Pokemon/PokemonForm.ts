@@ -1,7 +1,7 @@
 import type { VersionGroup } from "../Games/VersionGroup"
 import type { Name } from "../Utility/CommonModels"
 import type { NamedApiResource } from "../Utility/NamedApiResourceList"
-import type { Pokemon } from "./Pokemon"
+import type { Pokemon } from "./"
 
 export interface PokemonForm {
   form_name: string

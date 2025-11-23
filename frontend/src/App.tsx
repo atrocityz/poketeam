@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 
-import { PokemonPage, PokemonsPage } from "@/pages"
-import { ROUTES } from "@/utils/constants"
+import { AuthPage, PokemonPage, PokemonsPage } from "@/pages"
+import { routes } from "@/utils/config"
 
 export const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route index element={<PokemonsPage />} path={ROUTES.POKEMONS} />
-      <Route element={<PokemonPage />} path={ROUTES.POKEMON} />
+      <Route index element={<PokemonsPage />} path={routes.pokemons.path} />
+      <Route element={<PokemonPage />} path={routes.pokemon.path} />
+      <Route element={<AuthPage />} path={routes.auth.path} />
     </Routes>
   </BrowserRouter>
 )

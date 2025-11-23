@@ -3,7 +3,7 @@ import type { Move } from "../Moves/Move"
 import type { MoveDamageClass } from "../Moves/MoveDamageClass"
 import type { GenerationGameIndex, Name } from "../Utility/CommonModels"
 import type { NamedApiResource } from "../Utility/NamedApiResourceList"
-import type { Pokemon } from "./Pokemon"
+import type { Pokemon } from "./"
 
 export interface Type {
   damage_relations: TypeRelations

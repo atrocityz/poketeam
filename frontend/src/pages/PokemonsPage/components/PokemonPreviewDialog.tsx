@@ -1,7 +1,7 @@
 import { X } from "lucide-react"
 import { Link } from "react-router"
 
-import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
+import type { Pokemon } from "@/../@types/pokeapi"
 
 import {
   Dialog,
@@ -14,6 +14,7 @@ import {
   PokemonCardSkeletonNumber,
   PokemonCardTypes,
 } from "@/components/ui"
+import { routes } from "@/utils/config"
 import { formatPokemonId } from "@/utils/helpers"
 import { cn } from "@/utils/lib"
 
@@ -72,7 +73,7 @@ export const PokemonPreviewDialog = ({
               "pointer-events-none opacity-10": state.isPokemonQueryLoading,
             },
           )}
-          to={`/pokemon/${pokemonId}`}
+          to={routes.pokemon.getHref(pokemonId)}
         >
           More info
         </Link>

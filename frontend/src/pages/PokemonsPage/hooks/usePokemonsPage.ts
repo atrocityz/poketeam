@@ -1,7 +1,6 @@
 import React from "react"
 
-import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
-import type { NamedApiResource } from "@/../@types/Utility/NamedApiResourceList"
+import type { NamedApiResource, Pokemon } from "@/../@types/pokeapi"
 
 import { useGetPokemonInfiniteQuery } from "@/utils/api/hooks"
 import { POKEMONS_QUERY } from "@/utils/constants/pokemon"

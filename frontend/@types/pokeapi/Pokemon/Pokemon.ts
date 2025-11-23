@@ -1,20 +1,20 @@
 import type { Generation } from "../Games/Generation.js"
-import type { Version } from "../Games/Version"
-import type { VersionGroup } from "../Games/VersionGroup"
-import type { Item } from "../Items/Item"
-import type { Location } from "../Locations/Location"
-import type { Move } from "../Moves/Move"
-import type { MoveLearnMethod } from "../Moves/MoveLearnMethod"
+import type { Version } from "../Games/Version.js"
+import type { VersionGroup } from "../Games/VersionGroup.js"
+import type { Item } from "../Items/Item.js"
+import type { Location } from "../Locations/Location.js"
+import type { Move } from "../Moves/Move.js"
+import type { MoveLearnMethod } from "../Moves/MoveLearnMethod.js"
 import type {
   VersionEncounterDetail,
   VersionGameIndex,
-} from "../Utility/CommonModels"
-import type { NamedApiResource } from "../Utility/NamedApiResourceList"
-import type { Ability } from "./Ability"
-import type { PokemonForm } from "./PokemonForm"
-import type { PokemonSpecies } from "./PokemonSpecies"
-import type { Stat } from "./Stat"
-import type { Type } from "./Type"
+} from "../Utility/CommonModels.js"
+import type { NamedApiResource } from "../Utility/NamedApiResourceList.js"
+import type { Ability } from "./Ability.js"
+import type { PokemonForm } from "./PokemonForm.js"
+import type { PokemonSpecies } from "./PokemonSpecies.js"
+import type { Stat } from "./Stat.js"
+import type { Type } from "./Type.js"
 
 export interface Pokemon {
   abilities: PokemonAbility[]

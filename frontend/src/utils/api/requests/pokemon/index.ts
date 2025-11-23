@@ -1,19 +1,24 @@
+import type { AxiosRequestConfig } from "axios"
+
 import type {
   NamedApiResource,
   NamedApiResourceList,
-} from "@/../@types/Utility/NamedApiResourceList"
+} from "@/../@types/pokeapi"
 
-import { api } from "../../instance"
+import { pokeApi } from "../../instance"
 
 export interface GetPokemonsParams {
   limit: number
   offset: number
 }
 
-export type GetPokemonsRequestConfig = AxiosRequestConfig<GetPokemonsParams>
+interface GetPokemonsRequestConfig {
+  config?: AxiosRequestConfig
+  params: GetPokemonsParams
+}
 
 export const getPokemons = ({ config, params }: GetPokemonsRequestConfig) =>
-  api.get<NamedApiResourceList<NamedApiResource>>(`pokemon`, {
+  pokeApi.get<NamedApiResourceList<NamedApiResource>>(`pokemon`, {
     ...config,
     params: {
       ...params,

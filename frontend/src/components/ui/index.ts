@@ -1,5 +1,6 @@
 export * from "./Button"
 export * from "./Dialog"
+export * from "./ErrorMessage"
 export * from "./Loader"
 export * from "./PokemonCard"
 export * from "./Skeleton"

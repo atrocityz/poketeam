@@ -3,7 +3,7 @@ import type { VersionGroup } from "../Games/VersionGroup"
 import type { Effect, Name, VerboseEffect } from "../Utility/CommonModels"
 import type { Language } from "../Utility/Language"
 import type { NamedApiResource } from "../Utility/NamedApiResourceList"
-import type { Pokemon } from "./Pokemon"
+import type { Pokemon } from "./"
 
 export interface Ability {
   effect_changes: AbilityEffectChange[]

@@ -1,7 +1,3 @@
-type AxiosRequestConfig<Params = undefined> = Params extends undefined
-  ? { config?: import("axios").AxiosRequestConfig }
-  : { params: Params; config?: import("axios").AxiosRequestConfig }
-
 interface QuerySettings<Func = unknown> {
   config?: import("axios").AxiosRequestConfig
   options?: Omit<
@@ -25,5 +21,15 @@ interface InfinityQuerySettings<Func = unknown> {
       any
     >,
     "getNextPageParam" | "initialPageParam" | "queryKey"
+  >
+}
+
+interface MutationSettings<Params = void, Func = unknown> {
+  config?: ApiRequestConfig
+  options?: import("@tanstack/react-query").UseMutationOptions<
+    Awaited<ReturnType<Func>>,
+    any,
+    Params,
+    any
   >
 }

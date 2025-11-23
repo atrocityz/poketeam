@@ -1,6 +1,6 @@
 import type { EncounterMethod } from "../Encounters/EncounterMethod"
 import type { Version } from "../Games/Version"
-import type { Pokemon } from "../Pokemon/Pokemon"
+import type { Pokemon } from "../Pokemon"
 import type { Name, VersionEncounterDetail } from "../Utility/CommonModels"
 import type { NamedApiResource } from "../Utility/NamedApiResourceList"
 import type { Location } from "./Location"

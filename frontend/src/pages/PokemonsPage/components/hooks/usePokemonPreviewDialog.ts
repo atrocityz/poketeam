@@ -1,6 +1,6 @@
 import React from "react"
 
-import type { Pokemon } from "@/../@types/Pokemon/Pokemon"
+import type { Pokemon } from "@/../@types/pokeapi"
 
 import { useGetPokemonQuery } from "@/utils/api/hooks"
 import { dbPokemonToPokemonEntity } from "@/utils/helpers"
