@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { createPortal } from "react-dom"
 
 import { cn } from "@/utils/lib"
@@ -19,7 +19,7 @@ export const Dialog = ({
   className,
   ...props
 }: DialogProps) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (!ref.current) return
 
     if (isOpen) {

@@ -1,4 +1,4 @@
-import React from "react"
+import { useEffect, useState } from "react"
 
 import type { NamedApiResource, Pokemon } from "@/../@types/pokeapi"
 
@@ -12,7 +12,7 @@ export const usePokemonsPage = () => {
     offset: POKEMONS_QUERY.OFFSET,
   })
   const { ref, isInView } = useInView()
-  const [selectedPokemonId, setSelectedPokemonId] = React.useState<
+  const [selectedPokemonId, setSelectedPokemonId] = useState<
     Pokemon["id"] | null
   >(null)
 
@@ -23,7 +23,7 @@ export const usePokemonsPage = () => {
 
   const selectPokemon = (id: Pokemon["id"] | null) => setSelectedPokemonId(id)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isInView) {
       pokemonInfiniteQuery.fetchNextPage()
     }

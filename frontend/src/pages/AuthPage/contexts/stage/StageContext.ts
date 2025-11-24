@@ -1,4 +1,4 @@
-import React from "react"
+import { createContext } from "react"
 
 export type Stage = "login" | "register"
 
@@ -7,7 +7,7 @@ export interface StageContextProps {
   setStage: (stage: Stage) => void
 }
 
-export const StageContext = React.createContext<StageContextProps>({
+export const StageContext = createContext<StageContextProps>({
   stage: "login",
   setStage: () => {},
 })

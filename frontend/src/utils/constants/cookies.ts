@@ -1,6 +1,4 @@
-export const BASE_COOKIE_NAME = "poketeam"
-
 export const COOKIE = {
-  ACCESS_TOKEN: `${BASE_COOKIE_NAME}-accessToken`,
-  REFRESH_TOKEN: `${BASE_COOKIE_NAME}-refreshToken`,
+  ACCESS_TOKEN: "accessToken",
+  REFRESH_TOKEN: "refreshToken",
 } as const

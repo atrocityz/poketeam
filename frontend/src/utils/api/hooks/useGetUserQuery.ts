@@ -6,5 +6,6 @@ export const useGetUserQuery = (settings?: QuerySettings<typeof getUser>) =>
   useQuery({
     queryKey: ["getUser"],
     queryFn: () => getUser({ config: settings?.config }),
+    retry: false,
     ...settings?.options,
   })

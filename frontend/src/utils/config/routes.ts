@@ -5,6 +5,10 @@ export const routes = {
     path: "/",
     getHref: () => "/",
   },
+  profile: {
+    path: "/profile",
+    getHref: () => "/profile",
+  },
   pokemon: {
     path: "/pokemon/:pokemonId",
     getHref: (id: Pokemon["id"]) => `/pokemon/${id}`,

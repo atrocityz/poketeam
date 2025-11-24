@@ -15,7 +15,7 @@ import {
 import { formatPokemonId } from "@/utils/helpers"
 import { cn } from "@/utils/lib"
 
-import { Layout } from "../Layout"
+import { Layout } from "../../components/layouts/Layout"
 import { usePokemonPage } from "./hooks/usePokemonPage"
 
 export const PokemonPage = () => {

@@ -1,4 +1,4 @@
-import React from "react"
+import { useRef } from "react"
 
 import type { Pokemon } from "@/../@types/pokeapi"
 
@@ -7,7 +7,7 @@ import { dbPokemonToPokemonEntity } from "@/utils/helpers"
 
 export const usePokemonPreviewDialog = (pokemonId: Pokemon["id"]) => {
   const pokemonQuery = useGetPokemonQuery({ id: pokemonId })
-  const dialogRef = React.useRef<HTMLDialogElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
   const pokemon =
     pokemonQuery.data && dbPokemonToPokemonEntity(pokemonQuery.data.data)

@@ -1,4 +1,4 @@
-import React from "react"
+import { useEffect } from "react"
 
 import {
   PokemonCard,
@@ -10,7 +10,7 @@ import {
 import { POKEMONS_QUERY } from "@/utils/constants"
 import { formatPokemonId } from "@/utils/helpers"
 
-import { Layout } from "../Layout"
+import { Layout } from "../../components/layouts/Layout"
 import { PokemonPreviewDialog } from "./components/PokemonPreviewDialog"
 import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
@@ -18,7 +18,7 @@ export const PokemonsPage = () => {
   const { state, functions } = usePokemonsPage()
 
   // TODO: Вынести логику скрытия скролла в модалку PokemonPreviewDialog
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.selectedPokemonId) {
       document.documentElement.style.overflowY = "hidden"
     } else {
@@ -28,7 +28,7 @@ export const PokemonsPage = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto grid grid-cols-4 gap-5 pt-24 pb-14">
+      <div className="grid grid-cols-4 gap-5 pb-14">
         {/* TODO: Вынести повторение отрисовки скелета в отдельный компонент??? */}
         {state.isInfiniteQueryLoading
           ? Array.from({ length: POKEMONS_QUERY.LIMIT }).map((_, index) => (

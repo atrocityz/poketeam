@@ -1,6 +1,5 @@
 import Cookies from "js-cookie"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
 
 import { useStage } from "@/pages/AuthPage/contexts/stage"
 import { usePostRegisterMutation } from "@/utils/api/hooks/usePostRegisterMutation"
@@ -14,11 +13,12 @@ interface RegisterForm {
 }
 
 export const useRegisterForm = () => {
-  const navigate = useNavigate()
   const { setStage } = useStage()
   const registerForm = useForm<RegisterForm>({
     mode: "all",
   })
+
+  const goToLogin = () => setStage("login")
 
   const postRegisterMutation = usePostRegisterMutation({
     options: {
@@ -31,14 +31,10 @@ export const useRegisterForm = () => {
           expires: new Date(Date.now() + 15 * 60 * 1000),
         })
 
-        navigate("/", {
-          replace: true,
-        })
+        goToLogin()
       },
     },
   })
-
-  const goToLogin = () => setStage("login")
 
   const onSubmit = registerForm.handleSubmit((values) => {
     const { passwordConfirm, ...otherValues } = values
