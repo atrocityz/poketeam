@@ -22,11 +22,8 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  create(
-    @Res({ passthrough: true }) response: Response,
-    @Body() data: RegisterRequest,
-  ) {
-    return this.authService.register(response, data);
+  create(@Body() data: RegisterRequest) {
+    return this.authService.register(data);
   }
 
   @Post('login')

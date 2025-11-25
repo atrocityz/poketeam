@@ -39,7 +39,7 @@ export class AuthService {
     this.COOKIE_DOMAIN = configService.getOrThrow<string>('COOKIE_DOMAIN');
   }
 
-  async register(response: Response, data: RegisterRequest) {
+  async register(data: RegisterRequest) {
     const existUser = await this.prismaService.user.findUnique({
       where: {
         email: data.email,
@@ -50,7 +50,7 @@ export class AuthService {
       throw new ConflictException('User with this email already exists');
     }
 
-    const user = await this.prismaService.user.create({
+    await this.prismaService.user.create({
       data: {
         email: data.email,
         login: data.login,
@@ -58,7 +58,7 @@ export class AuthService {
       },
     });
 
-    return this.auth(response, user.id);
+    return true;
   }
 
   async login(response: Response, data: LoginRequest) {
