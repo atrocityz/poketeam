@@ -7,4 +7,4 @@ export interface GetLogoutRequestConfig {
 }
 
 export const logout = ({ config }: GetLogoutRequestConfig) =>
-  api.post<boolean>("auth/logout", config)
+  api.post<boolean>("auth/logout", {}, config)

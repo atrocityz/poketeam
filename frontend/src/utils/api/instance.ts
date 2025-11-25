@@ -3,6 +3,7 @@ import type { CreateAxiosDefaults } from "axios"
 import axios from "axios"
 import Cookies from "js-cookie"
 
+import { routes } from "../config"
 import { COOKIE } from "../constants"
 import { postRefreshTokens } from "./requests/auth/refresh"
 
@@ -47,23 +48,14 @@ apiWithAuth.interceptors.response.use(
         })
 
         return apiWithAuth.request(originalRequest)
-      } catch (error) {
-        const errorCatch = (error: any): string => {
-          const message = error?.response?.data?.message
-
-          return message
-            ? typeof error.response.data.message === "object"
-              ? message[0]
-              : message
-            : error.message
-        }
-
-        if (errorCatch(error) === "jwt expired") {
-          Cookies.remove(COOKIE.ACCESS_TOKEN)
-        }
+      } catch {
+        Cookies.remove(COOKIE.ACCESS_TOKEN)
+        window.location.href = routes.auth.getHref()
       }
     }
 
+    Cookies.remove(COOKIE.ACCESS_TOKEN)
+    window.location.href = routes.auth.getHref()
     throw error
   },
 )

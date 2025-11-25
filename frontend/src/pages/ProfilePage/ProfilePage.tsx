@@ -1,14 +1,13 @@
-import { useAuth } from "@/utils/contexts/auth"
+import { useGetUserQuery } from "@/utils/api/hooks"
 
 export const ProfilePage = () => {
-  const { isLoading, user } = useAuth()
-
-  if (!user && !isLoading) return null
+  const getUserQuery = useGetUserQuery()
+  const profile = getUserQuery.data?.data
 
   return (
     <div>
-      <div>{user?.email}</div>
-      <div>{user?.login}</div>
+      <div>{profile?.email}</div>
+      <div>{profile?.login}</div>
     </div>
   )
 }

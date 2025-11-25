@@ -21,7 +21,7 @@ export const PokemonPage = () => {
   const { state } = usePokemonPage()
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-6">
+    <div className="flex flex-col items-center justify-center gap-6">
       <PokemonCard className="grid gap-5">
         {!state.pokemon || state.isPokemonQueryLoading ? (
           <>

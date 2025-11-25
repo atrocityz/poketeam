@@ -1,14 +1,13 @@
+import type { Dispatch, SetStateAction } from "react"
+
 import { createContext } from "react"
 
-import type { User } from "@/../@types/auth"
-
 interface AuthContextProps {
-  isLoading: boolean
-  user?: User
-  onLogout: () => void
+  isAuth: boolean
+  setIsAuth: Dispatch<SetStateAction<boolean>>
 }
 
 export const AuthContext = createContext<AuthContextProps>({
-  isLoading: false,
-  onLogout: () => {},
+  isAuth: false,
+  setIsAuth: () => {},
 })

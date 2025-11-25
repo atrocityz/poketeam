@@ -8,10 +8,7 @@ export const LoginForm = () => {
   return (
     <form
       className="rounded-lg border border-zinc-300 p-8"
-      onSubmit={(event) => {
-        event.preventDefault()
-        functions.onSubmit()
-      }}
+      onSubmit={functions.onSubmit}
     >
       <fieldset className="grid gap-4" disabled={state.isLoading}>
         <h1 className="text-center text-2xl">Login</h1>

@@ -3,13 +3,13 @@ import type { AxiosError } from "axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Cookies from "js-cookie"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
 
 import type { ErrorResponse } from "@/../@types/auth"
 
 import { useStage } from "@/pages/AuthPage/contexts/stage"
 import { usePostLoginMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
+import { useAuth } from "@/utils/contexts"
 import { queryClient } from "@/utils/lib"
 
 import type { LoginFormData } from "../schemas/loginFormSchema"
@@ -17,8 +17,8 @@ import type { LoginFormData } from "../schemas/loginFormSchema"
 import { loginFormSchema } from "../schemas/loginFormSchema"
 
 export const useLoginForm = () => {
-  const navigate = useNavigate()
   const { setStage } = useStage()
+  const { setIsAuth } = useAuth()
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
@@ -38,9 +38,7 @@ export const useLoginForm = () => {
           queryKey: ["getUser"],
         })
 
-        navigate("/", {
-          replace: true,
-        })
+        setIsAuth(true)
       },
       onError: (error: AxiosError<ErrorResponse>) => {
         console.log(error.response?.data.message)

@@ -10,10 +10,7 @@ export const RegisterForm = () => {
   return (
     <form
       className="grid gap-2 rounded-lg border border-zinc-300 p-10"
-      onSubmit={(event) => {
-        event.preventDefault()
-        functions.onSubmit()
-      }}
+      onSubmit={functions.onSubmit}
     >
       <h1>Register</h1>
 

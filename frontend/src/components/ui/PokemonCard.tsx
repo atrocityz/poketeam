@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 
 import { cva } from "class-variance-authority"
 
-import type { PokemonType } from "@/../@types/Pokemon/Pokemon"
+import type { PokemonType } from "@/../@types/pokeapi"
 
 import { cn } from "@/utils/lib"
 
@@ -47,7 +47,7 @@ const PokemonCardName = ({
   </span>
 )
 
-const PokemonCardSkeletonName = () => <Skeleton className="h-7 w-25" />
+const PokemonCardSkeletonName = () => <Skeleton className="h-7 w-full" />
 
 const PokemonCardNumber = ({
   className,
@@ -59,7 +59,7 @@ const PokemonCardNumber = ({
   </span>
 )
 
-const PokemonCardSkeletonNumber = () => <Skeleton className="h-6 w-9" />
+const PokemonCardSkeletonNumber = () => <Skeleton className="h-full w-9" />
 
 const PokemonCardContent = ({
   children,

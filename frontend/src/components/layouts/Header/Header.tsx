@@ -1,15 +1,11 @@
-import { Activity } from "react"
-import { Link, useLocation, useNavigate } from "react-router"
+import { Link, useLocation } from "react-router"
 
 import { Profile } from "@/components/Profile"
-import { Button, Skeleton } from "@/components/ui"
 import { routes } from "@/utils/config"
-import { useAuth } from "@/utils/contexts"
 import { cn } from "@/utils/lib"
 
+// TODO: Логику получения данных о пользователе и logout можно куда-нибудь вынести
 export const Header = () => {
-  const { isLoading, user, onLogout } = useAuth()
-  const navigate = useNavigate()
   const location = useLocation()
 
   const isActiveLink = (pathname: string) => {
@@ -42,49 +38,20 @@ export const Header = () => {
             </Link>
           </li>
           <li>
-            <Activity mode={user ? "hidden" : "visible"}>
-              <Link
-                className={cn("text-xl hover:underline", {
-                  "pointer-events-none underline": isActiveLink(
-                    routes.auth.getHref(),
-                  ),
-                })}
-                to={routes.auth.path}
-              >
-                Auth
-              </Link>
-            </Activity>
-            <Activity mode={user ? "visible" : "hidden"}>
-              <Link
-                className={cn("text-xl hover:underline", {
-                  "pointer-events-none underline": isActiveLink(
-                    routes.profile.getHref(),
-                  ),
-                })}
-                to={routes.profile.path}
-              >
-                Profile
-              </Link>
-            </Activity>
+            <Link
+              className={cn("text-xl hover:underline", {
+                "pointer-events-none underline": isActiveLink(
+                  routes.profile.getHref(),
+                ),
+              })}
+              to={routes.profile.path}
+            >
+              Profile
+            </Link>
           </li>
         </ul>
       </nav>
-      {isLoading && <Skeleton className="h-12 w-[200px]" />}
-      {user && (
-        <div className="flex items-center gap-2">
-          <Profile profile={user} />
-          <Button
-            onClick={() => {
-              onLogout()
-              navigate(routes.auth.getHref(), {
-                replace: true,
-              })
-            }}
-          >
-            Logout
-          </Button>
-        </div>
-      )}
+      <Profile />
     </header>
   )
 }
