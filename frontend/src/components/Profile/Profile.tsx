@@ -1,7 +1,7 @@
 import type { User } from "@/../@types/auth"
 
 interface ProfileProps {
-  profile: Omit<User, "password">
+  profile: User
 }
 
 export const Profile = ({ profile }: ProfileProps) => {

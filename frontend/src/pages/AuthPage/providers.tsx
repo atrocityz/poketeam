@@ -6,7 +6,7 @@ import { StageProvider } from "./contexts/stage"
 
 interface AuthPageProvidersProps {
   children: ReactNode
-  stage: Omit<StageProviderProps, "children">
+  stage: Pick<StageProviderProps, "defaultStage">
 }
 
 export const AuthPageProviders = ({

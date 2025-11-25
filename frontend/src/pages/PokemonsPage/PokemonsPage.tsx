@@ -1,84 +1,59 @@
-import { useEffect } from "react"
+import { Loader2 } from "lucide-react"
+import { Activity } from "react"
 
-import {
-  PokemonCard,
-  PokemonCardName,
-  PokemonCardNumber,
-  PokemonCardSkeletonName,
-  PokemonCardSkeletonNumber,
-} from "@/components/ui"
-import { POKEMONS_QUERY } from "@/utils/constants"
+import { PokemonCardName, PokemonCardNumber } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
 
-import { Layout } from "../../components/layouts/Layout"
+import { PokemonListSkeleton } from "./components/PokemonListSkeleton"
 import { PokemonPreviewDialog } from "./components/PokemonPreviewDialog"
 import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
+// TODO: Обработать ситуацию когда state.pokemon undefined
 export const PokemonsPage = () => {
   const { state, functions } = usePokemonsPage()
 
-  // TODO: Вынести логику скрытия скролла в модалку PokemonPreviewDialog
-  useEffect(() => {
-    if (state.selectedPokemonId) {
-      document.documentElement.style.overflowY = "hidden"
-    } else {
-      document.documentElement.style.overflowY = "auto"
-    }
-  }, [state.selectedPokemonId])
-
   return (
-    <Layout>
-      <div className="grid grid-cols-4 gap-5 pb-14">
-        {/* TODO: Вынести повторение отрисовки скелета в отдельный компонент??? */}
-        {state.isInfiniteQueryLoading
-          ? Array.from({ length: POKEMONS_QUERY.LIMIT }).map((_, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <PokemonCard key={index} className="flex justify-between gap-4">
-                <PokemonCardSkeletonName />
-                <PokemonCardSkeletonNumber />
-              </PokemonCard>
-            ))
-          : state.pokemons!.map((pokemon, index) => {
-              const id = index + 1
+    <div className="grid grid-cols-4 gap-5 pb-14">
+      {state.isInfiniteQueryLoading ? (
+        <PokemonListSkeleton />
+      ) : (
+        state.pokemons.map((pokemon, index) => {
+          const id = index + 1
 
-              return (
-                <button
-                  key={id}
-                  aria-label="Open pokemon preview"
-                  className="relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 hover:animate-pulse"
-                  title="Open pokemon preview"
-                  type="button"
-                  onClick={() => {
-                    functions.selectPokemon(id)
-                  }}
-                >
-                  <PokemonCardName className="z-1">
-                    {pokemon.name}
-                  </PokemonCardName>
-                  <PokemonCardNumber className="z-1">
-                    {formatPokemonId(id)}
-                  </PokemonCardNumber>
-                </button>
-              )
-            })}
-        {state.selectedPokemonId && (
-          <PokemonPreviewDialog
-            onClose={() => functions.selectPokemon(null)}
-            pokemonId={state.selectedPokemonId}
-          />
-        )}
-        {state.isFetchingNextPokemonPage ? (
-          Array.from({ length: POKEMONS_QUERY.LIMIT }).map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <PokemonCard key={index} className="flex justify-between gap-4">
-              <PokemonCardSkeletonName />
-              <PokemonCardSkeletonNumber />
-            </PokemonCard>
-          ))
-        ) : (
-          <div ref={state.loadMoreRef} />
-        )}
-      </div>
-    </Layout>
+          return (
+            <button
+              key={id}
+              aria-label="Open pokemon preview"
+              className="relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 hover:animate-pulse"
+              title="Open pokemon preview"
+              type="button"
+              onClick={() => {
+                functions.selectPokemon(id)
+              }}
+            >
+              <PokemonCardName className="z-1">{pokemon.name}</PokemonCardName>
+              <PokemonCardNumber className="z-1">
+                {formatPokemonId(id)}
+              </PokemonCardNumber>
+            </button>
+          )
+        })
+      )}
+      {state.selectedPokemonId && (
+        <PokemonPreviewDialog
+          onClose={() => functions.selectPokemon(null)}
+          pokemonId={state.selectedPokemonId}
+        />
+      )}
+      <Activity mode={state.isFetchingNextPokemonPage ? "visible" : "hidden"}>
+        <PokemonListSkeleton />
+        <div className="col-span-full mx-auto">
+          <Loader2 className="size-12 animate-spin text-cyan-500" />
+        </div>
+      </Activity>
+      <Activity mode={state.isFetchingNextPokemonPage ? "hidden" : "visible"}>
+        <div ref={state.loadMoreRef} />
+      </Activity>
+    </div>
   )
 }

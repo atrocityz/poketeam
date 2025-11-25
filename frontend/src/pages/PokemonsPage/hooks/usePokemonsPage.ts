@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
-import type { NamedApiResource, Pokemon } from "@/../@types/pokeapi"
+import type { Pokemon } from "@/../@types/pokeapi"
 
 import { useGetPokemonInfiniteQuery } from "@/utils/api/hooks"
 import { POKEMONS_QUERY } from "@/utils/constants/pokemon"
-import { useInView } from "@/utils/hooks"
+import { useInView, useLockScroll } from "@/utils/hooks"
 
 export const usePokemonsPage = () => {
   const pokemonInfiniteQuery = useGetPokemonInfiniteQuery({
@@ -16,9 +16,11 @@ export const usePokemonsPage = () => {
     Pokemon["id"] | null
   >(null)
 
-  const pokemons = pokemonInfiniteQuery.data?.pages.reduce(
-    (array: NamedApiResource[], page) => [...array, ...page.data.results],
-    [],
+  const pokemons = useMemo(
+    () =>
+      pokemonInfiniteQuery.data?.pages.flatMap(({ data }) => data.results) ??
+      [],
+    [pokemonInfiniteQuery.data?.pages],
   )
 
   const selectPokemon = (id: Pokemon["id"] | null) => setSelectedPokemonId(id)
@@ -28,6 +30,8 @@ export const usePokemonsPage = () => {
       pokemonInfiniteQuery.fetchNextPage()
     }
   }, [isInView])
+
+  useLockScroll(!!selectedPokemonId)
 
   return {
     state: {

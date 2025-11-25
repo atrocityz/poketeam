@@ -3,7 +3,6 @@ export interface User {
   email: string
   id: string
   login?: string
-  password: string
   updatedAt: Date
 }
 

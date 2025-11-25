@@ -9,6 +9,7 @@ import type { ErrorResponse } from "@/../@types/auth"
 import { useStage } from "@/pages/AuthPage/contexts/stage"
 import { usePostLoginMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
+import { queryClient } from "@/utils/lib"
 
 interface LoginForm {
   email: string
@@ -29,6 +30,10 @@ export const useLoginForm = () => {
           domain: "localhost",
           sameSite: "strict",
           expires: new Date(Date.now() + 15 * 60 * 1000),
+        })
+
+        queryClient.refetchQueries({
+          queryKey: ["getUser"],
         })
 
         navigate("/", {

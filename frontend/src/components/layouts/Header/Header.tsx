@@ -2,13 +2,13 @@ import { Activity } from "react"
 import { Link, useLocation, useNavigate } from "react-router"
 
 import { Profile } from "@/components/Profile"
-import { useProfile } from "@/components/Profile/useProfile"
 import { Button, Skeleton } from "@/components/ui"
 import { routes } from "@/utils/config"
+import { useAuth } from "@/utils/contexts"
 import { cn } from "@/utils/lib"
 
 export const Header = () => {
-  const { isLoading, profile, onLogout } = useProfile()
+  const { isLoading, user, onLogout } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -18,14 +18,13 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-4 border-b border-gray-400 bg-white px-8 py-4 shadow-2xs">
-      <Link className="flex items-center gap-3" to="/">
-        <img
-          alt=""
-          aria-label="Home"
-          className="h-9 w-9"
-          src="/logo.png"
-          title="Home"
-        />
+      <Link
+        aria-label="Home"
+        className="flex items-center gap-3"
+        title="Home"
+        to="/"
+      >
+        <img alt="" className="h-9 w-9" src="/logo.png" />
         <span className="text-xl">PokeTeam</span>
       </Link>
       <nav>
@@ -43,7 +42,7 @@ export const Header = () => {
             </Link>
           </li>
           <li>
-            <Activity mode={profile ? "hidden" : "visible"}>
+            <Activity mode={user ? "hidden" : "visible"}>
               <Link
                 className={cn("text-xl hover:underline", {
                   "pointer-events-none underline": isActiveLink(
@@ -55,7 +54,7 @@ export const Header = () => {
                 Auth
               </Link>
             </Activity>
-            <Activity mode={profile ? "visible" : "hidden"}>
+            <Activity mode={user ? "visible" : "hidden"}>
               <Link
                 className={cn("text-xl hover:underline", {
                   "pointer-events-none underline": isActiveLink(
@@ -71,9 +70,9 @@ export const Header = () => {
         </ul>
       </nav>
       {isLoading && <Skeleton className="h-12 w-[200px]" />}
-      {profile && (
+      {user && (
         <div className="flex items-center gap-2">
-          <Profile profile={profile} />
+          <Profile profile={user} />
           <Button
             onClick={() => {
               onLogout()

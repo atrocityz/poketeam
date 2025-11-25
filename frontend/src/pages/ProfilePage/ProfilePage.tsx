@@ -1,18 +1,14 @@
-import { useProfile } from "@/components/Profile/useProfile"
-
-import { Layout } from "../../components/layouts/Layout"
+import { useAuth } from "@/utils/contexts/auth"
 
 export const ProfilePage = () => {
-  const { isLoading, profile } = useProfile()
+  const { isLoading, user } = useAuth()
 
-  if (!profile && !isLoading) return null
+  if (!user && !isLoading) return null
 
   return (
-    <Layout>
-      <div>
-        <div>{profile?.email}</div>
-        <div>{profile?.login}</div>
-      </div>
-    </Layout>
+    <div>
+      <div>{user?.email}</div>
+      <div>{user?.login}</div>
+    </div>
   )
 }

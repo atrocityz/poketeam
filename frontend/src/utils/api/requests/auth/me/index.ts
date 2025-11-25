@@ -9,4 +9,4 @@ interface GetUserRequestConfig {
 }
 
 export const getUser = ({ config }: GetUserRequestConfig) =>
-  apiWithAuth.get<Omit<User, "password">>("auth/me", config)
+  apiWithAuth.get<User>("auth/me", config)
