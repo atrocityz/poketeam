@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui"
+import { Button, ErrorMessage } from "@/components/ui"
 
 import { useLoginForm } from "./hooks/useLoginForm"
 
@@ -29,6 +29,9 @@ export const LoginForm = () => {
                 required: true,
               })}
             />
+            {form.formState.errors.email && (
+              <ErrorMessage>{form.formState.errors.email.message}</ErrorMessage>
+            )}
           </div>
 
           <div className="flex flex-col gap-1">
@@ -43,6 +46,11 @@ export const LoginForm = () => {
                 required: true,
               })}
             />
+            {form.formState.errors.password && (
+              <ErrorMessage>
+                {form.formState.errors.password.message}
+              </ErrorMessage>
+            )}
           </div>
         </div>
 

@@ -65,11 +65,7 @@ export const RegisterForm = () => {
           className="h-8 rounded-sm border border-zinc-300 p-4"
           id="password-confirm"
           type="password"
-          {...form.register("passwordConfirm", {
-            required: "Confirm password is required",
-            validate: (value) =>
-              value === state.password || "Passwords do not match",
-          })}
+          {...form.register("passwordConfirm")}
         />
         {form.formState.errors.passwordConfirm && (
           <ErrorMessage>

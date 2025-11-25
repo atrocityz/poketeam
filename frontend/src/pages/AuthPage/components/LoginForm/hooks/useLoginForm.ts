@@ -1,5 +1,6 @@
 import type { AxiosError } from "axios"
 
+import { zodResolver } from "@hookform/resolvers/zod"
 import Cookies from "js-cookie"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
@@ -11,15 +12,16 @@ import { usePostLoginMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
 import { queryClient } from "@/utils/lib"
 
-interface LoginForm {
-  email: string
-  password: string
-}
+import type { LoginFormData } from "../schemas/loginFormSchema"
+
+import { loginFormSchema } from "../schemas/loginFormSchema"
 
 export const useLoginForm = () => {
   const navigate = useNavigate()
   const { setStage } = useStage()
-  const loginForm = useForm<LoginForm>()
+  const loginForm = useForm<LoginFormData>({
+    resolver: zodResolver(loginFormSchema),
+  })
 
   const postLoginMutation = usePostLoginMutation({
     options: {
