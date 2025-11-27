@@ -8,12 +8,11 @@ import { PokemonListSkeleton } from "./components/PokemonListSkeleton"
 import { PokemonPreviewDialog } from "./components/PokemonPreviewDialog"
 import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
-// TODO: Обработать ситуацию когда state.pokemon undefined
 export const PokemonsPage = () => {
   const { state, functions } = usePokemonsPage()
 
   return (
-    <div className="grid grid-cols-4 gap-5 pb-14">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 pb-14">
       {state.isInfiniteQueryLoading ? (
         <PokemonListSkeleton />
       ) : (

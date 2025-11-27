@@ -1,57 +1,46 @@
-import { Link, useLocation } from "react-router"
+import Cookies from "js-cookie"
+import { Link } from "react-router"
 
-import { Profile } from "@/components/Profile"
-import { routes } from "@/utils/config"
-import { cn } from "@/utils/lib"
+import { Button } from "@/components/ui"
+import { usePostLogoutMutation } from "@/utils/api/hooks"
+import { COOKIE } from "@/utils/constants"
+import { useAuth } from "@/utils/contexts"
+import { queryClient } from "@/utils/lib"
 
-// TODO: Логику получения данных о пользователе и logout можно куда-нибудь вынести
+import { Navigation, Profile } from "./components"
+
 export const Header = () => {
-  const location = useLocation()
-
-  const isActiveLink = (pathname: string) => {
-    return location.pathname === pathname
-  }
+  const { setIsAuth } = useAuth()
+  const { mutate: logout, isPending } = usePostLogoutMutation({
+    options: {
+      onSuccess: () => {
+        Cookies.remove(COOKIE.ACCESS_TOKEN)
+        queryClient.removeQueries()
+        setIsAuth(false)
+      },
+    },
+  })
 
   return (
-    <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-4 border-b border-gray-400 bg-white px-8 py-4 shadow-2xs">
-      <Link
-        aria-label="Home"
-        className="flex items-center gap-3"
-        title="Home"
-        to="/"
-      >
-        <img alt="" className="h-9 w-9" src="/logo.png" />
-        <span className="text-xl">PokeTeam</span>
-      </Link>
-      <nav>
-        <ul className="flex items-center gap-3">
-          <li>
-            <Link
-              className={cn("text-xl hover:underline", {
-                "pointer-events-none underline": isActiveLink(
-                  routes.pokemons.getHref(),
-                ),
-              })}
-              to={routes.pokemons.path}
-            >
-              Pokemons
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={cn("text-xl hover:underline", {
-                "pointer-events-none underline": isActiveLink(
-                  routes.profile.getHref(),
-                ),
-              })}
-              to={routes.profile.path}
-            >
-              Profile
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <Profile />
+    <header className="sticky top-0 z-50 w-full border-b border-gray-400 bg-white shadow-2xs">
+      <div className="container grid grid-cols-[auto_1fr_auto] items-center gap-4 py-4">
+        <Link
+          aria-label="Home"
+          className="flex items-center gap-3"
+          title="Home"
+          to="/"
+        >
+          <img alt="" className="h-9 w-9 shrink-0" src="/logo.png" />
+          <span className="sr-only text-xl md:not-sr-only">PokeTeam</span>
+        </Link>
+        <Navigation className="justify-self-center" />
+        <div className="flex items-center gap-2">
+          <Profile className="sr-only md:not-sr-only" />
+          <Button disabled={isPending} onClick={() => logout({})}>
+            Logout
+          </Button>
+        </div>
+      </div>
     </header>
   )
 }

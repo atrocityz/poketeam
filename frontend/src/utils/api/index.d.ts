@@ -25,7 +25,7 @@ interface InfinityQuerySettings<Func = unknown> {
 }
 
 interface MutationSettings<Params = void, Func = unknown> {
-  config?: ApiRequestConfig
+  config?: import("axios").AxiosRequestConfig
   options?: import("@tanstack/react-query").UseMutationOptions<
     Awaited<ReturnType<Func>>,
     any,
