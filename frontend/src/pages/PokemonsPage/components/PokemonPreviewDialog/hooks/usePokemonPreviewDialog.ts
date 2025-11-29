@@ -16,6 +16,8 @@ export const usePokemonPreviewDialog = (pokemonId: Pokemon["id"]) => {
     state: {
       pokemon,
       isPokemonQueryLoading: pokemonQuery.isLoading,
+    },
+    refs: {
       dialogRef,
     },
   }

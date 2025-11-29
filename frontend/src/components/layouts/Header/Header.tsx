@@ -4,19 +4,18 @@ import { Link } from "react-router"
 import { Button } from "@/components/ui"
 import { usePostLogoutMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
-import { useAuth } from "@/utils/contexts"
-import { queryClient } from "@/utils/lib"
+import { useAuthStore } from "@/utils/stores/auth"
 
 import { Navigation, Profile } from "./components"
 
 export const Header = () => {
-  const { setIsAuth } = useAuth()
+  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn)
   const { mutate: logout, isPending } = usePostLogoutMutation({
     options: {
       onSuccess: () => {
         Cookies.remove(COOKIE.ACCESS_TOKEN)
-        queryClient.removeQueries()
-        setIsAuth(false)
+        // queryClient.removeQueries()
+        setIsLoggedIn(false)
       },
     },
   })

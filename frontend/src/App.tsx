@@ -4,7 +4,7 @@ import { Layout } from "@/components/layouts"
 import { AuthPage, PokemonPage, PokemonsPage, ProfilePage } from "@/pages"
 import { routes } from "@/utils/config"
 
-import { useAuth } from "./utils/contexts"
+import { useAuthStore } from "./utils/stores/auth"
 
 export const AuthApp = () => (
   <Routes>
@@ -14,12 +14,12 @@ export const AuthApp = () => (
 )
 
 export const App = () => {
-  const { isAuth } = useAuth()
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
 
   return (
     <BrowserRouter>
-      {!isAuth && <AuthApp />}
-      {isAuth && (
+      {!isLoggedIn && <AuthApp />}
+      {isLoggedIn && (
         <Routes>
           <Route element={<Layout />}>
             <Route

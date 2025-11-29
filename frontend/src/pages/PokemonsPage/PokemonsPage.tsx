@@ -28,7 +28,6 @@ export const PokemonsPage = () => {
               type="button"
               onClick={() => {
                 functions.selectPokemon(id)
-                document.body.style.overflow = "hidden"
               }}
             >
               <PokemonCardName className="z-1">{pokemon.name}</PokemonCardName>

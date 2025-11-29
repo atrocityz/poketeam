@@ -4,9 +4,5 @@ import type { User } from "@/../@types/auth"
 
 import { apiWithAuth } from "@/utils/api/instance"
 
-interface GetUserRequestConfig {
-  config?: AxiosRequestConfig
-}
-
-export const getUser = ({ config }: GetUserRequestConfig) =>
+export const getUser = (config?: AxiosRequestConfig) =>
   apiWithAuth.get<User>("auth/me", config)

@@ -9,8 +9,7 @@ import type { ErrorResponse } from "@/../@types/auth"
 import { useStage } from "@/pages/AuthPage/contexts/stage"
 import { usePostLoginMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
-import { useAuth } from "@/utils/contexts"
-import { queryClient } from "@/utils/lib"
+import { useAuthStore } from "@/utils/stores/auth"
 
 import type { LoginFormData } from "../schemas/loginFormSchema"
 
@@ -18,27 +17,19 @@ import { loginFormSchema } from "../schemas/loginFormSchema"
 
 export const useLoginForm = () => {
   const { setStage } = useStage()
-  const { setIsAuth } = useAuth()
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
   const postLoginMutation = usePostLoginMutation({
     options: {
-      onSuccess: ({ data }) => {
-        const { accessToken } = data
+      onSuccess: (response) => {
+        Cookies.set(COOKIE.ACCESS_TOKEN, response.data.accessToken)
 
-        Cookies.set(COOKIE.ACCESS_TOKEN, accessToken, {
-          domain: "localhost",
-          sameSite: "strict",
-          expires: new Date(Date.now() + 15 * 60 * 1000),
+        useAuthStore.setState({
+          isLoggedIn: true,
+          user: response.data.user,
         })
-
-        queryClient.refetchQueries({
-          queryKey: ["getUser"],
-        })
-
-        setIsAuth(true)
       },
       onError: (error: AxiosError<ErrorResponse>) => {
         console.log(error.response?.data.message)

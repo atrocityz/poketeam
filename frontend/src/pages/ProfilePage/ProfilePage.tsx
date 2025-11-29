@@ -1,13 +1,12 @@
-import { useGetUserQuery } from "@/utils/api/hooks"
+import { useAuthStore } from "@/utils/stores"
 
 export const ProfilePage = () => {
-  const getUserQuery = useGetUserQuery()
-  const profile = getUserQuery.data?.data
+  const user = useAuthStore((state) => state.user)
 
   return (
     <div>
-      <div>{profile?.email}</div>
-      <div>{profile?.login}</div>
+      <div>{user.email}</div>
+      <div>{user.login}</div>
     </div>
   )
 }

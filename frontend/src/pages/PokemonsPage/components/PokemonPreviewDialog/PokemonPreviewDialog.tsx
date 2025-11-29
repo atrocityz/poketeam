@@ -29,11 +29,11 @@ export const PokemonPreviewDialog = ({
   pokemonId,
   onClose,
 }: PokemonDialogProps) => {
-  const { state } = usePokemonPreviewDialog(pokemonId)
+  const { state, refs } = usePokemonPreviewDialog(pokemonId)
 
   return (
     <Dialog
-      ref={state.dialogRef}
+      ref={refs.dialogRef}
       className="flex flex-col rounded-xl border bg-white p-9"
       isOpen={!!pokemonId}
       closedby="any"

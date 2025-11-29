@@ -41,11 +41,7 @@ apiWithAuth.interceptors.response.use(
 
         const { accessToken } = response.data
 
-        Cookies.set(COOKIE.ACCESS_TOKEN, accessToken, {
-          domain: "localhost",
-          sameSite: "strict",
-          expires: new Date(Date.now() + 15 * 60 * 1000),
-        })
+        Cookies.set(COOKIE.ACCESS_TOKEN, accessToken)
 
         return apiWithAuth.request(originalRequest)
       } catch {
