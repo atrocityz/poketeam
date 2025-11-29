@@ -23,11 +23,12 @@ export const PokemonsPage = () => {
             <button
               key={id}
               aria-label="Open pokemon preview"
-              className="relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 hover:animate-pulse"
+              className="relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 transition-colors hover:bg-zinc-100"
               title="Open pokemon preview"
               type="button"
               onClick={() => {
                 functions.selectPokemon(id)
+                document.body.style.overflow = "hidden"
               }}
             >
               <PokemonCardName className="z-1">{pokemon.name}</PokemonCardName>
@@ -51,6 +52,7 @@ export const PokemonsPage = () => {
         </div>
       </Activity>
       <Activity mode={state.isFetchingNextPokemonPage ? "hidden" : "visible"}>
+        {/* TODO: Возможно стоит подгружать ref не в конце списка, а заранее */}
         <div ref={state.loadMoreRef} />
       </Activity>
     </div>

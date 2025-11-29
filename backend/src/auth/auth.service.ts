@@ -62,27 +62,28 @@ export class AuthService {
   }
 
   async login(response: Response, data: LoginRequest) {
-    const user = await this.prismaService.user.findUnique({
+    const currentUser = await this.prismaService.user.findUnique({
       where: {
         email: data.email,
       },
-      select: {
-        id: true,
-        password: true,
-      },
     });
 
-    if (!user) {
+    if (!currentUser) {
       throw new NotFoundException('Login or password is incorrect');
     }
 
-    const isValidPassword = await verify(user.password, data.password);
+    const { password, ...user } = currentUser;
+
+    const isValidPassword = await verify(password, data.password);
 
     if (!isValidPassword) {
       throw new NotFoundException('Login or password is incorrect');
     }
 
-    return this.auth(response, user.id);
+    return {
+      ...this.auth(response, user.id),
+      user,
+    };
   }
 
   async logout(response: Response) {

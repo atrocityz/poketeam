@@ -4,7 +4,7 @@ import type { Pokemon } from "@/../@types/pokeapi"
 
 import { useGetPokemonInfiniteQuery } from "@/utils/api/hooks"
 import { POKEMONS_QUERY } from "@/utils/constants/pokemon"
-import { useInView, useLockScroll } from "@/utils/hooks"
+import { useInView } from "@/utils/hooks"
 
 export const usePokemonsPage = () => {
   const pokemonInfiniteQuery = useGetPokemonInfiniteQuery({

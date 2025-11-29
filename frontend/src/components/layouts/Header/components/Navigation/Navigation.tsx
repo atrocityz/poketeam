@@ -15,8 +15,8 @@ export const Navigation = ({ className }: NavigationProps) => {
       <ul className="flex items-center gap-3">
         <li>
           <Link
-            className={cn("text-lg hover:underline", {
-              "pointer-events-none underline md:text-xl":
+            className={cn("text-lg hover:underline md:text-xl", {
+              "pointer-events-none underline":
                 location.pathname === routes.pokemons.getHref(),
             })}
             to={routes.pokemons.path}
