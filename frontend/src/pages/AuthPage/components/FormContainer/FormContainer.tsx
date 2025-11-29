@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 
-import type { Stage } from "../../contexts/stage"
+import type { Stage } from "../../stores"
 
-import { useStage } from "../../contexts/stage"
+import { useStageStore } from "../../stores"
 import { LoginForm } from "../LoginForm"
 import { RegisterForm } from "../RegisterForm"
 
@@ -12,7 +12,7 @@ const component: Record<Stage, ReactNode> = {
 }
 
 export const FormContainer = () => {
-  const { stage } = useStage()
+  const state = useStageStore((state) => state.stage)
 
-  return component[stage]
+  return component[state]
 }

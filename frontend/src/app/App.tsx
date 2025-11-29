@@ -4,7 +4,7 @@ import { Layout } from "@/components/layouts"
 import { AuthPage, PokemonPage, PokemonsPage, ProfilePage } from "@/pages"
 import { routes } from "@/utils/config"
 
-import { useAuthStore } from "./utils/stores/auth"
+import { useAuthStore } from "../utils/stores/auth"
 
 export const AuthApp = () => (
   <Routes>

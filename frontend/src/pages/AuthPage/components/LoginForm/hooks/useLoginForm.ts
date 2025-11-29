@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 
 import type { ErrorResponse } from "@/../@types/auth"
 
-import { useStage } from "@/pages/AuthPage/contexts/stage"
+import { useStageStore } from "@/pages/AuthPage/stores"
 import { usePostLoginMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
 import { useAuthStore } from "@/utils/stores/auth"
@@ -16,7 +16,7 @@ import type { LoginFormData } from "../schemas/loginFormSchema"
 import { loginFormSchema } from "../schemas/loginFormSchema"
 
 export const useLoginForm = () => {
-  const { setStage } = useStage()
+  const setStage = useStageStore((state) => state.setStage)
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })

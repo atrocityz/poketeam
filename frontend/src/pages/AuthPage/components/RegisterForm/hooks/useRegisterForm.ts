@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 
 import type { ErrorResponse } from "@/../@types/auth"
 
-import { useStage } from "@/pages/AuthPage/contexts/stage"
+import { useStageStore } from "@/pages/AuthPage/stores"
 import { usePostRegisterMutation } from "@/utils/api/hooks/usePostRegisterMutation"
 
 import type { RegisterFormData } from "../schemas/registerFormSchema"
@@ -13,7 +13,7 @@ import type { RegisterFormData } from "../schemas/registerFormSchema"
 import { registerFormSchema } from "../schemas/registerFormSchema"
 
 export const useRegisterForm = () => {
-  const { setStage } = useStage()
+  const setStage = useStageStore((state) => state.setStage)
   const registerForm = useForm<RegisterFormData>({
     mode: "all",
     resolver: zodResolver(registerFormSchema),
