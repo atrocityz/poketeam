@@ -41,7 +41,7 @@ export const useLoginForm = () => {
         toast.success("Successful login to your account")
       },
       onError: (error: AxiosError<ErrorResponse>) => {
-        toast.error(error.response?.data.message)
+        toast.error(error.response?.data.message ?? error.message)
       },
     },
   })
