@@ -3,6 +3,7 @@ import type { AxiosError } from "axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Cookies from "js-cookie"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import type { ErrorResponse } from "@/../@types/auth"
 
@@ -19,6 +20,12 @@ export const useLoginForm = () => {
   const setStage = useStageStore((state) => state.setStage)
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
+    shouldFocusError: true,
+    mode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   })
 
   const postLoginMutation = usePostLoginMutation({
@@ -30,9 +37,11 @@ export const useLoginForm = () => {
           isLoggedIn: true,
           user: response.data.user,
         })
+
+        toast.success("Successful login to your account")
       },
       onError: (error: AxiosError<ErrorResponse>) => {
-        console.log(error.response?.data.message)
+        toast.error(error.response?.data.message)
       },
     },
   })

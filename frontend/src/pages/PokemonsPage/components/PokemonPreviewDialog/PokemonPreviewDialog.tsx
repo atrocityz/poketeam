@@ -4,6 +4,7 @@ import { Link } from "react-router"
 import type { Pokemon } from "@/../@types/pokeapi"
 
 import {
+  Button,
   Dialog,
   PokemonCardContent,
   PokemonCardImage,
@@ -66,28 +67,29 @@ export const PokemonPreviewDialog = ({
           </>
         )}
 
-        <Link
+        <Button
+          asChild
           className={cn(
-            "mt-auto w-full rounded-xl border border-cyan-800 bg-cyan-500 p-3 text-center text-lg font-medium text-white transition-colors duration-250 hover:border-cyan-700 hover:bg-cyan-400",
+            "rounded-xl border p-3 text-lg transition-colors duration-250",
             {
-              "pointer-events-none opacity-10": state.isPokemonQueryLoading,
+              "pointer-events-none opacity-25": state.isPokemonQueryLoading,
             },
           )}
-          to={routes.pokemon.getHref(pokemonId)}
         >
-          More info
-        </Link>
+          <Link to={routes.pokemon.getHref(pokemonId)}>More info</Link>
+        </Button>
       </div>
 
-      <button
+      <Button
         aria-label="Close"
         className="group absolute top-1 right-1 inline-flex h-[42px] w-[42px] cursor-pointer items-center justify-center p-1 transition-colors"
         title="Close"
         type="button"
+        variant="ghost"
         onClick={onClose}
       >
-        <X className="text-zinc-600 group-hover:text-red-600" />
-      </button>
+        <X className="text-destructive" />
+      </Button>
     </Dialog>
   )
 }

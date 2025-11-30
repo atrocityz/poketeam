@@ -14,7 +14,7 @@ const init = async () => {
   const accessToken = Cookies.get(COOKIE.ACCESS_TOKEN)
 
   if (accessToken) {
-    const getUserResponse = await getUser({})
+    const getUserResponse = await getUser()
     useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
   }
 

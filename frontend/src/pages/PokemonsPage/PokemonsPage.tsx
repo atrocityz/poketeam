@@ -1,6 +1,6 @@
-import { Loader2 } from "lucide-react"
 import { Activity } from "react"
 
+import { SpinnerIcon } from "@/components/icons"
 import { PokemonCardName, PokemonCardNumber } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
 
@@ -47,7 +47,7 @@ export const PokemonsPage = () => {
       <Activity mode={state.isFetchingNextPokemonPage ? "visible" : "hidden"}>
         <PokemonListSkeleton />
         <div className="col-span-full mx-auto">
-          <Loader2 className="size-12 animate-spin text-cyan-500" />
+          <SpinnerIcon className="size-12 animate-spin" />
         </div>
       </Activity>
       <Activity mode={state.isFetchingNextPokemonPage ? "hidden" : "visible"}>

@@ -1,3 +1,4 @@
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Link } from "react-router"
 
 import {
@@ -59,7 +60,7 @@ export const PokemonPage = () => {
             })}
             to={`/pokemon/${state.prevPokemonId}`}
           >
-            Prev
+            <ArrowLeft className="size-6" />
           </Link>
         </Button>
         <Button asChild>
@@ -69,7 +70,7 @@ export const PokemonPage = () => {
             })}
             to={`/pokemon/${state.nextPokemonId}`}
           >
-            Next
+            <ArrowRight className="size-6" />
           </Link>
         </Button>
       </div>

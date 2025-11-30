@@ -1,64 +1,75 @@
-import { Button, ErrorMessage } from "@/components/ui"
+import { Controller } from "react-hook-form"
 
+import {
+  Button,
+  Field,
+  FieldError,
+  FieldLabel,
+  Input,
+  LoaderSwap,
+} from "@/components/ui"
+
+import { AuthFormLayout } from "../AuthFormLayout"
 import { useLoginForm } from "./hooks/useLoginForm"
 
 export const LoginForm = () => {
   const { functions, state, form } = useLoginForm()
 
   return (
-    <form
-      className="rounded-lg border border-zinc-300 p-8"
+    <AuthFormLayout
+      link={
+        <div className="flex items-center justify-center">
+          Don&apos;t have an account?
+          <Button type="button" variant="link" onClick={functions.goToRegister}>
+            Sign up
+          </Button>
+        </div>
+      }
+      title="Login"
+      description="Enter your email and password to login to your account"
+      isLoading={state.isLoading}
       onSubmit={functions.onSubmit}
     >
-      <fieldset className="grid gap-4" disabled={state.isLoading}>
-        <h1 className="text-center text-2xl">Login</h1>
-
-        <div className="grid gap-3 text-xl">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email">Email</label>
-            <input
-              required
-              className="h-8 rounded-sm border border-zinc-300 p-2"
-              id="email"
-              type="email"
-              autoComplete="email"
-              {...form.register("email", {
-                required: true,
-              })}
+      <Controller
+        render={({ field, fieldState }) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id={field.name}
+              placeholder="login@example.com"
             />
-            {form.formState.errors.email && (
-              <ErrorMessage>{form.formState.errors.email.message}</ErrorMessage>
-            )}
-          </div>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+        name="email"
+        control={form.control}
+      />
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password">Password</label>
-            <input
-              required
-              className="h-8 rounded-sm border border-zinc-300 p-2"
-              id="password"
-              minLength={6}
+      <Controller
+        render={({ field, fieldState }) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id={field.name}
               type="password"
-              {...form.register("password", {
-                required: true,
-              })}
+              placeholder="********"
             />
-            {form.formState.errors.password && (
-              <ErrorMessage>
-                {form.formState.errors.password.message}
-              </ErrorMessage>
-            )}
-          </div>
-        </div>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+        name="password"
+        control={form.control}
+      />
 
-        <Button type="button" variant="link" onClick={functions.goToRegister}>
-          Need to create account?
-        </Button>
+      <Button disabled={state.isLoading} type="submit">
+        <LoaderSwap isLoading={state.isLoading}>Sign In</LoaderSwap>
+      </Button>
 
-        <Button disabled={state.isLoading} type="submit">
-          Sign in
-        </Button>
-      </fieldset>
-    </form>
+      {/* <AuthButtonsContainer /> */}
+    </AuthFormLayout>
   )
 }

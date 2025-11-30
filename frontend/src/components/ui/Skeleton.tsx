@@ -7,12 +7,13 @@ interface SkeletonProps extends ComponentProps<"div"> {
   className?: string
 }
 
-export const Skeleton = ({ children, className }: SkeletonProps) => (
+export const Skeleton = ({ children, className, ...props }: SkeletonProps) => (
   <div
     className={cn(
       "animate-pulse rounded-md bg-gray-300/60 dark:bg-gray-300/20",
       className,
     )}
+    {...props}
   >
     {children}
   </div>

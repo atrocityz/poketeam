@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router"
+import { Toaster } from "sonner"
 
 import { Layout } from "@/components/layouts"
 import { AuthPage, PokemonPage, PokemonsPage, ProfilePage } from "@/pages"
@@ -36,6 +37,7 @@ export const App = () => {
           </Route>
         </Routes>
       )}
+      <Toaster />
     </BrowserRouter>
   )
 }

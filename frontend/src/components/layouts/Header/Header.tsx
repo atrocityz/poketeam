@@ -14,7 +14,6 @@ export const Header = () => {
     options: {
       onSuccess: () => {
         Cookies.remove(COOKIE.ACCESS_TOKEN)
-        // queryClient.removeQueries()
         setIsLoggedIn(false)
       },
     },

@@ -2,6 +2,7 @@ import type { AxiosError } from "axios"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import type { ErrorResponse } from "@/../@types/auth"
 
@@ -17,15 +18,24 @@ export const useRegisterForm = () => {
   const registerForm = useForm<RegisterFormData>({
     mode: "all",
     resolver: zodResolver(registerFormSchema),
+    shouldFocusError: true,
+    defaultValues: {
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
   })
 
   const goToLogin = () => setStage("login")
 
   const postRegisterMutation = usePostRegisterMutation({
     options: {
-      onSuccess: goToLogin,
+      onSuccess: () => {
+        goToLogin()
+        toast.success("Account has been successfully registered")
+      },
       onError: (error: AxiosError<ErrorResponse>) => {
-        console.log(error.response?.data.message)
+        toast.error(error.response?.data.message)
       },
     },
   })

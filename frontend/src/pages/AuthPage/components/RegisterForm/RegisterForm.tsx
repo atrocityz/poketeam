@@ -1,84 +1,110 @@
-import { Loader } from "lucide-react"
+import { Controller } from "react-hook-form"
 
-import { Button, ErrorMessage } from "@/components/ui"
+import {
+  Button,
+  Field,
+  FieldError,
+  FieldLabel,
+  Input,
+  LoaderSwap,
+} from "@/components/ui"
 
+import { AuthFormLayout } from "../AuthFormLayout"
 import { useRegisterForm } from "./hooks/useRegisterForm"
 
 export const RegisterForm = () => {
   const { form, functions, state } = useRegisterForm()
 
   return (
-    <form
-      className="grid gap-2 rounded-lg border border-zinc-300 p-10"
+    <AuthFormLayout
+      link={
+        <div className="flex items-center justify-center">
+          Already has account?
+          <Button type="button" variant="link" onClick={functions.goToLogin}>
+            Sign in
+          </Button>
+        </div>
+      }
+      title="Create an account"
+      description="Create a new account by filling out the form below"
+      isLoading={state.isLoading}
       onSubmit={functions.onSubmit}
     >
-      <h1>Register</h1>
-
-      <div className="flex flex-col gap-1">
-        <label htmlFor="login">Login</label>
-        <input
-          className="h-8 rounded-sm border border-zinc-300 p-4"
-          id="login"
-          type="text"
-          {...form.register("login")}
-        />
-        {form.formState.errors.login && (
-          <ErrorMessage>{form.formState.errors.login.message}</ErrorMessage>
+      <Controller
+        render={({ field, fieldState }) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Login</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id={field.name}
+              placeholder="login"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
         )}
-      </div>
+        name="login"
+        control={form.control}
+      />
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email">Email</label>
-        <input
-          required
-          className="h-8 rounded-sm border border-zinc-300 p-4"
-          id="email"
-          type="email"
-          {...form.register("email")}
-        />
-        {form.formState.errors.email && (
-          <ErrorMessage>{form.formState.errors.email.message}</ErrorMessage>
+      <Controller
+        render={({ field, fieldState }) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id={field.name}
+              placeholder="login@example.com"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
         )}
-      </div>
+        name="email"
+        control={form.control}
+      />
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password">Password</label>
-        <input
-          required
-          className="h-8 rounded-sm border border-zinc-300 p-4"
-          id="password"
-          type="password"
-          {...form.register("password")}
-        />
-        {form.formState.errors.password && (
-          <ErrorMessage>{form.formState.errors.password.message}</ErrorMessage>
+      <Controller
+        render={({ field, fieldState }) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id={field.name}
+              type="password"
+              placeholder="********"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
         )}
-      </div>
+        name="password"
+        control={form.control}
+      />
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password-confirm">Password confirmation</label>
-        <input
-          required
-          className="h-8 rounded-sm border border-zinc-300 p-4"
-          id="password-confirm"
-          type="password"
-          {...form.register("passwordConfirm")}
-        />
-        {form.formState.errors.passwordConfirm && (
-          <ErrorMessage>
-            {form.formState.errors.passwordConfirm.message}
-          </ErrorMessage>
+      <Controller
+        render={({ field, fieldState }) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Password confirmation</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id={field.name}
+              type="password"
+              placeholder="********"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
         )}
-      </div>
-
-      <Button type="button" variant="link" onClick={functions.goToLogin}>
-        Already has account?
-      </Button>
+        name="passwordConfirm"
+        control={form.control}
+      />
 
       <Button disabled={state.isLoading} type="submit">
-        {state.isLoading && <Loader className="animate-spin" />}
-        Sign up
+        <LoaderSwap isLoading={state.isLoading}>Sign Up</LoaderSwap>
       </Button>
-    </form>
+
+      {/* <AuthButtonsContainer /> */}
+    </AuthFormLayout>
   )
 }
