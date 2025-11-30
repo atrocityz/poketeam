@@ -6,6 +6,7 @@ import {
   PokemonCard,
   PokemonCardContent,
   PokemonCardImage,
+  PokemonCardImageNotFound,
   PokemonCardName,
   PokemonCardNumber,
   PokemonCardSkeletonImage,
@@ -35,7 +36,10 @@ export const PokemonPage = () => {
         ) : (
           <>
             <div className="relative flex shrink-0 justify-center">
-              <PokemonCardImage src={state.pokemon.img} />
+              {state.pokemon.img && (
+                <PokemonCardImage src={state.pokemon.img} />
+              )}
+              {!state.pokemon.img && <PokemonCardImageNotFound />}
               <PokemonCardTypes
                 className="absolute top-0 left-0"
                 types={state.pokemon.types}
@@ -65,9 +69,12 @@ export const PokemonPage = () => {
         </Button>
         <Button asChild>
           <Link
-            className={cn({
-              "pointer-events-none opacity-15": !state.nextPokemonId,
-            })}
+            className={cn(
+              cn({
+                "pointer-events-none opacity-15":
+                  state.nextPokemonId === state.pokemon?.id,
+              }),
+            )}
             to={`/pokemon/${state.nextPokemonId}`}
           >
             <ArrowRight className="size-6" />

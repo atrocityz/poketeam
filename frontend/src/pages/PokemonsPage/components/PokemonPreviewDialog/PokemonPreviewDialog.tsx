@@ -8,6 +8,7 @@ import {
   Dialog,
   PokemonCardContent,
   PokemonCardImage,
+  PokemonCardImageNotFound,
   PokemonCardName,
   PokemonCardNumber,
   PokemonCardSkeletonImage,
@@ -53,7 +54,8 @@ export const PokemonPreviewDialog = ({
 
         {state.pokemon && (
           <>
-            <PokemonCardImage src={state.pokemon.img} />
+            {state.pokemon.img && <PokemonCardImage src={state.pokemon.img} />}
+            {!state.pokemon.img && <PokemonCardImageNotFound />}
             <PokemonCardTypes
               className="absolute top-0 left-0"
               types={state.pokemon.types}

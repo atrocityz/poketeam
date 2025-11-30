@@ -35,6 +35,21 @@ const PokemonCardImage = ({ className, ...props }: ComponentProps<"img">) => (
   />
 )
 
+const PokemonCardImageNotFound = ({
+  className,
+  ...props
+}: ComponentProps<"div">) => (
+  <div
+    className={cn(
+      "text-muted-foreground mx-auto flex h-60 w-60 items-center justify-center text-xl",
+      className,
+    )}
+    {...props}
+  >
+    Image not found
+  </div>
+)
+
 const PokemonCardSkeletonImage = () => <Skeleton className="h-60 w-60" />
 
 const PokemonCardName = ({
@@ -129,6 +144,7 @@ export {
   PokemonCard,
   PokemonCardContent,
   PokemonCardImage,
+  PokemonCardImageNotFound,
   PokemonCardName,
   PokemonCardNumber,
   PokemonCardSkeletonImage,
