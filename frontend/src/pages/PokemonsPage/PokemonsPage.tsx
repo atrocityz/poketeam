@@ -17,7 +17,7 @@ export const PokemonsPage = () => {
         <PokemonListSkeleton />
       ) : (
         state.pokemons.map((pokemon, index) => {
-          const id = index + 1
+          const id = index + 1 >= 1026 ? 9975 + ((index + 1) % 1000) : index + 1
 
           return (
             <button

@@ -16,6 +16,17 @@ const init = async () => {
   if (accessToken) {
     const getUserResponse = await getUser()
     useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
+  } else {
+    const urlParams = new URLSearchParams(window.location.search)
+    const token = urlParams.get("token")
+
+    if (token) {
+      Cookies.set(COOKIE.ACCESS_TOKEN, token)
+      const getUserResponse = await getUser()
+      useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
+    } else {
+      useAuthStore.setState({ isLoggedIn: false })
+    }
   }
 
   createRoot(document.getElementById("root")!).render(

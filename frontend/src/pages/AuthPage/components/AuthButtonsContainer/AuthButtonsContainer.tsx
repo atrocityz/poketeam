@@ -1,22 +1,24 @@
-import { GithubIcon, GoogleIcon } from "@/components/icons"
+import { Link } from "react-router"
+
+import { GoogleIcon } from "@/components/icons"
 import { Button, FieldSeparator } from "@/components/ui"
 
-export const AuthButtonsContainer = () => {
-  return (
-    <div className="grid gap-4">
-      <FieldSeparator>Or continue with</FieldSeparator>
+export const AuthButtonsContainer = () => (
+  <div className="grid gap-4">
+    <FieldSeparator>Or continue with</FieldSeparator>
 
-      <div className="grid gap-1.5">
-        <Button type="button" variant="outline">
+    <div className="grid gap-1.5">
+      {/* <Button type="button" variant="outline">
           <GithubIcon />
           GitHub
-        </Button>
+        </Button> */}
 
-        <Button type="button" variant="outline">
+      <Button asChild type="button" variant="outline">
+        <Link to={`${import.meta.env.VITE_API_URL}/auth/google/login`}>
           <GoogleIcon />
           Google
-        </Button>
-      </div>
+        </Link>
+      </Button>
     </div>
-  )
-}
+  </div>
+)

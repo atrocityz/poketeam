@@ -9,6 +9,7 @@ import {
   LoaderSwap,
 } from "@/components/ui"
 
+import { AuthButtonsContainer } from "../AuthButtonsContainer/AuthButtonsContainer"
 import { AuthFormLayout } from "../AuthFormLayout"
 import { useLoginForm } from "./hooks/useLoginForm"
 
@@ -69,7 +70,7 @@ export const LoginForm = () => {
         <LoaderSwap isLoading={state.isLoading}>Sign In</LoaderSwap>
       </Button>
 
-      {/* <AuthButtonsContainer /> */}
+      <AuthButtonsContainer />
     </AuthFormLayout>
   )
 }

@@ -13,7 +13,8 @@ export const usePokemonPage = () => {
     pokemonQuery.data && dbPokemonToPokemonEntity(pokemonQuery.data.data)
 
   const prevPokemonId = pokemon && Math.max(1, pokemon.id - 1)
-  const nextPokemonId = pokemon && pokemon.id + 1
+  // TODO: Проблема с зависимости от числа 10303, нужно как-то отталкиваясь от сервера понять, какой покемон последний
+  const nextPokemonId = pokemon && Math.min(pokemon.id + 1, 10303)
 
   return {
     state: {

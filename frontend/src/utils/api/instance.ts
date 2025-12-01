@@ -3,12 +3,11 @@ import type { CreateAxiosDefaults } from "axios"
 import axios from "axios"
 import Cookies from "js-cookie"
 
-import { routes } from "../config"
 import { COOKIE } from "../constants"
 import { postRefreshTokens } from "./requests/auth/refresh"
 
 const defaultOptions: CreateAxiosDefaults = {
-  baseURL: "http://localhost:3000/api/",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 }
 
@@ -46,12 +45,10 @@ apiWithAuth.interceptors.response.use(
         return apiWithAuth.request(originalRequest)
       } catch {
         Cookies.remove(COOKIE.ACCESS_TOKEN)
-        window.location.href = routes.auth.getHref()
       }
     }
 
     Cookies.remove(COOKIE.ACCESS_TOKEN)
-    window.location.href = routes.auth.getHref()
     throw error
   },
 )

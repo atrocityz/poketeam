@@ -7,6 +7,7 @@ import {
   Post,
   Req,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { User } from 'prisma/generated/client';
@@ -15,6 +16,7 @@ import { Authorization } from './decorators/authorization.decorator';
 import { Authorized } from './decorators/authorized.decorator';
 import { LoginRequest } from './dto/login.dto';
 import { RegisterRequest } from './dto/register.dto';
+import { GoogleOAuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -55,5 +57,30 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   me(@Authorized() user: User) {
     return user;
+  }
+
+  @UseGuards(GoogleOAuthGuard)
+  @Get('google/login')
+  googleLogin() {}
+
+  @UseGuards(GoogleOAuthGuard)
+  @Get('google/callback')
+  async googleCallback(@Req() request: Request, @Res() response: Response) {
+    const user = request.user as {
+      login?: string;
+      id: string;
+      email: string;
+      createdAt: Date;
+      updatedAt: Date;
+    };
+
+    const authResult = await this.authService.loginWithGoogle(
+      response,
+      user.email,
+    );
+
+    response.redirect(
+      `${process.env.FRONTEND_ORIGIN}?token=${authResult.accessToken}`,
+    );
   }
 }

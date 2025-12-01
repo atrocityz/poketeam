@@ -9,6 +9,7 @@ import {
   LoaderSwap,
 } from "@/components/ui"
 
+import { AuthButtonsContainer } from "../AuthButtonsContainer/AuthButtonsContainer"
 import { AuthFormLayout } from "../AuthFormLayout"
 import { useRegisterForm } from "./hooks/useRegisterForm"
 
@@ -104,7 +105,7 @@ export const RegisterForm = () => {
         <LoaderSwap isLoading={state.isLoading}>Sign Up</LoaderSwap>
       </Button>
 
-      {/* <AuthButtonsContainer /> */}
+      <AuthButtonsContainer />
     </AuthFormLayout>
   )
 }

@@ -86,6 +86,26 @@ export class AuthService {
     };
   }
 
+  async loginWithGoogle(response: Response, email: string) {
+    const currentUser = await this.prismaService.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!currentUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...user } = currentUser;
+
+    return {
+      ...this.auth(response, user.id),
+      user,
+    };
+  }
+
   async logout(response: Response) {
     this.setCookie({
       response,
@@ -111,6 +131,35 @@ export class AuthService {
     const { password, ...rest } = user;
 
     return rest;
+  }
+
+  async validateGoogleUser(data: RegisterRequest) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (user) {
+      await this.prismaService.user.update({
+        where: { id: user.id },
+        data: {
+          login: data.login,
+          email: data.email,
+          password: await hash(data.password),
+        },
+      });
+
+      return user;
+    }
+
+    return await this.prismaService.user.create({
+      data: {
+        email: data.email,
+        password: await hash(data.password),
+        login: data.login,
+      },
+    });
   }
 
   async refresh(request: Request, response: Response) {
