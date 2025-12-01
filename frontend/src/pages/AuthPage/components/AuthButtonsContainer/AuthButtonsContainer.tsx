@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 
-import { GoogleIcon } from "@/components/icons"
+import { GithubIcon, GoogleIcon } from "@/components/icons"
 import { Button, FieldSeparator } from "@/components/ui"
 
 export const AuthButtonsContainer = () => (
@@ -8,10 +8,12 @@ export const AuthButtonsContainer = () => (
     <FieldSeparator>Or continue with</FieldSeparator>
 
     <div className="grid gap-1.5">
-      {/* <Button type="button" variant="outline">
+      <Button asChild type="button" variant="outline">
+        <Link to={`${import.meta.env.VITE_API_URL}/auth/github/login`}>
           <GithubIcon />
           GitHub
-        </Button> */}
+        </Link>
+      </Button>
 
       <Button asChild type="button" variant="outline">
         <Link to={`${import.meta.env.VITE_API_URL}/auth/google/login`}>

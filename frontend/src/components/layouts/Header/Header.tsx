@@ -1,8 +1,9 @@
 import Cookies from "js-cookie"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 
 import { Button } from "@/components/ui"
 import { usePostLogoutMutation } from "@/utils/api/hooks"
+import { routes } from "@/utils/config"
 import { COOKIE } from "@/utils/constants"
 import { useAuthStore } from "@/utils/stores/auth"
 
@@ -10,11 +11,15 @@ import { Navigation, Profile } from "./components"
 
 export const Header = () => {
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn)
+  const navigate = useNavigate()
   const { mutate: logout, isPending } = usePostLogoutMutation({
     options: {
       onSuccess: () => {
         Cookies.remove(COOKIE.ACCESS_TOKEN)
         setIsLoggedIn(false)
+        navigate(routes.auth.getHref(), {
+          replace: true,
+        })
       },
     },
   })

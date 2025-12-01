@@ -86,7 +86,7 @@ export class AuthService {
     };
   }
 
-  async loginWithGoogle(response: Response, email: string) {
+  async loginWithOAuth(response: Response, email: string) {
     const currentUser = await this.prismaService.user.findUnique({
       where: {
         email,
@@ -133,7 +133,7 @@ export class AuthService {
     return rest;
   }
 
-  async validateGoogleUser(data: RegisterRequest) {
+  async validateOAuthUser(data: RegisterRequest) {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: data.email,

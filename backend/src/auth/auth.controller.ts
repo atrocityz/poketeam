@@ -16,7 +16,7 @@ import { Authorization } from './decorators/authorization.decorator';
 import { Authorized } from './decorators/authorized.decorator';
 import { LoginRequest } from './dto/login.dto';
 import { RegisterRequest } from './dto/register.dto';
-import { GoogleOAuthGuard } from './guards/auth.guard';
+import { GitHubOAuthGuard, GoogleOAuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -65,18 +65,27 @@ export class AuthController {
 
   @UseGuards(GoogleOAuthGuard)
   @Get('google/callback')
-  async googleCallback(@Req() request: Request, @Res() response: Response) {
-    const user = request.user as {
-      login?: string;
-      id: string;
-      email: string;
-      createdAt: Date;
-      updatedAt: Date;
-    };
-
-    const authResult = await this.authService.loginWithGoogle(
+  async googleCallback(@Req() request, @Res() response: Response) {
+    const authResult = await this.authService.loginWithOAuth(
       response,
-      user.email,
+      request.user.email,
+    );
+
+    response.redirect(
+      `${process.env.FRONTEND_ORIGIN}?token=${authResult.accessToken}`,
+    );
+  }
+
+  @Get('github/login')
+  @UseGuards(GitHubOAuthGuard)
+  githubAuth() {}
+
+  @Get('github/callback')
+  @UseGuards(GitHubOAuthGuard)
+  async githubCallback(@Req() request, @Res() response: Response) {
+    const authResult = await this.authService.loginWithOAuth(
+      response,
+      request.user.email,
     );
 
     response.redirect(
