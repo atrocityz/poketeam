@@ -10,7 +10,7 @@ import { useAuthStore } from "../utils/stores/auth"
 export const AuthApp = () => (
   <Routes>
     <Route element={<AuthPage />} path={routes.auth.path} />
-    <Route element={<Navigate to={routes.auth.path} />} path="/" />
+    <Route element={<Navigate to={routes.auth.path} />} path="*" />
   </Routes>
 )
 

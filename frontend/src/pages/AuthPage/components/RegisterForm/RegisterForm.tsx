@@ -105,7 +105,7 @@ export const RegisterForm = () => {
         <LoaderSwap isLoading={state.isLoading}>Sign Up</LoaderSwap>
       </Button>
 
-      <AuthButtonsContainer />
+      <AuthButtonsContainer isLoading={state.isLoading} />
     </AuthFormLayout>
   )
 }

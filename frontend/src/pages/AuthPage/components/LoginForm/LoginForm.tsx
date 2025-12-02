@@ -70,7 +70,7 @@ export const LoginForm = () => {
         <LoaderSwap isLoading={state.isLoading}>Sign In</LoaderSwap>
       </Button>
 
-      <AuthButtonsContainer />
+      <AuthButtonsContainer isLoading={state.isLoading} />
     </AuthFormLayout>
   )
 }

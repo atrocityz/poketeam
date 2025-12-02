@@ -10,7 +10,7 @@ import { useAuthStore } from "./utils/stores"
 
 import "./main.css"
 
-const init = async () => {
+const checkAuth = async () => {
   const accessToken = Cookies.get(COOKIE.ACCESS_TOKEN)
 
   if (accessToken) {
@@ -28,6 +28,10 @@ const init = async () => {
       useAuthStore.setState({ isLoggedIn: false })
     }
   }
+}
+
+const init = () => {
+  checkAuth()
 
   createRoot(document.getElementById("root")!).render(
     <StrictMode>

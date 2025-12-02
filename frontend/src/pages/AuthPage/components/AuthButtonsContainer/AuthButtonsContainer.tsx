@@ -1,26 +1,44 @@
-import { Link } from "react-router"
-
 import { GithubIcon, GoogleIcon } from "@/components/icons"
 import { Button, FieldSeparator } from "@/components/ui"
 
-export const AuthButtonsContainer = () => (
-  <div className="grid gap-4">
-    <FieldSeparator>Or continue with</FieldSeparator>
+interface AuthButtonsContainerProps {
+  isLoading: boolean
+}
 
-    <div className="grid gap-1.5">
-      <Button asChild type="button" variant="outline">
-        <Link to={`${import.meta.env.VITE_API_URL}/auth/github/login`}>
+export const AuthButtonsContainer = ({
+  isLoading,
+}: AuthButtonsContainerProps) => {
+  const onOAuthButtonClick = (provider: "github" | "google") => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}/login`
+  }
+
+  return (
+    <div className="grid gap-4">
+      <FieldSeparator>Or continue with</FieldSeparator>
+
+      <div className="grid gap-1.5">
+        <Button
+          aria-label="Sign in with GitHub"
+          disabled={isLoading}
+          type="button"
+          variant="outline"
+          onClick={() => onOAuthButtonClick("github")}
+        >
           <GithubIcon />
           GitHub
-        </Link>
-      </Button>
+        </Button>
 
-      <Button asChild type="button" variant="outline">
-        <Link to={`${import.meta.env.VITE_API_URL}/auth/google/login`}>
+        <Button
+          aria-label="Sign in with Google"
+          disabled={isLoading}
+          type="button"
+          variant="outline"
+          onClick={() => onOAuthButtonClick("google")}
+        >
           <GoogleIcon />
           Google
-        </Link>
-      </Button>
+        </Button>
+      </div>
     </div>
-  </div>
-)
+  )
+}
