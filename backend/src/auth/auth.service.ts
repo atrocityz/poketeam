@@ -55,6 +55,7 @@ export class AuthService {
         email: data.email,
         login: data.login,
         password: await hash(data.password),
+        avatarUrl: data.avatarUrl,
       },
     });
 
@@ -147,6 +148,7 @@ export class AuthService {
           login: data.login,
           email: data.email,
           password: await hash(data.password),
+          avatarUrl: data.avatarUrl,
         },
       });
 
@@ -158,6 +160,7 @@ export class AuthService {
         email: data.email,
         password: await hash(data.password),
         login: data.login,
+        avatarUrl: data.avatarUrl,
       },
     });
   }

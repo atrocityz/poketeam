@@ -19,7 +19,15 @@ export class GithubOAuthStrategy extends PassportStrategy(Strategy, 'github') {
     });
   }
 
-  async validate(accessToken: string, refreshToken: string, profile: Profile) {
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile & {
+      _json: {
+        avatar_url: string;
+      };
+    },
+  ) {
     const user = await this.authService.validateOAuthUser({
       email: await this.getPrimaryEmail(accessToken),
       login: profile.displayName,
@@ -30,6 +38,7 @@ export class GithubOAuthStrategy extends PassportStrategy(Strategy, 'github') {
         uppercase: true,
         excludeSimilarCharacters: true,
       }),
+      avatarUrl: profile._json.avatar_url,
     });
 
     return user;

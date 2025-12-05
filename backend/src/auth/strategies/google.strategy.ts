@@ -30,6 +30,7 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy) {
         uppercase: true,
         excludeSimilarCharacters: true,
       }),
+      avatarUrl: profile._json.picture,
     });
 
     return user;

@@ -38,4 +38,8 @@ export class RegisterRequest {
     message: 'Password must not be longer than 128 characters.',
   })
   password: string;
+
+  @IsString({ message: 'AvatarUrl must be string' })
+  @IsNotEmpty({ message: 'AvatarUrl is required' })
+  avatarUrl: string;
 }
