@@ -50,7 +50,9 @@ const PokemonCardImageNotFound = ({
   </div>
 )
 
-const PokemonCardSkeletonImage = () => <Skeleton className="h-60 w-60" />
+const PokemonCardSkeletonImage = () => (
+  <Skeleton className="min-h-60 w-full min-w-60" />
+)
 
 const PokemonCardName = ({
   children,

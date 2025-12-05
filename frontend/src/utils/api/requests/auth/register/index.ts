@@ -5,6 +5,7 @@ import type { AuthResponse } from "@/../@types/auth"
 import { api } from "../../../instance"
 
 export interface PostRegisterUserParams {
+  avatarUrl: string
   email: string
   login?: string
   password: string

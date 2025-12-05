@@ -1,49 +1,22 @@
-import Cookies from "js-cookie"
-import { Link, useNavigate } from "react-router"
+import { Link } from "react-router"
 
-import { Button } from "@/components/ui"
-import { usePostLogoutMutation } from "@/utils/api/hooks"
-import { routes } from "@/utils/config"
-import { COOKIE } from "@/utils/constants"
-import { useAuthStore } from "@/utils/stores/auth"
+import { Navigation } from "./components/Navigation"
+import { ProfileMenu } from "./components/ProfileMenu"
 
-import { Navigation, Profile } from "./components"
-
-export const Header = () => {
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn)
-  const navigate = useNavigate()
-  const { mutate: logout, isPending } = usePostLogoutMutation({
-    options: {
-      onSuccess: () => {
-        Cookies.remove(COOKIE.ACCESS_TOKEN)
-        setIsLoggedIn(false)
-        navigate(routes.auth.getHref(), {
-          replace: true,
-        })
-      },
-    },
-  })
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-400 bg-white shadow-2xs">
-      <div className="container grid grid-cols-[auto_1fr_auto] items-center gap-4 py-4">
-        <Link
-          aria-label="Home"
-          className="flex items-center gap-3"
-          title="Home"
-          to="/"
-        >
-          <img alt="" className="h-9 w-9 shrink-0" src="/logo.png" />
-          <span className="sr-only text-xl md:not-sr-only">PokeTeam</span>
-        </Link>
-        <Navigation className="justify-self-center" />
-        <div className="flex items-center gap-2">
-          <Profile className="sr-only md:not-sr-only" />
-          <Button disabled={isPending} onClick={() => logout({})}>
-            Logout
-          </Button>
-        </div>
-      </div>
-    </header>
-  )
-}
+export const Header = () => (
+  <header className="border-muted-foreground/30 bg-background sticky top-0 z-50 w-full border-b shadow-2xs">
+    <div className="container grid grid-cols-[auto_1fr_auto] items-center gap-4 py-2">
+      <Link
+        aria-label="Home"
+        className="flex items-center gap-3"
+        title="Home"
+        to="/"
+      >
+        <img alt="" className="h-9 w-9 shrink-0" src="/logo.png" />
+        <span className="sr-only text-xl md:not-sr-only">PokeTeam</span>
+      </Link>
+      <Navigation className="justify-self-center" />
+      <ProfileMenu />
+    </div>
+  </header>
+)

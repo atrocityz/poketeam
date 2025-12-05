@@ -1,4 +1,5 @@
 export interface User {
+  avatarUrl: string
   createdAt: Date
   email: string
   id: string

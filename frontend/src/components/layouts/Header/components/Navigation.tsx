@@ -24,17 +24,6 @@ export const Navigation = ({ className }: NavigationProps) => {
             Pokemons
           </Link>
         </li>
-        <li>
-          <Link
-            className={cn("text-lg hover:underline md:text-xl", {
-              "pointer-events-none underline":
-                location.pathname === routes.profile.getHref(),
-            })}
-            to={routes.profile.path}
-          >
-            Profile
-          </Link>
-        </li>
       </ul>
     </nav>
   )

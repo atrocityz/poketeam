@@ -23,7 +23,7 @@ export const PokemonsPage = () => {
             <button
               key={id}
               aria-label="Open pokemon preview"
-              className="relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 transition-colors hover:bg-zinc-100"
+              className="hover:bg-accent relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-zinc-400 px-4 py-3 transition-colors"
               title="Open pokemon preview"
               type="button"
               onClick={() => {
@@ -40,6 +40,7 @@ export const PokemonsPage = () => {
       )}
       {state.selectedPokemonId && (
         <PokemonPreviewDialog
+          isOpen={!!state.selectedPokemonId}
           onClose={() => functions.selectPokemon(null)}
           pokemonId={state.selectedPokemonId}
         />
