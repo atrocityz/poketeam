@@ -3,10 +3,10 @@ import { Link } from "react-router"
 
 import {
   Button,
-  PokemonCard,
   PokemonCardContent,
   PokemonCardImage,
   PokemonCardImageNotFound,
+  PokemonCardMotion,
   PokemonCardName,
   PokemonCardNumber,
   PokemonCardSkeletonImage,
@@ -15,16 +15,42 @@ import {
   PokemonCardTypes,
 } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
+import { useMotionCardTiltAnimation } from "@/utils/hooks"
 import { cn } from "@/utils/lib"
 
 import { usePokemonPage } from "./hooks/usePokemonPage"
 
 export const PokemonPage = () => {
   const { state } = usePokemonPage()
+  const { handleMouseLeave, handleMouseMove, rotateX, rotateY } =
+    useMotionCardTiltAnimation()
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6">
-      <PokemonCard className="grid gap-5">
+    <div
+      style={{
+        perspective: "1000px",
+      }}
+      className="flex flex-col items-center justify-center gap-6"
+    >
+      <PokemonCardMotion
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          transformOrigin: "center center",
+        }}
+        className="grid gap-5"
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 20,
+        }}
+        whileHover={{
+          scale: 1.05,
+        }}
+      >
         {!state.pokemon || state.isPokemonQueryLoading ? (
           <>
             <PokemonCardSkeletonImage />
@@ -53,14 +79,13 @@ export const PokemonPage = () => {
             </PokemonCardContent>
           </>
         )}
-      </PokemonCard>
+      </PokemonCardMotion>
 
       <div className="flex gap-4">
         <Button asChild>
           <Link
             className={cn({
-              "pointer-events-none opacity-15":
-                state.prevPokemonId === state.pokemon?.id,
+              "pointer-events-none opacity-15": !state.hasPrevPokemon,
             })}
             to={`/pokemon/${state.prevPokemonId}`}
           >
@@ -71,8 +96,7 @@ export const PokemonPage = () => {
           <Link
             className={cn(
               cn({
-                "pointer-events-none opacity-15":
-                  state.nextPokemonId === state.pokemon?.id,
+                "pointer-events-none opacity-15": !state.hasNextPokemon,
               }),
             )}
             to={`/pokemon/${state.nextPokemonId}`}

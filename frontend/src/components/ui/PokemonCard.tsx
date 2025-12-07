@@ -1,6 +1,8 @@
+import type { HTMLMotionProps } from "motion/react"
 import type { ComponentProps } from "react"
 
 import { cva } from "class-variance-authority"
+import { motion } from "motion/react"
 
 import type { PokemonType } from "@/../@types/pokeapi"
 
@@ -22,6 +24,22 @@ const PokemonCard = ({
   >
     {children}
   </div>
+)
+
+const PokemonCardMotion = ({
+  className,
+  children,
+  ...props
+}: HTMLMotionProps<"div">) => (
+  <motion.div
+    className={cn(
+      "overflow-hidden rounded-xl border-2 border-gray-200 p-5 shadow-xl",
+      className,
+    )}
+    {...props}
+  >
+    {children}
+  </motion.div>
 )
 
 const PokemonCardImage = ({ className, ...props }: ComponentProps<"img">) => (
@@ -116,6 +134,7 @@ const pokemonTypesVariants = cva<{ type: Record<string, string> }>(
         steel: "bg-zinc-600 dark:zinc-500",
         water: "bg-blue-600 dark:blue-500",
         ice: "bg-cyan-400 dark:cyan-400",
+        psychic: "bg-pink-400 dark:pink-400",
       },
     },
   },
@@ -147,6 +166,7 @@ export {
   PokemonCardContent,
   PokemonCardImage,
   PokemonCardImageNotFound,
+  PokemonCardMotion,
   PokemonCardName,
   PokemonCardNumber,
   PokemonCardSkeletonImage,

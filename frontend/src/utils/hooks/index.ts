@@ -1,2 +1,2 @@
 export * from "./useInView"
-export * from "./useLockScroll"
+export * from "./useMotionCardTiltAnimation"
