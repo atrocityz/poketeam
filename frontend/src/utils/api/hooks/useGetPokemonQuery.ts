@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 
-import type { GetPokemonParams } from "../requests/pokemon/id"
+import type { GetPokemonByIdParams } from "../requests/pokemon/id"
 
 import { getPokemon } from "../requests/pokemon/id"
 
 export const useGetPokemonQuery = (
-  params: GetPokemonParams,
+  params: GetPokemonByIdParams,
   settings?: QuerySettings<typeof getPokemon>,
 ) =>
   useQuery({

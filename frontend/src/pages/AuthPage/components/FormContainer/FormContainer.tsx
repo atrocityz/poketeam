@@ -14,11 +14,11 @@ const component: Record<Stage, ReactNode> = {
 }
 
 export const FormContainer = () => {
-  const state = useStageStore((state) => state.stage)
+  const stage = useStageStore((state) => state.stage)
 
   return (
     <Card className="min-w-[350px]">
-      <CardContent>{component[state]}</CardContent>
+      <CardContent>{component[stage]}</CardContent>
     </Card>
   )
 }

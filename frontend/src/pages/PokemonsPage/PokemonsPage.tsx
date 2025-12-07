@@ -10,42 +10,43 @@ import { PokemonPreviewDialog } from "./components/PokemonPreviewDialog/PokemonP
 import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
 export const PokemonsPage = () => {
-  const { state, functions } = usePokemonsPage()
+  const { state, functions, refs } = usePokemonsPage()
 
   return (
     <React.Fragment>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 pb-14">
         {state.isInfiniteQueryLoading && <PokemonListSkeleton />}
         {!state.isInfiniteQueryLoading &&
-          state.pokemons.map((pokemon, index) => {
-            const id =
-              index + 1 >= 1026 ? 9975 + ((index + 1) % 1000) : index + 1
-
-            return (
-              <motion.button
-                key={id}
-                animate={{ opacity: 1, y: 0 }}
-                aria-label="Open pokemon preview"
-                className="hover:bg-accent border-accent-foreground/15 relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border px-4 py-3 transition-colors"
-                initial={{ opacity: 0, y: -15 }}
-                title="Open pokemon preview"
-                type="button"
-                whileTap={{ scale: 0.99 }}
-                onClick={() => {
-                  functions.selectPokemon(id)
-                }}
-                whileFocus={{ scale: 1.05 }}
-                whileHover={{ scale: 1.05 }}
+          state.pokemons.map((pokemon) => (
+            <motion.button
+              key={pokemon.name}
+              animate={{ opacity: 1, y: 0 }}
+              aria-label="Open pokemon preview"
+              className="hover:bg-accent border-accent-foreground/15 relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border px-4 py-3 transition-colors"
+              initial={{ opacity: 0, y: -10 }}
+              title="Open pokemon preview"
+              type="button"
+              whileTap={{ scale: 0.99 }}
+              onClick={() => {
+                functions.selectPokemon(pokemon.id)
+              }}
+              transition={{
+                duration: 0.2,
+              }}
+              whileFocus={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <PokemonCardName
+                className="z-1 max-w-40 truncate"
+                title={pokemon.name}
               >
-                <PokemonCardName className="z-1">
-                  {pokemon.name}
-                </PokemonCardName>
-                <PokemonCardNumber className="z-1">
-                  {formatPokemonId(id)}
-                </PokemonCardNumber>
-              </motion.button>
-            )
-          })}
+                {pokemon.name}
+              </PokemonCardName>
+              <PokemonCardNumber className="z-1">
+                {formatPokemonId(pokemon.id)}
+              </PokemonCardNumber>
+            </motion.button>
+          ))}
         <Activity mode={state.isFetchingNextPokemonPage ? "visible" : "hidden"}>
           <PokemonListSkeleton />
           <div className="col-span-full justify-self-center">
@@ -54,7 +55,7 @@ export const PokemonsPage = () => {
         </Activity>
       </div>
       <Activity mode={state.isFetchingNextPokemonPage ? "hidden" : "visible"}>
-        <div ref={state.loadMoreRef} className="-mt-[400px]" />
+        <div ref={refs.loadMoreRef} className="-mt-[400px]" />
       </Activity>
       {state.selectedPokemonId && (
         <PokemonPreviewDialog

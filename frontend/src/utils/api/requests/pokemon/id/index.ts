@@ -4,14 +4,14 @@ import type { Pokemon } from "@/../@types/pokeapi"
 
 import { pokeApi } from "../../../instance"
 
-export interface GetPokemonParams {
+export interface GetPokemonByIdParams {
   id: Pokemon["id"]
 }
 
-interface GetPokemonRequestConfig {
+interface GetPokemonByIdRequestConfig {
   config?: AxiosRequestConfig
-  params: GetPokemonParams
+  params: GetPokemonByIdParams
 }
 
-export const getPokemon = ({ config, params }: GetPokemonRequestConfig) =>
+export const getPokemon = ({ config, params }: GetPokemonByIdRequestConfig) =>
   pokeApi.get<Pokemon>(`pokemon/${params.id}`, config)

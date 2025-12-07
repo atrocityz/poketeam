@@ -6,20 +6,31 @@ import { useGetPokemonInfiniteQuery } from "@/utils/api/hooks"
 import { POKEMONS } from "@/utils/constants/pokemon"
 import { useInView } from "@/utils/hooks"
 
+const getPokemonIdFromUrl = (url: string) => {
+  const lastIndexOfSlash = url.lastIndexOf("/")
+  const formattedUrl = url.slice(0, lastIndexOfSlash)
+
+  return Number(formattedUrl.slice(formattedUrl.lastIndexOf("/") + 1))
+}
+
 export const usePokemonsPage = () => {
   const pokemonInfiniteQuery = useGetPokemonInfiniteQuery({
     limit: POKEMONS.LIMIT,
     offset: POKEMONS.OFFSET,
   })
-  const { ref, isInView } = useInView()
+  const { ref: loadMoreRef, isInView } = useInView()
   const [selectedPokemonId, setSelectedPokemonId] = useState<
     Pokemon["id"] | null
   >(null)
 
   const pokemons = useMemo(
     () =>
-      pokemonInfiniteQuery.data?.pages.flatMap(({ data }) => data.results) ??
-      [],
+      pokemonInfiniteQuery.data?.pages.flatMap(({ data }) => {
+        return data.results.map((item) => ({
+          ...item,
+          id: getPokemonIdFromUrl(item.url),
+        }))
+      }) ?? [],
     [pokemonInfiniteQuery.data?.pages],
   )
 
@@ -32,11 +43,13 @@ export const usePokemonsPage = () => {
   }, [isInView])
 
   return {
+    refs: {
+      loadMoreRef,
+    },
     state: {
       pokemons,
       selectedPokemonId,
       isInfiniteQueryLoading: pokemonInfiniteQuery.isPending,
-      loadMoreRef: ref,
       isFetchingNextPokemonPage: pokemonInfiniteQuery.isFetchingNextPage,
     },
     functions: {
