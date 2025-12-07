@@ -33,7 +33,7 @@ export const ProfileMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="hover:bg-accent rounded-lg p-1 transition-colors hover:cursor-pointer">
+      <DropdownMenuTrigger className="hover:bg-accent rounded-full p-2 transition-colors duration-300 hover:cursor-pointer">
         <Avatar className="size-10">
           <AvatarImage src={user.avatarUrl} />
         </Avatar>
