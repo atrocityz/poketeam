@@ -14,18 +14,24 @@ const checkAuth = async () => {
   const accessToken = Cookies.get(COOKIE.ACCESS_TOKEN)
 
   if (accessToken) {
-    const getUserResponse = await getUser()
-    useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
+    try {
+      const getUserResponse = await getUser()
+      useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
+    } catch {
+      useAuthStore.setState({ isLoggedIn: false })
+    }
   } else {
     const urlParams = new URLSearchParams(window.location.search)
     const token = urlParams.get("token")
 
     if (token) {
-      Cookies.set(COOKIE.ACCESS_TOKEN, token)
-      const getUserResponse = await getUser()
-      useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
-    } else {
-      useAuthStore.setState({ isLoggedIn: false })
+      try {
+        Cookies.set(COOKIE.ACCESS_TOKEN, token)
+        const getUserResponse = await getUser()
+        useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
+      } catch {
+        useAuthStore.setState({ isLoggedIn: false })
+      }
     }
   }
 }
