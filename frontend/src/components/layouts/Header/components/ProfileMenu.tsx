@@ -38,7 +38,7 @@ export const ProfileMenu = () => {
           <AvatarImage src={user.avatarUrl} />
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-background">
+      <DropdownMenuContent align="end" className="bg-background">
         <DropdownMenuItem className="hover:bg-accent">
           <Link
             className="flex w-full items-center gap-1"

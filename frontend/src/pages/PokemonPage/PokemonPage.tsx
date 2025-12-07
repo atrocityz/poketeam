@@ -1,4 +1,5 @@
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import React from "react"
 import { Link } from "react-router"
 
 import {
@@ -60,7 +61,7 @@ export const PokemonPage = () => {
             </PokemonCardContent>
           </>
         ) : (
-          <>
+          <React.Fragment>
             <div className="relative flex shrink-0 justify-center">
               {state.pokemon.img && (
                 <PokemonCardImage src={state.pokemon.img} />
@@ -77,7 +78,7 @@ export const PokemonPage = () => {
               </PokemonCardNumber>
               <PokemonCardName>{state.pokemon.name}</PokemonCardName>
             </PokemonCardContent>
-          </>
+          </React.Fragment>
         )}
       </PokemonCardMotion>
 

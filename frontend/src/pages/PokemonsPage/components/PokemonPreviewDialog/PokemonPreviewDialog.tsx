@@ -1,4 +1,5 @@
 import { X } from "lucide-react"
+import React from "react"
 import { Link } from "react-router"
 
 import type { Pokemon } from "@/../@types/pokeapi"
@@ -59,18 +60,18 @@ export const PokemonPreviewDialog = ({
           Preview pokemon card, you can follow the link for detailed statistics
         </DialogDescription>
         <div className="relative grid gap-4">
-          {(state.isPokemonQueryLoading || !state.pokemon) && (
-            <>
+          {state.isPokemonQueryLoading && (
+            <React.Fragment>
               <PokemonCardSkeletonImage />
               <PokemonCardContent>
                 <PokemonCardSkeletonNumber />
                 <PokemonCardSkeletonName />
               </PokemonCardContent>
-            </>
+            </React.Fragment>
           )}
 
           {state.pokemon && (
-            <>
+            <React.Fragment>
               {state.pokemon.img ? (
                 <PokemonCardImage src={state.pokemon.img} />
               ) : (
@@ -86,7 +87,7 @@ export const PokemonPreviewDialog = ({
                 </PokemonCardNumber>
                 <PokemonCardName>{state.pokemon.name}</PokemonCardName>
               </PokemonCardContent>
-            </>
+            </React.Fragment>
           )}
 
           <Button
