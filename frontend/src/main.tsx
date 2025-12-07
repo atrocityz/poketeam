@@ -30,8 +30,8 @@ const checkAuth = async () => {
   }
 }
 
-const init = () => {
-  checkAuth()
+const init = async () => {
+  await checkAuth()
 
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
