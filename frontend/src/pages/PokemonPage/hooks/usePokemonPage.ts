@@ -1,6 +1,7 @@
 import { useParams } from "react-router"
 
 import { useGetPokemonQuery } from "@/utils/api/hooks"
+import { POKEMONS } from "@/utils/constants"
 import { dbPokemonToPokemonEntity } from "@/utils/helpers"
 
 export const usePokemonPage = () => {
@@ -13,8 +14,11 @@ export const usePokemonPage = () => {
     pokemonQuery.data && dbPokemonToPokemonEntity(pokemonQuery.data.data)
 
   const prevPokemonId = pokemon && Math.max(1, pokemon.id - 1)
-  // TODO: Проблема с зависимости от числа 10303, нужно как-то отталкиваясь от сервера понять, какой покемон последний
-  const nextPokemonId = pokemon && Math.min(pokemon.id + 1, 10303)
+  const nextPokemonId =
+    pokemon && Math.min(pokemon.id + 1, POKEMONS.LAST_POKEMON_ID)
+
+  const hasPrevPokemon = prevPokemonId !== pokemon?.id
+  const hasNextPokemon = nextPokemonId !== pokemon?.id
 
   return {
     state: {
@@ -22,6 +26,8 @@ export const usePokemonPage = () => {
       isPokemonQueryLoading: pokemonQuery.isLoading,
       prevPokemonId,
       nextPokemonId,
+      hasPrevPokemon,
+      hasNextPokemon,
     },
   }
 }
