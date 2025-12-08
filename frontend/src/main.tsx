@@ -12,27 +12,16 @@ import "./main.css"
 
 const checkAuth = async () => {
   const accessToken = Cookies.get(COOKIE.ACCESS_TOKEN)
-
   if (accessToken) {
     try {
       const getUserResponse = await getUser()
       useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
     } catch {
       useAuthStore.setState({ isLoggedIn: false })
+      Cookies.remove(COOKIE.ACCESS_TOKEN)
     }
   } else {
-    const urlParams = new URLSearchParams(window.location.search)
-    const token = urlParams.get("token")
-
-    if (token) {
-      try {
-        Cookies.set(COOKIE.ACCESS_TOKEN, token)
-        const getUserResponse = await getUser()
-        useAuthStore.setState({ isLoggedIn: true, user: getUserResponse.data })
-      } catch {
-        useAuthStore.setState({ isLoggedIn: false })
-      }
-    }
+    useAuthStore.setState({ isLoggedIn: false })
   }
 }
 

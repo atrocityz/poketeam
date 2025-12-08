@@ -1,6 +1,8 @@
 import { GithubIcon, GoogleIcon } from "@/components/icons"
 import { Button, FieldSeparator } from "@/components/ui"
 
+import { useOAuth } from "./hooks/useOAuth"
+
 interface AuthButtonsContainerProps {
   isLoading: boolean
 }
@@ -8,9 +10,7 @@ interface AuthButtonsContainerProps {
 export const AuthButtonsContainer = ({
   isLoading,
 }: AuthButtonsContainerProps) => {
-  const onOAuthButtonClick = (provider: "github" | "google") => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}/login`
-  }
+  const { openOAuthPopup } = useOAuth()
 
   return (
     <div className="grid gap-4">
@@ -22,7 +22,7 @@ export const AuthButtonsContainer = ({
           disabled={isLoading}
           type="button"
           variant="outline"
-          onClick={() => onOAuthButtonClick("github")}
+          onClick={() => openOAuthPopup("github")}
         >
           <GithubIcon />
           GitHub
@@ -33,7 +33,7 @@ export const AuthButtonsContainer = ({
           disabled={isLoading}
           type="button"
           variant="outline"
-          onClick={() => onOAuthButtonClick("google")}
+          onClick={() => openOAuthPopup("google")}
         >
           <GoogleIcon />
           Google

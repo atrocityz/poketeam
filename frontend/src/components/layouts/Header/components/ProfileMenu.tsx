@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 import { LogOut, UserRound } from "lucide-react"
-import { Link, useNavigate } from "react-router"
+import { Link } from "react-router"
 
 import {
   Avatar,
@@ -18,18 +18,13 @@ import { useAuthStore } from "@/utils/stores"
 
 export const ProfileMenu = () => {
   const { setIsLoggedIn, user } = useAuthStore()
-  const navigate = useNavigate()
-  const { mutate: logout, isPending } = usePostLogoutMutation({
-    options: {
-      onSuccess: () => {
-        Cookies.remove(COOKIE.ACCESS_TOKEN)
-        setIsLoggedIn(false)
-        navigate(routes.auth.getHref(), {
-          replace: true,
-        })
-      },
-    },
-  })
+  const { mutate, isPending } = usePostLogoutMutation()
+
+  const logout = () => {
+    mutate({})
+    Cookies.remove(COOKIE.ACCESS_TOKEN)
+    setIsLoggedIn(false)
+  }
 
   return (
     <DropdownMenu>
@@ -54,7 +49,7 @@ export const ProfileMenu = () => {
             className="flex w-full items-center gap-1 hover:cursor-pointer"
             disabled={isPending}
             type="button"
-            onClick={() => logout({})}
+            onClick={() => logout()}
           >
             <LogOut className="text-foreground" />
             Logout

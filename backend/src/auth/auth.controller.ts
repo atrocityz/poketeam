@@ -71,9 +71,30 @@ export class AuthController {
       request.user.email,
     );
 
-    response.redirect(
-      `${process.env.FRONTEND_ORIGIN}?token=${authResult.accessToken}`,
-    );
+    response.send(`
+       <!DOCTYPE html>
+       <html>
+         <head>
+           <title>Auth Complete</title>
+         </head>
+         <body>
+           <script>
+             const token = '${authResult.accessToken}';
+             const user = ${JSON.stringify(authResult.user)};
+
+             if (window.opener) {
+              window.opener.postMessage({
+                type: 'OAUTH_SUCCESS',
+                token: token,
+                user,
+              }, '*');
+
+              window.close();
+            }
+           </script>
+         </body>
+       </html>
+     `);
   }
 
   @Get('github/login')
@@ -88,8 +109,30 @@ export class AuthController {
       request.user.email,
     );
 
-    response.redirect(
-      `${process.env.FRONTEND_ORIGIN}?token=${authResult.accessToken}`,
-    );
+    response.send(`
+       <!DOCTYPE html>
+       <html>
+         <head>
+           <title>Auth Complete</title>
+         </head>
+         <body>
+           <script>
+             const token = '${authResult.accessToken}';
+             const user = ${JSON.stringify(authResult.user)};
+
+             window.opener.postMessage(
+               {
+                 type: 'OAUTH_SUCCESS',
+                 token: token,
+                 user,
+               },
+               '*',
+             );
+
+             window.close();
+           </script>
+         </body>
+       </html>
+     `);
   }
 }

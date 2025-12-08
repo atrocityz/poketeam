@@ -16,9 +16,9 @@ import {
   PokemonCardTypes,
 } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
-import { useMotionCardTiltAnimation } from "@/utils/hooks"
 import { cn } from "@/utils/lib"
 
+import { useMotionCardTiltAnimation } from "./hooks/useMotionCardTiltAnimation"
 import { usePokemonPage } from "./hooks/usePokemonPage"
 
 export const PokemonPage = () => {
