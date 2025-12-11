@@ -18,10 +18,10 @@ import { useAuthStore } from "@/utils/stores"
 
 export const ProfileMenu = () => {
   const { setIsLoggedIn, user } = useAuthStore()
-  const { mutate, isPending } = usePostLogoutMutation()
+  const { mutateAsync, isPending } = usePostLogoutMutation()
 
   const logout = () => {
-    mutate({})
+    mutateAsync({})
     Cookies.remove(COOKIE.ACCESS_TOKEN)
     setIsLoggedIn(false)
   }
@@ -34,7 +34,10 @@ export const ProfileMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background">
-        <DropdownMenuItem className="hover:bg-accent">
+        <DropdownMenuItem
+          asChild
+          className="hover:bg-accent hover:cursor-pointer"
+        >
           <Link
             className="flex w-full items-center gap-1"
             to={routes.profile.getHref()}
@@ -44,7 +47,10 @@ export const ProfileMenu = () => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="focus:bg-destructive/35">
+        <DropdownMenuItem
+          asChild
+          className="focus:bg-destructive/35 hover:cursor-pointer"
+        >
           <button
             className="flex w-full items-center gap-1 hover:cursor-pointer"
             disabled={isPending}

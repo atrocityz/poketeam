@@ -1,7 +1,8 @@
+import Cookies from "js-cookie"
+
 import { GithubIcon, GoogleIcon } from "@/components/icons"
 import { Button, FieldSeparator } from "@/components/ui"
-
-import { useOAuth } from "./hooks/useOAuth"
+import { COOKIE } from "@/utils/constants"
 
 interface AuthButtonsContainerProps {
   isLoading: boolean
@@ -10,7 +11,10 @@ interface AuthButtonsContainerProps {
 export const AuthButtonsContainer = ({
   isLoading,
 }: AuthButtonsContainerProps) => {
-  const { openOAuthPopup } = useOAuth()
+  const onOAuthButtonClick = (provider: "github" | "google") => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}/login`
+    Cookies.set(COOKIE.ACCESS_TOKEN, "token")
+  }
 
   return (
     <div className="grid gap-4">
@@ -22,7 +26,7 @@ export const AuthButtonsContainer = ({
           disabled={isLoading}
           type="button"
           variant="outline"
-          onClick={() => openOAuthPopup("github")}
+          onClick={() => onOAuthButtonClick("github")}
         >
           <GithubIcon />
           GitHub
@@ -33,7 +37,7 @@ export const AuthButtonsContainer = ({
           disabled={isLoading}
           type="button"
           variant="outline"
-          onClick={() => openOAuthPopup("google")}
+          onClick={() => onOAuthButtonClick("google")}
         >
           <GoogleIcon />
           Google
