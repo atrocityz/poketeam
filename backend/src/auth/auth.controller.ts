@@ -66,35 +66,9 @@ export class AuthController {
   @UseGuards(GoogleOAuthGuard)
   @Get('google/callback')
   async googleCallback(@Req() request, @Res() response: Response) {
-    const authResult = await this.authService.loginWithOAuth(
-      response,
-      request.user.email,
-    );
+    await this.authService.loginWithOAuth(response, request.user.email);
 
-    response.send(`
-       <!DOCTYPE html>
-       <html>
-         <head>
-           <title>Auth Complete</title>
-         </head>
-         <body>
-           <script>
-             const token = '${authResult.accessToken}';
-             const user = ${JSON.stringify(authResult.user)};
-
-             if (window.opener) {
-              window.opener.postMessage({
-                type: 'OAUTH_SUCCESS',
-                token: token,
-                user,
-              }, '*');
-
-              window.close();
-            }
-           </script>
-         </body>
-       </html>
-     `);
+    response.redirect(`${process.env.FRONTEND_ORIGIN}`);
   }
 
   @Get('github/login')
@@ -104,35 +78,8 @@ export class AuthController {
   @Get('github/callback')
   @UseGuards(GitHubOAuthGuard)
   async githubCallback(@Req() request, @Res() response: Response) {
-    const authResult = await this.authService.loginWithOAuth(
-      response,
-      request.user.email,
-    );
+    await this.authService.loginWithOAuth(response, request.user.email);
 
-    response.send(`
-       <!DOCTYPE html>
-       <html>
-         <head>
-           <title>Auth Complete</title>
-         </head>
-         <body>
-           <script>
-             const token = '${authResult.accessToken}';
-             const user = ${JSON.stringify(authResult.user)};
-
-             window.opener.postMessage(
-               {
-                 type: 'OAUTH_SUCCESS',
-                 token: token,
-                 user,
-               },
-               '*',
-             );
-
-             window.close();
-           </script>
-         </body>
-       </html>
-     `);
+    response.redirect(`${process.env.FRONTEND_ORIGIN}`);
   }
 }
