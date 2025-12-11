@@ -1,5 +1,5 @@
 import Cookies from "js-cookie"
-import { LogOut, UserRound } from "lucide-react"
+import { Lamp, LogOut, UserRound } from "lucide-react"
 import { Link } from "react-router"
 
 import {
@@ -10,15 +10,17 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  Switch,
 } from "@/components/ui"
 import { usePostLogoutMutation } from "@/utils/api/hooks"
 import { routes } from "@/utils/config"
 import { COOKIE } from "@/utils/constants"
-import { useAuthStore } from "@/utils/stores"
+import { useAuthStore, useThemeStore } from "@/utils/stores"
 
 export const ProfileMenu = () => {
   const { setIsLoggedIn, user } = useAuthStore()
   const { mutateAsync, isPending } = usePostLogoutMutation()
+  const { setTheme, theme } = useThemeStore()
 
   const logout = () => {
     mutateAsync({})
@@ -46,18 +48,24 @@ export const ProfileMenu = () => {
             Profile
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem
-          asChild
-          className="focus:bg-destructive/35 hover:cursor-pointer"
+          className="hover:bg-accent relative after:absolute after:inset-0 hover:cursor-pointer"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onSelect={(event) => event.preventDefault()}
         >
+          <Lamp className="text-foreground" />
+          <label htmlFor="theme-mode">Dark Mode</label>
+          <Switch checked={theme === "dark"} id="theme-mode" />
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild className="hover:cursor-pointer">
           <button
-            className="flex w-full items-center gap-1 hover:cursor-pointer"
+            className="text-destructive flex w-full items-center gap-1 hover:cursor-pointer"
             disabled={isPending}
             type="button"
             onClick={() => logout()}
           >
-            <LogOut className="text-foreground" />
+            <LogOut className="text-inherit" />
             Logout
           </button>
         </DropdownMenuItem>

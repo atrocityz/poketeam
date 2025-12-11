@@ -17,7 +17,7 @@ const PokemonCard = ({
 }: ComponentProps<"div">) => (
   <div
     className={cn(
-      "overflow-hidden rounded-xl border-2 border-gray-200 p-5 shadow-xl",
+      "border-border overflow-hidden rounded-xl border p-5 shadow-xl",
       className,
     )}
     {...props}
@@ -33,7 +33,7 @@ const PokemonCardMotion = ({
 }: HTMLMotionProps<"div">) => (
   <motion.div
     className={cn(
-      "overflow-hidden rounded-xl border-2 border-gray-200 p-5 shadow-xl",
+      "border-border overflow-hidden rounded-xl border p-5 shadow-xl",
       className,
     )}
     {...props}

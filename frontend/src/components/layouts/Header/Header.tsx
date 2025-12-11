@@ -12,7 +12,9 @@ export const Header = () => (
         title="Home"
         to="/"
       >
-        <img alt="" className="h-9 w-9 shrink-0" src="/logo.png" />
+        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full after:absolute after:inset-0 after:-z-1 after:bg-white">
+          <img alt="" src="/logo.png" />
+        </div>
         <span className="sr-only text-xl md:not-sr-only">PokeTeam</span>
       </Link>
       <Navigation className="justify-self-center" />
