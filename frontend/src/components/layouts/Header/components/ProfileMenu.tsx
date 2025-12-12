@@ -1,5 +1,5 @@
 import Cookies from "js-cookie"
-import { Lamp, LogOut, UserRound } from "lucide-react"
+import { ChevronsUpDown, Lamp, LogOut, UserRound } from "lucide-react"
 import { Link } from "react-router"
 
 import {
@@ -30,10 +30,14 @@ export const ProfileMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="hover:bg-accent rounded-full p-2 transition-colors duration-300 hover:cursor-pointer">
-        <Avatar className="size-10">
-          <AvatarImage src={user.avatarUrl} />
-        </Avatar>
+      <DropdownMenuTrigger className="hover:bg-muted flex items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors duration-300 hover:cursor-pointer">
+        <div className="flex items-center gap-1.5">
+          <Avatar className="size-6 select-none">
+            <AvatarImage src={user.avatarUrl} />
+          </Avatar>
+          {user.login}
+        </div>
+        <ChevronsUpDown className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background">
         <DropdownMenuItem
@@ -60,7 +64,7 @@ export const ProfileMenu = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="hover:cursor-pointer">
           <button
-            className="text-destructive flex w-full items-center gap-1 hover:cursor-pointer"
+            className="text-destructive focus:text-destructive focus:bg-destructive/15 flex w-full items-center gap-1 hover:cursor-pointer"
             disabled={isPending}
             type="button"
             onClick={() => logout()}

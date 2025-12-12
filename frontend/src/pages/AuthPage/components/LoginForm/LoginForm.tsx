@@ -20,7 +20,7 @@ export const LoginForm = () => {
     <AuthFormLayout
       link={
         <div className="flex items-center justify-center">
-          Don&apos;t have an account?
+          <span className="text-sm">Don&apos;t have an account?</span>
           <Button type="button" variant="link" onClick={functions.goToRegister}>
             Sign up
           </Button>

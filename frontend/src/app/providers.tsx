@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { useEffect } from "react"
 
+import { LOCALSTORAGE } from "@/utils/constants/localStorage"
 import { useThemeStore } from "@/utils/stores"
 
 import { queryClient } from "../utils/lib"
@@ -18,9 +19,17 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const root = window.document.documentElement
 
-    root.classList.remove("light", "dark")
+    if (!localStorage.getItem(LOCALSTORAGE.THEME)) {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light"
 
-    root.classList.add(theme)
+      root.classList.add(systemTheme)
+    } else {
+      root.classList.remove("light", "dark")
+      root.classList.add(theme)
+    }
   }, [theme])
 
   return <>{children}</>

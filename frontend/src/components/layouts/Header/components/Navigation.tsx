@@ -12,13 +12,16 @@ export const Navigation = ({ className }: NavigationProps) => {
 
   return (
     <nav className={className}>
-      <ul className="flex items-center gap-3">
+      <ul className="flex items-center gap-2">
         <li>
           <Link
-            className={cn("text-lg hover:underline md:text-xl", {
-              "pointer-events-none underline":
-                location.pathname === routes.pokemons.getHref(),
-            })}
+            className={cn(
+              "hover:bg-muted rounded-lg border px-2.5 py-2 text-lg font-medium transition-colors hover:cursor-pointer",
+              {
+                "bg-muted pointer-events-none":
+                  location.pathname === routes.pokemons.getHref(),
+              },
+            )}
             to={routes.pokemons.path}
           >
             Pokemons

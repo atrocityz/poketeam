@@ -12,8 +12,8 @@ export const Header = () => (
         title="Home"
         to="/"
       >
-        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full after:absolute after:inset-0 after:-z-1 after:bg-white">
-          <img alt="" src="/logo.png" />
+        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full">
+          <img alt="" src="/logo.svg" />
         </div>
         <span className="sr-only text-xl md:not-sr-only">PokeTeam</span>
       </Link>

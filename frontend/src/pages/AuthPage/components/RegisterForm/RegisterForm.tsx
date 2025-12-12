@@ -20,7 +20,7 @@ export const RegisterForm = () => {
     <AuthFormLayout
       link={
         <div className="flex items-center justify-center">
-          Already has account?
+          <span className="text-sm">Already has account?</span>
           <Button type="button" variant="link" onClick={functions.goToLogin}>
             Sign in
           </Button>
