@@ -51,6 +51,9 @@ export const usePokemonsPage = () => {
       selectedPokemonId,
       isInfiniteQueryLoading: pokemonInfiniteQuery.isPending,
       isFetchingNextPokemonPage: pokemonInfiniteQuery.isFetchingNextPage,
+      showLoadMore:
+        !pokemonInfiniteQuery.isPending &&
+        !pokemonInfiniteQuery.isFetchingNextPage,
     },
     functions: {
       selectPokemon,

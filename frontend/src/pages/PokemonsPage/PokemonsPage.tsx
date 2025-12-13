@@ -54,9 +54,9 @@ export const PokemonsPage = () => {
           </div>
         </Activity>
       </div>
-      <Activity mode={state.isFetchingNextPokemonPage ? "hidden" : "visible"}>
+      {state.showLoadMore && (
         <div ref={refs.loadMoreRef} className="-mt-[400px]" />
-      </Activity>
+      )}
       {state.selectedPokemonId && (
         <PokemonPreviewDialog
           isOpen={!!state.selectedPokemonId}
