@@ -11,7 +11,6 @@ import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
 export const PokemonsPage = () => {
   const { state, functions, refs } = usePokemonsPage()
-
   return (
     <React.Fragment>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 pb-14">

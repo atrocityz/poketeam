@@ -4,6 +4,7 @@ import { Toaster } from "sonner"
 import { Layout } from "@/components/layouts"
 import { AuthPage, PokemonPage, PokemonsPage, ProfilePage } from "@/pages"
 import { routes } from "@/utils/config"
+import { useThemeStore } from "@/utils/stores"
 
 import { useAuthStore } from "../utils/stores/auth"
 
@@ -16,6 +17,7 @@ export const AuthApp = () => (
 
 export const App = () => {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
+  const theme = useThemeStore((state) => state.theme)
 
   return (
     <BrowserRouter>
@@ -37,7 +39,7 @@ export const App = () => {
           </Route>
         </Routes>
       )}
-      <Toaster />
+      <Toaster theme={theme} />
     </BrowserRouter>
   )
 }
