@@ -1,10 +1,10 @@
 import type { HTMLMotionProps } from "motion/react"
-import type { ComponentProps } from "react"
+import type { ComponentProps, ReactNode } from "react"
 
 import { cva } from "class-variance-authority"
 import { motion } from "motion/react"
 
-import type { PokemonType } from "@/../@types/pokeapi"
+import type { PokemonStat, PokemonType } from "@/../@types/pokeapi"
 
 import { cn } from "@/utils/lib"
 
@@ -17,7 +17,7 @@ const PokemonCard = ({
 }: ComponentProps<"div">) => (
   <div
     className={cn(
-      "border-border overflow-hidden rounded-xl border p-5 shadow-xl",
+      "border-border flex w-full flex-col gap-2 overflow-hidden rounded-xl border p-4 shadow-xl sm:max-w-[360px]",
       className,
     )}
     {...props}
@@ -33,7 +33,7 @@ const PokemonCardMotion = ({
 }: HTMLMotionProps<"div">) => (
   <motion.div
     className={cn(
-      "border-border overflow-hidden rounded-xl border p-5 shadow-xl",
+      "border-border flex w-full flex-col gap-2 overflow-hidden rounded-xl border p-4 shadow-xl sm:max-w-[360px]",
       className,
     )}
     {...props}
@@ -94,17 +94,24 @@ const PokemonCardNumber = ({
   </span>
 )
 
-const PokemonCardSkeletonNumber = () => <Skeleton className="h-full w-9" />
+const PokemonCardSkeletonNumber = () => <Skeleton className="h-7 w-9" />
 
 const PokemonCardContent = ({
   children,
   className,
   ...props
 }: ComponentProps<"div">) => (
-  <div
-    className={cn("flex max-h-max items-center gap-2", className)}
-    {...props}
-  >
+  <div className={cn("flex max-h-max flex-col gap-4", className)} {...props}>
+    {children}
+  </div>
+)
+
+interface PokemonCardHeaderProps {
+  children: ReactNode
+}
+
+const PokemonCardHeader = ({ children }: PokemonCardHeaderProps) => (
+  <div className="flex items-center gap-1 not-last:border-b not-last:pb-4">
     {children}
   </div>
 )
@@ -161,9 +168,42 @@ const PokemonCardTypes = ({
   </ul>
 )
 
+interface PokemonCardStatItemProps {
+  className?: string
+  stat: PokemonStat
+}
+
+const PokemonCardStatItem = ({ stat, className }: PokemonCardStatItemProps) => (
+  <li
+    key={stat.stat.name}
+    className={cn("flex items-center gap-1 text-sm", className)}
+  >
+    <div className="text-[13px] font-semibold uppercase md:text-sm">
+      {stat.stat.name}:
+    </div>
+    <div>{stat.base_stat}</div>
+  </li>
+)
+
+interface PokemonCardStatsProps {
+  children: ReactNode
+  className?: string
+}
+
+const PokemonCardStats = ({ children, className }: PokemonCardStatsProps) => (
+  <ul
+    className={cn("grid grid-cols-2 gap-x-1 gap-y-2 md:gap-x-1.5", className)}
+  >
+    {children}
+  </ul>
+)
+
+const PokemonCardStatsSkeleton = () => <Skeleton className="h-[104px] w-full" />
+
 export {
   PokemonCard,
   PokemonCardContent,
+  PokemonCardHeader,
   PokemonCardImage,
   PokemonCardImageNotFound,
   PokemonCardMotion,
@@ -172,5 +212,8 @@ export {
   PokemonCardSkeletonImage,
   PokemonCardSkeletonName,
   PokemonCardSkeletonNumber,
+  PokemonCardStatItem,
+  PokemonCardStats,
+  PokemonCardStatsSkeleton,
   PokemonCardTypes,
 }

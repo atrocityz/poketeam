@@ -5,6 +5,7 @@ import { Link } from "react-router"
 import {
   Button,
   PokemonCardContent,
+  PokemonCardHeader,
   PokemonCardImage,
   PokemonCardImageNotFound,
   PokemonCardMotion,
@@ -13,6 +14,9 @@ import {
   PokemonCardSkeletonImage,
   PokemonCardSkeletonName,
   PokemonCardSkeletonNumber,
+  PokemonCardStatItem,
+  PokemonCardStats,
+  PokemonCardStatsSkeleton,
   PokemonCardTypes,
 } from "@/components/ui"
 import { formatPokemonId } from "@/utils/helpers"
@@ -31,7 +35,7 @@ export const PokemonPage = () => {
       style={{
         perspective: "1000px",
       }}
-      className="flex flex-col items-center justify-center gap-6"
+      className="flex flex-col items-center justify-center gap-10 pt-4"
     >
       <PokemonCardMotion
         style={{
@@ -40,7 +44,6 @@ export const PokemonPage = () => {
           transformStyle: "preserve-3d",
           transformOrigin: "center center",
         }}
-        className="grid gap-5"
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
         transition={{
@@ -56,8 +59,11 @@ export const PokemonPage = () => {
           <>
             <PokemonCardSkeletonImage />
             <PokemonCardContent>
-              <PokemonCardSkeletonNumber />
-              <PokemonCardSkeletonName />
+              <PokemonCardHeader>
+                <PokemonCardSkeletonNumber />
+                <PokemonCardSkeletonName />
+              </PokemonCardHeader>
+              <PokemonCardStatsSkeleton />
             </PokemonCardContent>
           </>
         ) : (
@@ -73,10 +79,17 @@ export const PokemonPage = () => {
               />
             </div>
             <PokemonCardContent>
-              <PokemonCardNumber>
-                {formatPokemonId(state.pokemon.id)}
-              </PokemonCardNumber>
-              <PokemonCardName>{state.pokemon.name}</PokemonCardName>
+              <PokemonCardHeader>
+                <PokemonCardNumber>
+                  {formatPokemonId(state.pokemon.id)}
+                </PokemonCardNumber>
+                <PokemonCardName>{state.pokemon.name}</PokemonCardName>
+              </PokemonCardHeader>
+              <PokemonCardStats>
+                {state.pokemon.stats.map((stat) => (
+                  <PokemonCardStatItem key={stat.stat.name} stat={stat} />
+                ))}
+              </PokemonCardStats>
             </PokemonCardContent>
           </React.Fragment>
         )}
@@ -97,7 +110,8 @@ export const PokemonPage = () => {
           <Link
             className={cn(
               cn({
-                "pointer-events-none opacity-15": !state.hasNextPokemon,
+                "pointer-events-none opacity-15":
+                  !state.hasNextPokemon || state.isLastPokemonIdLoading,
               }),
             )}
             to={`/pokemon/${state.nextPokemonId}`}

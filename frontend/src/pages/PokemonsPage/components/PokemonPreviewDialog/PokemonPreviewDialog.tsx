@@ -12,6 +12,7 @@ import {
   DialogDescription,
   DialogTitle,
   PokemonCardContent,
+  PokemonCardHeader,
   PokemonCardImage,
   PokemonCardImageNotFound,
   PokemonCardName,
@@ -64,8 +65,10 @@ export const PokemonPreviewDialog = ({
             <React.Fragment>
               <PokemonCardSkeletonImage />
               <PokemonCardContent>
-                <PokemonCardSkeletonNumber />
-                <PokemonCardSkeletonName />
+                <PokemonCardHeader>
+                  <PokemonCardSkeletonNumber />
+                  <PokemonCardSkeletonName />
+                </PokemonCardHeader>
               </PokemonCardContent>
             </React.Fragment>
           )}
@@ -82,10 +85,12 @@ export const PokemonPreviewDialog = ({
                 types={state.pokemon.types}
               />
               <PokemonCardContent>
-                <PokemonCardNumber>
-                  {formatPokemonId(state.pokemon.id)}
-                </PokemonCardNumber>
-                <PokemonCardName>{state.pokemon.name}</PokemonCardName>
+                <PokemonCardHeader>
+                  <PokemonCardNumber>
+                    {formatPokemonId(state.pokemon.id)}
+                  </PokemonCardNumber>
+                  <PokemonCardName>{state.pokemon.name}</PokemonCardName>
+                </PokemonCardHeader>
               </PokemonCardContent>
             </React.Fragment>
           )}
