@@ -10,10 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { User } from 'prisma/generated/client';
 import { AuthService } from './auth.service';
-import { Authorization } from './decorators/authorization.decorator';
-import { Authorized } from './decorators/authorized.decorator';
 import { LoginRequest } from './dto/login.dto';
 import { RegisterRequest } from './dto/register.dto';
 import { GitHubOAuthGuard, GoogleOAuthGuard } from './guards/auth.guard';
@@ -50,13 +47,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   logout(@Res({ passthrough: true }) response: Response) {
     return this.authService.logout(response);
-  }
-
-  @Authorization()
-  @Get('me')
-  @HttpCode(HttpStatus.OK)
-  me(@Authorized() user: User) {
-    return user;
   }
 
   @UseGuards(GoogleOAuthGuard)

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { getUser } from "../requests/auth/me"
+import { getUser } from "../requests/user/me"
 
 export const useGetUserQuery = (settings?: QuerySettings<typeof getUser>) =>
   useQuery({

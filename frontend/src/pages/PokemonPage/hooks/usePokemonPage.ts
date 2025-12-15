@@ -24,7 +24,7 @@ export const usePokemonPage = () => {
   const prevPokemonId = pokemon && Math.max(1, pokemon.id - 1)
   const nextPokemonId =
     pokemon &&
-    Math.min(pokemon.id + 1, lastPokemonId || POKEMONS_QUERY.LAST_POKEMON_ID)
+    Math.min(pokemon.id + 1, lastPokemonId || POKEMONS_QUERY.SAFE_POKEMON_COUNT)
 
   const hasPrevPokemon = prevPokemonId !== pokemon?.id
   const hasNextPokemon = nextPokemonId !== pokemon?.id

@@ -12,10 +12,11 @@ import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
 import type { StringValue } from 'ms';
-import type { User } from 'prisma/generated/client';
+import type { User } from '../../../prisma/generated/client';
 import type { LoginRequest } from './dto/login.dto';
 import type { RegisterRequest } from './dto/register.dto';
 import type { JwtPayload } from './interfaces/jwt.interface';
+import { UserService } from '@/components/user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -25,9 +26,9 @@ export class AuthService {
   private readonly COOKIE_DOMAIN: string;
 
   constructor(
-    private readonly prismaService: PrismaService,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
+    private readonly userService: UserService,
   ) {
     this.JWT_ACCESS_TOKEN_TTL = configService.getOrThrow<StringValue>(
       'JWT_ACCESS_TOKEN_TTL',
@@ -40,34 +41,19 @@ export class AuthService {
   }
 
   async register(data: RegisterRequest) {
-    const existUser = await this.prismaService.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
+    const existUser = await this.userService.findByEmail(data.email);
 
     if (existUser) {
       throw new ConflictException('User with this email already exists');
     }
 
-    await this.prismaService.user.create({
-      data: {
-        email: data.email,
-        login: data.login,
-        password: await hash(data.password),
-        avatarUrl: data.avatarUrl,
-      },
-    });
+    await this.userService.create(data);
 
     return true;
   }
 
   async login(response: Response, data: LoginRequest) {
-    const currentUser = await this.prismaService.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
+    const currentUser = await this.userService.findByEmail(data.email);
 
     if (!currentUser) {
       throw new NotFoundException('Login or password is incorrect');
@@ -88,11 +74,7 @@ export class AuthService {
   }
 
   async loginWithOAuth(response: Response, email: string) {
-    const currentUser = await this.prismaService.user.findUnique({
-      where: {
-        email,
-      },
-    });
+    const currentUser = await this.userService.findByEmail(email);
 
     if (!currentUser) {
       throw new NotFoundException('User not found');
@@ -118,11 +100,7 @@ export class AuthService {
   }
 
   async validate(id: string) {
-    const user = await this.prismaService.user.findUnique({
-      where: {
-        id,
-      },
-    });
+    const user = await this.userService.findById(id);
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -135,34 +113,18 @@ export class AuthService {
   }
 
   async validateOAuthUser(data: RegisterRequest) {
-    const user = await this.prismaService.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
+    const user = await this.userService.findByEmail(data.email);
 
     if (user) {
-      await this.prismaService.user.update({
-        where: { id: user.id },
-        data: {
-          login: data.login,
-          email: data.email,
-          password: await hash(data.password),
-          avatarUrl: data.avatarUrl,
-        },
+      await this.userService.update({
+        id: user.id,
+        data,
       });
 
       return user;
     }
 
-    return await this.prismaService.user.create({
-      data: {
-        email: data.email,
-        password: await hash(data.password),
-        login: data.login,
-        avatarUrl: data.avatarUrl,
-      },
-    });
+    return this.userService.create(data);
   }
 
   async refresh(request: Request, response: Response) {
@@ -175,14 +137,7 @@ export class AuthService {
     const payload: JwtPayload = await this.jwtService.verifyAsync(refreshToken);
 
     if (payload) {
-      const user = await this.prismaService.user.findUnique({
-        where: {
-          id: payload.id,
-        },
-        select: {
-          id: true,
-        },
-      });
+      const user = await this.userService.findById(payload.id);
 
       if (!user) {
         throw new NotFoundException('User not found');

@@ -1,6 +1,7 @@
 import Cookies from "js-cookie"
 import { ChevronsUpDown, Lamp, LogOut, UserRound } from "lucide-react"
 import { Link } from "react-router"
+import { toast } from "sonner"
 
 import {
   Avatar,
@@ -26,6 +27,7 @@ export const ProfileMenu = () => {
     mutateAsync({})
     Cookies.remove(COOKIE.ACCESS_TOKEN)
     setIsLoggedIn(false)
+    toast.success("Logout successful")
   }
 
   return (
