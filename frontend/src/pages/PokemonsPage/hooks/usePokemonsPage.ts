@@ -3,15 +3,22 @@ import { useEffect, useMemo, useState } from "react"
 import type { Pokemon } from "@/../@types/pokeapi"
 
 import { useGetPokemonInfiniteQuery } from "@/utils/api/hooks"
-import { POKEMONS_QUERY } from "@/utils/constants/pokemon"
+import { POKEMONS } from "@/utils/constants/pokemon"
 import { getPokemonIdFromUrl } from "@/utils/helpers"
 import { useInView } from "@/utils/hooks"
 
 export const usePokemonsPage = () => {
-  const pokemonInfiniteQuery = useGetPokemonInfiniteQuery({
-    limit: POKEMONS_QUERY.LIMIT,
-    offset: POKEMONS_QUERY.OFFSET,
-  })
+  const pokemonInfiniteQuery = useGetPokemonInfiniteQuery(
+    {
+      limit: POKEMONS.LIMIT,
+      offset: POKEMONS.OFFSET,
+    },
+    {
+      options: {
+        staleTime: Infinity,
+      },
+    },
+  )
   const { ref: loadMoreRef, isInView } = useInView()
   const [selectedPokemonId, setSelectedPokemonId] = useState<
     Pokemon["id"] | null

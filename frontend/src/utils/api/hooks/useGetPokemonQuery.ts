@@ -11,5 +11,6 @@ export const useGetPokemonQuery = (
   useQuery({
     queryKey: ["pokemon", params.id],
     queryFn: () => getPokemon({ params, config: settings?.config }),
+    staleTime: Infinity,
     ...settings?.options,
   })
