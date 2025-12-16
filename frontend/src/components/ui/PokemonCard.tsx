@@ -17,7 +17,7 @@ const PokemonCard = ({
 }: ComponentProps<"div">) => (
   <div
     className={cn(
-      "border-border flex w-full flex-col gap-2 overflow-hidden rounded-xl border p-4 shadow-xl sm:max-w-[360px]",
+      "border-border w-full overflow-hidden rounded-xl border shadow-xl sm:max-w-[360px]",
       className,
     )}
     {...props}
@@ -33,7 +33,7 @@ const PokemonCardMotion = ({
 }: HTMLMotionProps<"div">) => (
   <motion.div
     className={cn(
-      "border-border flex w-full flex-col gap-2 overflow-hidden rounded-xl border p-4 shadow-xl sm:max-w-[360px]",
+      "border-border w-full overflow-hidden rounded-xl border shadow-xl sm:max-w-[360px]",
       className,
     )}
     {...props}
@@ -42,10 +42,24 @@ const PokemonCardMotion = ({
   </motion.div>
 )
 
+interface PokemonCardBackgroundImageProps {
+  children: ReactNode
+  className?: string
+}
+
+const PokemonCardBackgroundImage = ({
+  children,
+  className,
+}: PokemonCardBackgroundImageProps) => (
+  <div className={cn("bg-[url(/bg.jpg)] bg-cover bg-top", className)}>
+    {children}
+  </div>
+)
+
 const PokemonCardImage = ({ className, ...props }: ComponentProps<"img">) => (
   <img
     className={cn(
-      "pixelated-image mx-auto h-60 w-60 max-w-none object-contain",
+      "pixelated-image relative mx-auto h-60 w-60 max-w-none rounded-xl object-contain p-4 select-none after:absolute",
       className,
     )}
     alt=""
@@ -59,7 +73,7 @@ const PokemonCardImageNotFound = ({
 }: ComponentProps<"div">) => (
   <div
     className={cn(
-      "text-muted-foreground mx-auto flex h-60 w-60 items-center justify-center text-xl",
+      "mx-auto flex h-60 w-60 items-center justify-center text-2xl font-medium text-zinc-200",
       className,
     )}
     {...props}
@@ -68,8 +82,8 @@ const PokemonCardImageNotFound = ({
   </div>
 )
 
-const PokemonCardSkeletonImage = () => (
-  <Skeleton className="min-h-60 w-full min-w-60" />
+const PokemonCardSkeletonBackground = () => (
+  <Skeleton className="h-60 w-full rounded-none" />
 )
 
 const PokemonCardName = ({
@@ -101,23 +115,32 @@ const PokemonCardContent = ({
   className,
   ...props
 }: ComponentProps<"div">) => (
-  <div className={cn("flex max-h-max flex-col gap-4", className)} {...props}>
+  <div
+    className={cn("flex max-h-max flex-col gap-4 p-4", className)}
+    {...props}
+  >
     {children}
   </div>
 )
 
 interface PokemonCardHeaderProps {
   children: ReactNode
+  className?: string
 }
 
-const PokemonCardHeader = ({ children }: PokemonCardHeaderProps) => (
-  <div className="flex items-center gap-1 not-last:border-b not-last:pb-4">
+const PokemonCardHeader = ({ children, className }: PokemonCardHeaderProps) => (
+  <div
+    className={cn(
+      "flex items-center gap-1 not-last:border-b not-last:pb-4",
+      className,
+    )}
+  >
     {children}
   </div>
 )
 
 const pokemonTypesVariants = cva<{ type: Record<string, string> }>(
-  "rounded-xl regular-14 py-0.5 px-2 text-white font-medium",
+  "rounded-xl text-sm py-1 px-2 text-white font-semibold",
   {
     defaultVariants: {
       type: "grass",
@@ -156,7 +179,7 @@ const PokemonCardTypes = ({
   className,
   ...props
 }: PokemonCardTypesProps) => (
-  <ul className={cn("flex items-center gap-1", className)} {...props}>
+  <ul className={cn("m-4 flex items-center gap-1", className)} {...props}>
     {types.map(({ type }) => (
       <li
         key={type.name}
@@ -202,6 +225,7 @@ const PokemonCardStatsSkeleton = () => <Skeleton className="h-[104px] w-full" />
 
 export {
   PokemonCard,
+  PokemonCardBackgroundImage,
   PokemonCardContent,
   PokemonCardHeader,
   PokemonCardImage,
@@ -209,7 +233,7 @@ export {
   PokemonCardMotion,
   PokemonCardName,
   PokemonCardNumber,
-  PokemonCardSkeletonImage,
+  PokemonCardSkeletonBackground,
   PokemonCardSkeletonName,
   PokemonCardSkeletonNumber,
   PokemonCardStatItem,

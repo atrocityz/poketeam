@@ -1,5 +1,5 @@
 import { motion } from "motion/react"
-import React, { Activity } from "react"
+import { Activity } from "react"
 
 import { SpinnerIcon } from "@/components/icons"
 import { PokemonCardName, PokemonCardNumber } from "@/components/ui"
@@ -11,8 +11,12 @@ import { usePokemonsPage } from "./hooks/usePokemonsPage"
 
 export const PokemonsPage = () => {
   const { state, functions, refs } = usePokemonsPage()
+
   return (
-    <React.Fragment>
+    <div className="grid gap-5">
+      <div className="grid gap-1">
+        <h1 className="text-2xl">Pokemon List</h1>
+      </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 pb-14">
         {state.isInfiniteQueryLoading && <PokemonListSkeleton />}
         {!state.isInfiniteQueryLoading &&
@@ -21,7 +25,7 @@ export const PokemonsPage = () => {
               key={pokemon.name}
               animate={{ opacity: 1, y: 0 }}
               aria-label="Open pokemon preview"
-              className="hover:bg-accent border-accent-foreground/15 relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border px-4 py-3 transition-colors"
+              className="hover:bg-muted/40 border-accent-foreground/15 relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border px-4 py-3 transition-colors"
               initial={{ opacity: 0, y: -10 }}
               title="Open pokemon preview"
               type="button"
@@ -63,6 +67,6 @@ export const PokemonsPage = () => {
           pokemonId={state.selectedPokemonId}
         />
       )}
-    </React.Fragment>
+    </div>
   )
 }

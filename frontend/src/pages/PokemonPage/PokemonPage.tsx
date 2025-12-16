@@ -1,9 +1,11 @@
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import React from "react"
 import { Link } from "react-router"
 
 import {
   Button,
+  LoaderSwap,
+  PokemonCard,
+  PokemonCardBackgroundImage,
   PokemonCardContent,
   PokemonCardHeader,
   PokemonCardImage,
@@ -11,7 +13,7 @@ import {
   PokemonCardMotion,
   PokemonCardName,
   PokemonCardNumber,
-  PokemonCardSkeletonImage,
+  PokemonCardSkeletonBackground,
   PokemonCardSkeletonName,
   PokemonCardSkeletonNumber,
   PokemonCardStatItem,
@@ -26,7 +28,7 @@ import { useMotionCardTiltAnimation } from "./hooks/useMotionCardTiltAnimation"
 import { usePokemonPage } from "./hooks/usePokemonPage"
 
 export const PokemonPage = () => {
-  const { state } = usePokemonPage()
+  const { state, functions } = usePokemonPage()
   const { handleMouseLeave, handleMouseMove, rotateX, rotateY } =
     useMotionCardTiltAnimation()
 
@@ -35,68 +37,101 @@ export const PokemonPage = () => {
       style={{
         perspective: "1000px",
       }}
-      className="flex flex-col items-center justify-center gap-10 pt-4"
+      className="mx-auto flex max-w-fit min-w-full flex-col items-center gap-8 pt-4 md:min-w-[380px]"
     >
-      <PokemonCardMotion
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-          transformOrigin: "center center",
-        }}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 20,
-        }}
-        whileHover={{
-          scale: 1.05,
-        }}
-      >
-        {!state.pokemon || state.isPokemonQueryLoading ? (
-          <>
-            <PokemonCardSkeletonImage />
-            <PokemonCardContent>
-              <PokemonCardHeader>
-                <PokemonCardSkeletonNumber />
-                <PokemonCardSkeletonName />
-              </PokemonCardHeader>
-              <PokemonCardStatsSkeleton />
-            </PokemonCardContent>
-          </>
-        ) : (
-          <React.Fragment>
-            <div className="relative flex shrink-0 justify-center">
-              {state.pokemon.img && (
-                <PokemonCardImage src={state.pokemon.img} />
-              )}
-              {!state.pokemon.img && <PokemonCardImageNotFound />}
-              <PokemonCardTypes
-                className="absolute top-0 left-0"
-                types={state.pokemon.types}
-              />
-            </div>
-            <PokemonCardContent>
-              <PokemonCardHeader>
-                <PokemonCardNumber>
-                  {formatPokemonId(state.pokemon.id)}
-                </PokemonCardNumber>
-                <PokemonCardName>{state.pokemon.name}</PokemonCardName>
-              </PokemonCardHeader>
-              <PokemonCardStats>
-                {state.pokemon.stats.map((stat) => (
-                  <PokemonCardStatItem key={stat.stat.name} stat={stat} />
-                ))}
-              </PokemonCardStats>
-            </PokemonCardContent>
-          </React.Fragment>
-        )}
-      </PokemonCardMotion>
+      {(!state.pokemon || state.isPokemonQueryLoading) && (
+        <PokemonCard className="min-w-full">
+          <PokemonCardSkeletonBackground />
+          <PokemonCardContent>
+            <PokemonCardHeader>
+              <PokemonCardSkeletonNumber />
+              <PokemonCardSkeletonName />
+            </PokemonCardHeader>
+            <PokemonCardStatsSkeleton />
+          </PokemonCardContent>
+        </PokemonCard>
+      )}
+      {state.pokemon && !state.isPokemonQueryLoading && (
+        <PokemonCardMotion
+          style={{
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d",
+            transformOrigin: "center center",
+          }}
+          className="min-w-full"
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+          }}
+          whileHover={{
+            scale: 1.05,
+          }}
+        >
+          <PokemonCardBackgroundImage className="relative flex shrink-0 justify-center">
+            {state.pokemon.img && <PokemonCardImage src={state.pokemon.img} />}
+            {!state.pokemon.img && <PokemonCardImageNotFound />}
+            <PokemonCardTypes
+              className="absolute top-0 left-0"
+              types={state.pokemon.types}
+            />
+          </PokemonCardBackgroundImage>
+          <PokemonCardContent>
+            <PokemonCardHeader>
+              <PokemonCardNumber>
+                {formatPokemonId(state.pokemon.id)}
+              </PokemonCardNumber>
+              <PokemonCardName>{state.pokemon.name}</PokemonCardName>
+            </PokemonCardHeader>
+            <PokemonCardStats>
+              {state.pokemon.stats.map((stat) => (
+                <PokemonCardStatItem key={stat.stat.name} stat={stat} />
+              ))}
+            </PokemonCardStats>
+          </PokemonCardContent>
+        </PokemonCardMotion>
+      )}
+
+      {state.isPokemonInTeam ? (
+        <Button
+          className="w-full uppercase"
+          disabled={state.isPutTeamQueryLoading || state.isPokemonQueryLoading}
+          size="lg"
+          variant="destructive"
+          onClick={() => {
+            if (!state.pokemon) return
+            functions.removePokemonFromTeam(state.pokemon.id)
+          }}
+        >
+          <LoaderSwap isLoading={state.isPutTeamQueryLoading}>
+            Remove from team
+          </LoaderSwap>
+        </Button>
+      ) : (
+        <Button
+          disabled={
+            state.isPutTeamQueryLoading ||
+            state.isTeamFull ||
+            state.isPokemonQueryLoading
+          }
+          className="w-full uppercase"
+          size="lg"
+          onClick={() => {
+            if (!state.pokemon) return
+            functions.addPokemonToTeam(state.pokemon)
+          }}
+        >
+          <LoaderSwap isLoading={state.isPutTeamQueryLoading}>
+            Add to team
+          </LoaderSwap>
+        </Button>
+      )}
 
       <div className="flex gap-4">
-        <Button asChild>
+        <Button asChild variant="outline">
           <Link
             className={cn({
               "pointer-events-none opacity-15": !state.hasPrevPokemon,
@@ -106,7 +141,7 @@ export const PokemonPage = () => {
             <ArrowLeft className="size-6" />
           </Link>
         </Button>
-        <Button asChild>
+        <Button asChild variant="outline">
           <Link
             className={cn(
               cn({

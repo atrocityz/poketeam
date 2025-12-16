@@ -11,13 +11,14 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
+  PokemonCardBackgroundImage,
   PokemonCardContent,
   PokemonCardHeader,
   PokemonCardImage,
   PokemonCardImageNotFound,
   PokemonCardName,
   PokemonCardNumber,
-  PokemonCardSkeletonImage,
+  PokemonCardSkeletonBackground,
   PokemonCardSkeletonName,
   PokemonCardSkeletonNumber,
   PokemonCardTypes,
@@ -39,11 +40,14 @@ export const PokemonPreviewDialog = ({
   onClose,
   isOpen,
 }: PokemonDialogProps) => {
-  const { state } = usePokemonPreviewDialog(pokemonId)
+  const { state } = usePokemonPreviewDialog(pokemonId, onClose)
 
   return (
     <Dialog onOpenChange={onClose} open={isOpen}>
-      <DialogContent className="w-[320px]" showCloseButton={false}>
+      <DialogContent
+        className="w-[320px] overflow-hidden p-0"
+        showCloseButton={false}
+      >
         <DialogClose asChild>
           <Button
             aria-label="Close"
@@ -60,10 +64,10 @@ export const PokemonPreviewDialog = ({
         <DialogDescription className="sr-only">
           Preview pokemon card, you can follow the link for detailed statistics
         </DialogDescription>
-        <div className="relative grid gap-4">
-          {state.isPokemonQueryLoading && (
+        <div className="relative">
+          {(!state.pokemon || state.isPokemonQueryLoading) && (
             <React.Fragment>
-              <PokemonCardSkeletonImage />
+              <PokemonCardSkeletonBackground />
               <PokemonCardContent>
                 <PokemonCardHeader>
                   <PokemonCardSkeletonNumber />
@@ -75,17 +79,19 @@ export const PokemonPreviewDialog = ({
 
           {state.pokemon && (
             <React.Fragment>
-              {state.pokemon.img ? (
-                <PokemonCardImage src={state.pokemon.img} />
-              ) : (
-                <PokemonCardImageNotFound />
-              )}
-              <PokemonCardTypes
-                className="absolute top-0 left-0"
-                types={state.pokemon.types}
-              />
+              <PokemonCardBackgroundImage className="relative">
+                {state.pokemon.img ? (
+                  <PokemonCardImage src={state.pokemon.img} />
+                ) : (
+                  <PokemonCardImageNotFound />
+                )}
+                <PokemonCardTypes
+                  className="absolute top-0 left-0"
+                  types={state.pokemon.types}
+                />
+              </PokemonCardBackgroundImage>
               <PokemonCardContent>
-                <PokemonCardHeader>
+                <PokemonCardHeader className="border-none not-last:pb-0">
                   <PokemonCardNumber>
                     {formatPokemonId(state.pokemon.id)}
                   </PokemonCardNumber>
@@ -94,17 +100,19 @@ export const PokemonPreviewDialog = ({
               </PokemonCardContent>
             </React.Fragment>
           )}
-
           <Button
             asChild
             className={cn(
-              "rounded-xl border p-3 transition-colors duration-250",
+              "mx-4 mb-4 flex rounded-xl border p-3 transition-colors duration-250",
               {
-                "pointer-events-none opacity-25": state.isPokemonQueryLoading,
+                "pointer-events-none opacity-25":
+                  state.isPokemonQueryLoading || !state.pokemon,
               },
             )}
           >
-            <Link to={routes.pokemon.getHref(pokemonId)}>More info</Link>
+            <Link className="uppercase" to={routes.pokemon.getHref(pokemonId)}>
+              More
+            </Link>
           </Button>
         </div>
       </DialogContent>
