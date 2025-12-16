@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { hash, verify } from 'argon2';
+import { verify } from 'argon2';
 import type { Request, Response } from 'express';
 import type { StringValue } from 'ms';
 import type { User } from '../../../prisma/generated/client';

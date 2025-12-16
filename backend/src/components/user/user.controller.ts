@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
-import { Authorization } from '@/components/user/decorators/authorization.decorator';
-import { Authorized } from '@/components/user/decorators/authorized.decorator';
+import { Authorization } from '@/components/auth/decorators/authorization.decorator';
+import { Authorized } from '@/components/auth/decorators/authorized.decorator';
 import { User } from 'prisma/generated/client';
 
 @Controller('user')

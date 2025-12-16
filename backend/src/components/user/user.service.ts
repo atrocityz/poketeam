@@ -25,6 +25,11 @@ export class UserService {
         password: await hash(data.password),
         login: data.login,
         avatarUrl: data.avatarUrl,
+        team: {
+          create: {
+            pokemons: [],
+          },
+        },
       },
     });
 
