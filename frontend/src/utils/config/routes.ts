@@ -5,9 +5,9 @@ export const routes = {
     path: "/",
     getHref: () => "/",
   },
-  profile: {
-    path: "/profile",
-    getHref: () => "/profile",
+  team: {
+    path: "/team",
+    getHref: () => "/team",
   },
   pokemon: {
     path: "/pokemon/:pokemonId",

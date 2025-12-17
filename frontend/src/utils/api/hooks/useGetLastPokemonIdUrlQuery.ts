@@ -2,7 +2,7 @@ import type { UseQueryOptions } from "@tanstack/react-query"
 
 import { useQuery } from "@tanstack/react-query"
 
-import { POKEMONS_QUERY } from "@/utils/constants"
+import { POKEMONS } from "@/utils/constants"
 
 import { getPokemons } from "../requests"
 
@@ -16,7 +16,7 @@ export const useGetLastPokemonIdUrlQuery = (
         params: { limit: 1, offset: 0 },
       })
       const safeOffset = Math.max(
-        POKEMONS_QUERY.SAFE_POKEMON_COUNT,
+        POKEMONS.SAFE_POKEMON_COUNT,
         countResponse.data.count - 1,
       )
 

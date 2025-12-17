@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import type { ErrorResponse } from "@/../@types/auth"
+import type { ErrorResponse } from "@/../@types/myApi"
 
 import { useStageStore } from "@/pages/AuthPage/stores"
 import { usePostLoginMutation } from "@/utils/api/hooks"

@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from "axios"
 
-import type { AuthResponse } from "@/../@types/auth"
+import type { AuthResponse } from "../../../../../../@types/myApi"
 
 import { api } from "../../../instance"
 

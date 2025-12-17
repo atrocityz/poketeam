@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router"
 import { Toaster } from "sonner"
 
 import { Layout } from "@/components/layouts"
-import { AuthPage, PokemonPage, PokemonsPage, ProfilePage } from "@/pages"
+import { AuthPage, PokemonPage, PokemonsPage, TeamPage } from "@/pages"
 import { routes } from "@/utils/config"
 import { useThemeStore } from "@/utils/stores"
 
@@ -30,7 +30,7 @@ export const App = () => {
               element={<PokemonsPage />}
               path={routes.pokemons.path}
             />
-            <Route element={<ProfilePage />} path={routes.profile.path} />
+            <Route element={<TeamPage />} path={routes.team.path} />
             <Route element={<PokemonPage />} path={routes.pokemon.path} />
             <Route
               element={<Navigate to={routes.pokemons.getHref()} />}

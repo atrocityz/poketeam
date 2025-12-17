@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import type { ErrorResponse } from "@/../@types/auth"
+import type { ErrorResponse } from "@/../@types/myApi"
 
 import { useStageStore } from "@/pages/AuthPage/stores"
 import { usePostRegisterMutation } from "@/utils/api/hooks/usePostRegisterMutation"

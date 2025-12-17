@@ -55,6 +55,7 @@ export const usePokemonsPage = () => {
       showLoadMore:
         !pokemonInfiniteQuery.isPending &&
         !pokemonInfiniteQuery.isFetchingNextPage,
+      hasNextPage: pokemonInfiniteQuery.hasNextPage,
     },
     functions: {
       selectPokemon,

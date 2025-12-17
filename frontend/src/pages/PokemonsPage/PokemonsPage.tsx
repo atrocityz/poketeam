@@ -13,11 +13,11 @@ export const PokemonsPage = () => {
   const { state, functions, refs } = usePokemonsPage()
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-5 pb-8 md:pb-14">
       <div className="grid gap-1">
         <h1 className="text-2xl">Pokemon List</h1>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 pb-14">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5">
         {state.isInfiniteQueryLoading && <PokemonListSkeleton />}
         {!state.isInfiniteQueryLoading &&
           state.pokemons.map((pokemon) => (
@@ -57,7 +57,7 @@ export const PokemonsPage = () => {
           </div>
         </Activity>
       </div>
-      {state.showLoadMore && (
+      {state.showLoadMore && state.hasNextPage && (
         <div ref={refs.loadMoreRef} className="-mt-[400px]" />
       )}
       {state.selectedPokemonId && (

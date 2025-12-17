@@ -1,4 +1,4 @@
 export * from "./AuthPage"
 export * from "./PokemonPage"
 export * from "./PokemonsPage"
-export * from "./ProfilePage"
+export * from "./TeamPage"

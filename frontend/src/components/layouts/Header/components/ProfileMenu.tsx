@@ -1,5 +1,5 @@
 import Cookies from "js-cookie"
-import { ChevronsUpDown, Lamp, LogOut, UserRound } from "lucide-react"
+import { ChevronsUpDown, Lamp, LogOut, Users } from "lucide-react"
 import { Link } from "react-router"
 import { toast } from "sonner"
 
@@ -48,10 +48,10 @@ export const ProfileMenu = () => {
         >
           <Link
             className="flex w-full items-center gap-1"
-            to={routes.profile.getHref()}
+            to={routes.team.getHref()}
           >
-            <UserRound className="text-foreground" />
-            Profile
+            <Users className="text-foreground" />
+            Team
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
