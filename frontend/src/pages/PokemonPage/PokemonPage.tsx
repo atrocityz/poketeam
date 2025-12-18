@@ -125,7 +125,7 @@ export const PokemonPage = () => {
           }}
         >
           <LoaderSwap isLoading={state.isPutTeamQueryLoading}>
-            Add to team
+            {state.isTeamFull ? "Team is full!" : "Add to team"}
           </LoaderSwap>
         </Button>
       )}

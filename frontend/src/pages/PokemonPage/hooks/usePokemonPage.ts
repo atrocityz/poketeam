@@ -1,4 +1,5 @@
 import { useParams } from "react-router"
+import { toast } from "sonner"
 
 import type { PokemonEntity } from "@/../@types/myApi"
 
@@ -35,9 +36,15 @@ export const usePokemonPage = () => {
   // TODO: Probably i dont need add or remove pokemon from team when i didnt get it
   const pokemonsInTeam = getTeamQuery.data?.data.pokemons ?? []
   const addPokemonToTeam = (pokemon: PokemonEntity) => {
+    const pokemonsWithNew = [...pokemonsInTeam, pokemon]
+
+    if (pokemonsWithNew.length === POKEMONS.TEAM_COUNT_LIMIT) {
+      toast.info("Your pokemon team is full")
+    }
+
     putTeamMutation.mutate({
       params: {
-        pokemons: [...pokemonsInTeam, pokemon],
+        pokemons: pokemonsWithNew,
       },
     })
   }
