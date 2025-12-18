@@ -1,4 +1,4 @@
-import { X } from "lucide-react"
+import { SquareArrowOutUpRight, X } from "lucide-react"
 import { Link } from "react-router"
 
 import {
@@ -47,20 +47,22 @@ export const TeamPage = () => {
                 types={pokemon.types}
               />
             </div>
-            <PokemonCardContent className="z-1">
-              <PokemonCardHeader>
+            <PokemonCardContent className="z-1 flex flex-row justify-between">
+              <PokemonCardHeader className="not-last:border-none not-last:pb-0">
                 <PokemonCardNumber>
                   {formatPokemonId(pokemon.id)}
                 </PokemonCardNumber>
                 <PokemonCardName>{pokemon.name}</PokemonCardName>
               </PokemonCardHeader>
+              <Link
+                aria-label="Go to this pokemon page"
+                className="inline-flex items-center justify-center rounded-xl transition-colors outline-none after:absolute after:inset-0"
+                title="Go to this pokemon page"
+                to={routes.pokemon.getHref(pokemon.id)}
+              >
+                <SquareArrowOutUpRight className="size-5" />
+              </Link>
             </PokemonCardContent>
-            <Link
-              aria-label="Go to this pokemon page"
-              className="absolute inset-0 rounded-xl transition-colors outline-none"
-              title="Go to this pokemon page"
-              to={routes.pokemon.getHref(pokemon.id)}
-            />
             <Button
               aria-label="Delete pokemon from team"
               className="absolute top-4 right-4"
