@@ -12,7 +12,7 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => (
   <React.Fragment>
     <Header />
-    <main className="container mx-auto px-4 pt-8">
+    <main className="container mx-auto px-2 pt-8 md:px-4">
       {children || <Outlet />}
     </main>
   </React.Fragment>
