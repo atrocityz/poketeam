@@ -1,3 +1,3 @@
-export * from "./FormContainer"
-export * from "./LoginForm"
-export * from "./RegisterForm"
+export * from "./FormContainer/FormContainer"
+export * from "./LoginForm/LoginForm"
+export * from "./RegisterForm/RegisterForm"

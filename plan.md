@@ -1,11 +1,11 @@
 ## Goals
 1. Complete Pokémon page with full statistics.
 2. Implement user Pokémon team feature:
-   - Store user teams in PostgreSQL.
-   - Limit team to a maximum of 6 Pokémon.
+   + Store user teams in PostgreSQL.
+   + Limit team to a maximum of 6 Pokémon.
 3. Create Team page:
-   - Display user's saved Pokémon team.
-   - Allow CRUD operations on team (add/remove Pokémon).
+   + Display user's saved Pokémon team.
+   + Allow CRUD operations on team (add/remove Pokémon).
 
 ## Tasks Breakdown
 

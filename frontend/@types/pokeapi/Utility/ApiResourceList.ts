@@ -1,4 +1,4 @@
-import type { Endpoint } from "../../lib/Endpoint"
+import type { Endpoint } from "../lib/Endpoint"
 
 export interface Base {
   id: number
