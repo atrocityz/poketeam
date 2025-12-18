@@ -35,7 +35,11 @@ export const useRegisterForm = () => {
         toast.success("Account has been successfully registered")
       },
       onError: (error: AxiosError<ErrorResponse>) => {
-        toast.error(error.response?.data.message)
+        if (error.response?.data) {
+          registerForm.setError("email", {
+            message: error.response.data.message,
+          })
+        }
       },
     },
   })

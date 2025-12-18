@@ -31,6 +31,11 @@ export const LoginForm = () => {
       isLoading={state.isLoading}
       onSubmit={functions.onSubmit}
     >
+      {state.submitError?.response && (
+        <div className="bg-destructive/20 border-destructive text-destructive rounded-lg border p-4">
+          {state.submitError.response.data.message}
+        </div>
+      )}
       <Controller
         render={({ field, fieldState }) => (
           <Field>

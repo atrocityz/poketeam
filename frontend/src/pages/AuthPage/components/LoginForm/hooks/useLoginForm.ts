@@ -5,13 +5,12 @@ import Cookies from "js-cookie"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import type { ErrorResponse } from "@/../@types/myApi"
-
 import { useStageStore } from "@/pages/AuthPage/stores"
 import { usePostLoginMutation } from "@/utils/api/hooks"
 import { COOKIE } from "@/utils/constants"
 import { useAuthStore } from "@/utils/stores/auth"
 
+import type { ErrorResponse } from "../../../../../../@types/myApi"
 import type { LoginFormData } from "../schemas/loginFormSchema"
 
 import { loginFormSchema } from "../schemas/loginFormSchema"
@@ -40,9 +39,6 @@ export const useLoginForm = () => {
 
         toast.success("Successful login to your account")
       },
-      onError: (error: AxiosError<ErrorResponse>) => {
-        toast.error(error.response?.data.message ?? error.message)
-      },
     },
   })
 
@@ -57,6 +53,7 @@ export const useLoginForm = () => {
   return {
     state: {
       isLoading: postLoginMutation.isPending,
+      submitError: postLoginMutation.error as AxiosError<ErrorResponse>,
     },
     functions: {
       onSubmit,
