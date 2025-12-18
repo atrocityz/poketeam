@@ -103,7 +103,7 @@ const PokemonCardNumber = ({
   children,
   ...props
 }: ComponentProps<"span">) => (
-  <span className={className} {...props}>
+  <span className={cn("font-mono", className)} {...props}>
     {children}
   </span>
 )
@@ -204,7 +204,7 @@ const PokemonCardStatItem = ({ stat, className }: PokemonCardStatItemProps) => (
     <div className="text-[13px] font-semibold uppercase md:text-sm">
       {stat.stat.name}:
     </div>
-    <div>{stat.base_stat}</div>
+    <div className="font-mono">{stat.base_stat}</div>
   </li>
 )
 
