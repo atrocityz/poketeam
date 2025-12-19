@@ -1,3 +1,5 @@
+import { toast } from "sonner"
+
 import type { PokemonEntity } from "@/../@types/myApi"
 
 import {
@@ -18,11 +20,18 @@ export const useTeamPage = () => {
   const removePokemonFromTeam = (id: PokemonEntity["id"]) => {
     const filteredPokemons = pokemons.filter((pokemon) => pokemon.id !== id)
 
-    putTeamMutation.mutate({
-      params: {
-        pokemons: filteredPokemons,
+    putTeamMutation.mutate(
+      {
+        params: {
+          pokemons: filteredPokemons,
+        },
       },
-    })
+      {
+        onSuccess: () => {
+          toast.success(`Pokemon successful deleted from team`)
+        },
+      },
+    )
   }
 
   return {

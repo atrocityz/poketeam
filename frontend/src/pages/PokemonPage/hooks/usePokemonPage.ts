@@ -33,20 +33,30 @@ export const usePokemonPage = () => {
   const hasPrevPokemon = prevPokemonId !== pokemon?.id
   const hasNextPokemon = nextPokemonId !== pokemon?.id
 
-  // TODO: Probably i dont need add or remove pokemon from team when i didnt get it
   const pokemonsInTeam = getTeamQuery.data?.data.pokemons ?? []
   const addPokemonToTeam = (pokemon: PokemonEntity) => {
+    if (!getTeamQuery.data?.data) return
+
     const pokemonsWithNew = [...pokemonsInTeam, pokemon]
+    const formattedPokemonName =
+      pokemon.name[0].toLocaleUpperCase() + pokemon.name.slice(1)
 
     if (pokemonsWithNew.length === POKEMONS.TEAM_COUNT_LIMIT) {
       toast.info("Your pokemon team is full")
     }
 
-    putTeamMutation.mutate({
-      params: {
-        pokemons: pokemonsWithNew,
+    putTeamMutation.mutate(
+      {
+        params: {
+          pokemons: pokemonsWithNew,
+        },
       },
-    })
+      {
+        onSuccess: () => {
+          toast.success(`${formattedPokemonName} added to team`)
+        },
+      },
+    )
   }
 
   const removePokemonFromTeam = (id: PokemonEntity["id"]) => {
@@ -56,11 +66,18 @@ export const usePokemonPage = () => {
       (pokemon) => pokemon.id !== id,
     )
 
-    putTeamMutation.mutate({
-      params: {
-        pokemons: filteredPokemons,
+    putTeamMutation.mutate(
+      {
+        params: {
+          pokemons: filteredPokemons,
+        },
       },
-    })
+      {
+        onSuccess: () => {
+          toast.success(`Pokemon successful deleted from team`)
+        },
+      },
+    )
   }
 
   const isPokemonInTeam = !!pokemonsInTeam.find(
