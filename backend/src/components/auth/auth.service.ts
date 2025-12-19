@@ -189,7 +189,6 @@ export class AuthService {
       expires,
       secure: true,
       sameSite: isDev(this.configService) ? 'none' : 'lax',
-      partitioned: isDev(this.configService),
     });
   }
 }
