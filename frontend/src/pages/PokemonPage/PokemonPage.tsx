@@ -97,8 +97,12 @@ export const PokemonPage = () => {
 
       {state.isPokemonInTeam ? (
         <Button
+          disabled={
+            state.isPutTeamQueryLoading ||
+            state.isPokemonQueryLoading ||
+            state.isGetTeamQueryLoading
+          }
           className="w-full uppercase"
-          disabled={state.isPutTeamQueryLoading || state.isPokemonQueryLoading}
           size="lg"
           variant="destructive"
           onClick={() => {
@@ -115,7 +119,8 @@ export const PokemonPage = () => {
           disabled={
             state.isPutTeamQueryLoading ||
             state.isTeamFull ||
-            state.isPokemonQueryLoading
+            state.isPokemonQueryLoading ||
+            state.isGetTeamQueryLoading
           }
           className="w-full uppercase"
           size="lg"

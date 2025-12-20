@@ -97,6 +97,7 @@ export const usePokemonPage = () => {
       isPokemonInTeam,
       isTeamFull,
       isPutTeamQueryLoading: putTeamMutation.isPending,
+      isGetTeamQueryLoading: getTeamQuery.isLoading,
     },
     functions: {
       removePokemonFromTeam,
