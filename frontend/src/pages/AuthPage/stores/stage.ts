@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 export type Stage = "login" | "register"
 
@@ -7,7 +8,14 @@ interface StageStoreState {
   setStage: (stage: Stage) => void
 }
 
-export const useStageStore = create<StageStoreState>()((set) => ({
-  stage: "login",
-  setStage: (stage) => set({ stage }),
-}))
+export const useStageStore = create<StageStoreState>()(
+  persist(
+    (set) => ({
+      stage: "login",
+      setStage: (stage) => set({ stage }),
+    }),
+    {
+      name: "stage",
+    },
+  ),
+)

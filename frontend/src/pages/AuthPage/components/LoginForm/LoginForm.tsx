@@ -7,6 +7,7 @@ import {
   FieldLabel,
   Input,
   LoaderSwap,
+  PasswordInput,
 } from "@/components/ui"
 
 import { AuthButtonsContainer } from "../AuthButtonsContainer/AuthButtonsContainer"
@@ -57,11 +58,10 @@ export const LoginForm = () => {
         render={({ field, fieldState }) => (
           <Field>
             <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-            <Input
+            <PasswordInput
               {...field}
               aria-invalid={fieldState.invalid}
               id={field.name}
-              type="password"
               placeholder="********"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

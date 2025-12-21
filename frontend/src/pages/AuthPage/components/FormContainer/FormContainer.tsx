@@ -17,7 +17,7 @@ export const FormContainer = () => {
   const stage = useStageStore((state) => state.stage)
 
   return (
-    <Card className="w-full sm:w-[420px]">
+    <Card className="w-full sm:w-105">
       <CardContent>{component[stage]}</CardContent>
     </Card>
   )
