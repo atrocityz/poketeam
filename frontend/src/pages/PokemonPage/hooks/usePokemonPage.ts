@@ -11,6 +11,7 @@ import {
 } from "@/utils/api/hooks"
 import { POKEMONS } from "@/utils/constants"
 import { dbPokemonToPokemonEntity, getPokemonIdFromUrl } from "@/utils/helpers"
+import { queryClient } from "@/utils/lib"
 
 export const usePokemonPage = () => {
   const params = useParams()
@@ -19,7 +20,33 @@ export const usePokemonPage = () => {
   })
   const lastPokemonIdUrlQuery = useGetLastPokemonIdUrlQuery()
   const getTeamQuery = useGetUserTeamQuery()
-  const putTeamMutation = usePutUserTeamUpdateMutation()
+  const putTeamMutation = usePutUserTeamUpdateMutation({
+    options: {
+      onMutate: async (variables) => {
+        await queryClient.cancelQueries({ queryKey: ["getUserTeam"] })
+
+        const previousTeam = queryClient.getQueryData(["getUserTeam"])
+
+        queryClient.setQueryData(["getUserTeam"], (old: any) => ({
+          ...old,
+          data: {
+            ...old.data,
+            pokemons: variables.params.pokemons,
+          },
+        }))
+
+        return { previousTeam }
+      },
+      onError: (_err, _variables, context) => {
+        if (context?.previousTeam) {
+          queryClient.setQueryData(["getUserTeam"], context.previousTeam)
+        }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ["getUserTeam"] })
+      },
+    },
+  })
 
   const lastPokemonId = lastPokemonIdUrlQuery.data
     ? getPokemonIdFromUrl(lastPokemonIdUrlQuery.data)
@@ -38,46 +65,28 @@ export const usePokemonPage = () => {
     if (!getTeamQuery.data?.data) return
 
     const pokemonsWithNew = [...pokemonsInTeam, pokemon]
-    const formattedPokemonName =
-      pokemon.name[0].toLocaleUpperCase() + pokemon.name.slice(1)
 
     if (pokemonsWithNew.length === POKEMONS.TEAM_COUNT_LIMIT) {
       toast.info("Your pokemon team is full")
     }
 
-    putTeamMutation.mutate(
-      {
-        params: {
-          pokemons: pokemonsWithNew,
-        },
+    putTeamMutation.mutate({
+      params: {
+        pokemons: pokemonsWithNew,
       },
-      {
-        onSuccess: () => {
-          toast.success(`${formattedPokemonName} added to team`)
-        },
-      },
-    )
+    })
   }
 
   const removePokemonFromTeam = (id: PokemonEntity["id"]) => {
-    if (!getTeamQuery.data?.data) return
-
     const filteredPokemons = pokemonsInTeam.filter(
-      (pokemon) => pokemon.id !== id,
+      (pokemon) => id !== pokemon.id,
     )
 
-    putTeamMutation.mutate(
-      {
-        params: {
-          pokemons: filteredPokemons,
-        },
+    putTeamMutation.mutate({
+      params: {
+        pokemons: filteredPokemons,
       },
-      {
-        onSuccess: () => {
-          toast.success(`Pokemon successful deleted from team`)
-        },
-      },
-    )
+    })
   }
 
   const isPokemonInTeam = !!pokemonsInTeam.find(

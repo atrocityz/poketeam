@@ -3,7 +3,6 @@ import { Link } from "react-router"
 
 import {
   Button,
-  LoaderSwap,
   PokemonCard,
   PokemonCardContent,
   PokemonCardHeader,
@@ -70,9 +69,7 @@ export const TeamPage = () => {
               variant="destructive"
               onClick={() => functions.removePokemonFromTeam(pokemon.id)}
             >
-              <LoaderSwap isLoading={state.isPutTeamQuery}>
-                <X />
-              </LoaderSwap>
+              <X />
             </Button>
           </PokemonCard>
         ))}

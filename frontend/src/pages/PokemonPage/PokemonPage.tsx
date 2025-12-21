@@ -21,6 +21,7 @@ import {
   PokemonCardStatsSkeleton,
   PokemonCardTypes,
 } from "@/components/ui"
+import { routes } from "@/utils/config"
 import { formatPokemonId } from "@/utils/helpers"
 import { cn } from "@/utils/lib"
 
@@ -110,7 +111,11 @@ export const PokemonPage = () => {
             functions.removePokemonFromTeam(state.pokemon.id)
           }}
         >
-          <LoaderSwap isLoading={state.isPutTeamQueryLoading}>
+          <LoaderSwap
+            isLoading={
+              state.isPutTeamQueryLoading || state.isGetTeamQueryLoading
+            }
+          >
             Remove from team
           </LoaderSwap>
         </Button>
@@ -129,7 +134,11 @@ export const PokemonPage = () => {
             functions.addPokemonToTeam(state.pokemon)
           }}
         >
-          <LoaderSwap isLoading={state.isPutTeamQueryLoading}>
+          <LoaderSwap
+            isLoading={
+              state.isPutTeamQueryLoading || state.isGetTeamQueryLoading
+            }
+          >
             {state.isTeamFull ? "Team is full!" : "Add to team"}
           </LoaderSwap>
         </Button>
@@ -141,7 +150,7 @@ export const PokemonPage = () => {
             className={cn({
               "pointer-events-none opacity-15": !state.hasPrevPokemon,
             })}
-            to={`/pokemon/${state.prevPokemonId}`}
+            to={routes.pokemon.getHref(state.prevPokemonId!)}
           >
             <ArrowLeft className="size-6" />
           </Link>
@@ -154,7 +163,7 @@ export const PokemonPage = () => {
                   !state.hasNextPokemon || state.isLastPokemonIdLoading,
               }),
             )}
-            to={`/pokemon/${state.nextPokemonId}`}
+            to={routes.pokemon.getHref(state.nextPokemonId!)}
           >
             <ArrowRight className="size-6" />
           </Link>
