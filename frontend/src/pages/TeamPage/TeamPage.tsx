@@ -78,11 +78,15 @@ export const TeamPage = () => {
             key={index}
             className="bg-muted/30 flex min-h-[260px] items-center justify-center"
           >
-            <img
-              alt=""
-              className="max-h-24 max-w-24 grayscale"
-              src="/logo.svg"
-            />
+            {state.isGetTeamQueryLoading ? (
+              <img alt="" className="size-24 animate-spin" src="/logo.svg" />
+            ) : (
+              <img
+                alt=""
+                className="max-h-24 max-w-24 grayscale"
+                src="/logo.svg"
+              />
+            )}
           </PokemonCard>
         ))}
       </div>

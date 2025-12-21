@@ -105,7 +105,7 @@ export const usePokemonPage = () => {
       hasNextPokemon,
       isPokemonInTeam,
       isTeamFull,
-      isPutTeamQueryLoading: putTeamMutation.isPending,
+      isPutTeamMutationLoading: putTeamMutation.isPending,
       isGetTeamQueryLoading: getTeamQuery.isLoading,
     },
     functions: {

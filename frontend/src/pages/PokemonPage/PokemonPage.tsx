@@ -99,7 +99,7 @@ export const PokemonPage = () => {
       {state.isPokemonInTeam ? (
         <Button
           disabled={
-            state.isPutTeamQueryLoading ||
+            state.isPutTeamMutationLoading ||
             state.isPokemonQueryLoading ||
             state.isGetTeamQueryLoading
           }
@@ -113,7 +113,7 @@ export const PokemonPage = () => {
         >
           <LoaderSwap
             isLoading={
-              state.isPutTeamQueryLoading || state.isGetTeamQueryLoading
+              state.isPutTeamMutationLoading || state.isGetTeamQueryLoading
             }
           >
             Remove from team
@@ -122,7 +122,7 @@ export const PokemonPage = () => {
       ) : (
         <Button
           disabled={
-            state.isPutTeamQueryLoading ||
+            state.isPutTeamMutationLoading ||
             state.isTeamFull ||
             state.isPokemonQueryLoading ||
             state.isGetTeamQueryLoading
@@ -136,7 +136,7 @@ export const PokemonPage = () => {
         >
           <LoaderSwap
             isLoading={
-              state.isPutTeamQueryLoading || state.isGetTeamQueryLoading
+              state.isPutTeamMutationLoading || state.isGetTeamQueryLoading
             }
           >
             {state.isTeamFull ? "Team is full!" : "Add to team"}

@@ -56,7 +56,7 @@ export const useTeamPage = () => {
     state: {
       pokemons,
       remainingPokemonSpots,
-      isPutTeamQueryLoading: putTeamMutation.isPending,
+      isGetTeamQueryLoading: getTeamQuery.isLoading,
     },
     functions: {
       removePokemonFromTeam,
