@@ -22,6 +22,8 @@ export class AuthService {
   private readonly JWT_ACCESS_TOKEN_TTL: StringValue;
   private readonly JWT_REFRESH_TOKEN_TTL: StringValue;
 
+  private readonly COOKIE_DOMAIN: string;
+
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
@@ -33,6 +35,8 @@ export class AuthService {
     this.JWT_REFRESH_TOKEN_TTL = configService.getOrThrow<StringValue>(
       'JWT_REFRESH_TOKEN_TTL',
     );
+
+    this.COOKIE_DOMAIN = configService.getOrThrow<string>('COOKIE_DOMAIN');
   }
 
   async register(data: RegisterRequest) {
@@ -186,6 +190,7 @@ export class AuthService {
   }) {
     response.cookie('refreshToken', value, {
       httpOnly: true,
+      domain: this.COOKIE_DOMAIN,
       expires,
       secure: true,
       sameSite: isDev(this.configService) ? 'none' : 'lax',
