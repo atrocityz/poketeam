@@ -1,12 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router"
 import { Toaster } from "sonner"
 
+import { SpinnerIcon } from "@/components/icons"
 import { Layout } from "@/components/layouts"
 import { AuthPage, PokemonPage, PokemonsPage, TeamPage } from "@/pages"
 import { routes } from "@/utils/config"
-import { useThemeStore } from "@/utils/stores"
-
-import { useAuthStore } from "../utils/stores/auth"
+import { useAuthStore, useThemeStore } from "@/utils/stores"
 
 export const AuthApp = () => (
   <Routes>
@@ -16,8 +15,16 @@ export const AuthApp = () => (
 )
 
 export const App = () => {
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
+  const { isLoggedIn, isLoading } = useAuthStore()
   const theme = useThemeStore((state) => state.theme)
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <SpinnerIcon className="h-20 w-20 animate-spin" />
+      </div>
+    )
+  }
 
   return (
     <BrowserRouter>

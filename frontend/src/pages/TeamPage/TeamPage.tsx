@@ -76,7 +76,7 @@ export const TeamPage = () => {
         {state.remainingPokemonSpots.map((_, index) => (
           <PokemonCard
             key={index}
-            className="bg-muted/30 flex min-h-[260px] items-center justify-center"
+            className="bg-muted/30 flex min-h-65 items-center justify-center"
           >
             {state.isGetTeamQueryLoading ? (
               <img alt="" className="size-24 animate-spin" src="/logo.svg" />

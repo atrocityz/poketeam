@@ -20,14 +20,15 @@ const init = async () => {
       Cookies.remove(COOKIE.ACCESS_TOKEN)
     }
   }
-
-  createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-      <Providers>
-        <App />
-      </Providers>
-    </StrictMode>,
-  )
+  useAuthStore.setState({ isLoading: false })
 }
 
 init()
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <Providers>
+      <App />
+    </Providers>
+  </StrictMode>,
+)
