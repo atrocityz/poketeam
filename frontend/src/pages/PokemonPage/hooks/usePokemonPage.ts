@@ -10,6 +10,7 @@ import {
   usePutUserTeamUpdateMutation,
 } from "@/utils/api/hooks"
 import { POKEMONS } from "@/utils/constants"
+import { QUERY_KEYS } from "@/utils/constants/queries"
 import { dbPokemonToPokemonEntity, getPokemonIdFromUrl } from "@/utils/helpers"
 import { queryClient } from "@/utils/lib"
 
@@ -23,27 +24,39 @@ export const usePokemonPage = () => {
   const putTeamMutation = usePutUserTeamUpdateMutation({
     options: {
       onMutate: async (variables) => {
-        await queryClient.cancelQueries({ queryKey: ["getUserTeam"] })
+        await queryClient.cancelQueries({
+          queryKey: [QUERY_KEYS.USER.GET_USER_TEAM],
+        })
 
-        const previousTeam = queryClient.getQueryData(["getUserTeam"])
+        const previousTeam = queryClient.getQueryData([
+          QUERY_KEYS.USER.GET_USER_TEAM,
+        ])
 
-        queryClient.setQueryData(["getUserTeam"], (old: any) => ({
-          ...old,
-          data: {
-            ...old.data,
-            pokemons: variables.params.pokemons,
-          },
-        }))
+        queryClient.setQueryData(
+          [QUERY_KEYS.USER.GET_USER_TEAM],
+          (old: any) => ({
+            ...old,
+            data: {
+              ...old.data,
+              pokemons: variables.params.pokemons,
+            },
+          }),
+        )
 
         return { previousTeam }
       },
       onError: (_err, _variables, context) => {
         if (context?.previousTeam) {
-          queryClient.setQueryData(["getUserTeam"], context.previousTeam)
+          queryClient.setQueryData(
+            [QUERY_KEYS.USER.GET_USER_TEAM],
+            context.previousTeam,
+          )
         }
       },
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ["getUserTeam"] })
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.USER.GET_USER_TEAM],
+        })
       },
     },
   })

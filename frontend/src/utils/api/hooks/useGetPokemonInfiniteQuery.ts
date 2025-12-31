@@ -1,5 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 
+import { QUERY_KEYS } from "@/utils/constants/queries"
+
 import type { GetPokemonsParams } from "../requests"
 
 import { getPokemons } from "../requests"
@@ -9,7 +11,7 @@ export const useGetPokemonInfiniteQuery = (
   settings?: InfinityQuerySettings<typeof getPokemons>,
 ) =>
   useInfiniteQuery({
-    queryKey: ["pokemons"],
+    queryKey: [QUERY_KEYS.POKEMON.GET_POKEMONS],
     queryFn: ({ pageParam }) =>
       getPokemons({
         params: {
