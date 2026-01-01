@@ -35,9 +35,7 @@ export const ProfileMenu = () => {
           <Avatar className="size-6 select-none">
             <AvatarImage src={user.avatarUrl} />
           </Avatar>
-          <p className="max-w-30 truncate">
-            dwadwadaw dwadwadawdawdwadw adwadwad
-          </p>
+          <p className="hidden max-w-24 truncate sm:block">{user.login}</p>
         </div>
         <ChevronsUpDown className="size-4" />
       </DropdownMenuTrigger>
