@@ -19,12 +19,26 @@ export const Navigation = ({ className }: NavigationProps) => {
               "hover:bg-muted rounded-lg border px-2.5 py-2 text-lg font-medium transition-colors hover:cursor-pointer",
               {
                 "bg-muted pointer-events-none":
-                  location.pathname === routes.pokemons.getHref(),
+                  location.pathname === routes.pokemons.path,
               },
             )}
             to={routes.pokemons.path}
           >
             Pokemons
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={cn(
+              "hover:bg-muted rounded-lg border px-2.5 py-2 text-lg font-medium transition-colors hover:cursor-pointer",
+              {
+                "bg-muted pointer-events-none":
+                  location.pathname === routes.team.path,
+              },
+            )}
+            to={routes.team.path}
+          >
+            Team
           </Link>
         </li>
       </ul>
