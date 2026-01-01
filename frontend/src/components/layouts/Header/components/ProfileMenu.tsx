@@ -1,6 +1,5 @@
 import Cookies from "js-cookie"
-import { ChevronsUpDown, Lamp, LogOut, Users } from "lucide-react"
-import { Link } from "react-router"
+import { ChevronsUpDown, Lamp, LogOut } from "lucide-react"
 import { toast } from "sonner"
 
 import {
@@ -14,14 +13,13 @@ import {
   Switch,
 } from "@/components/ui"
 import { usePostLogoutMutation } from "@/utils/api/hooks"
-import { routes } from "@/utils/config"
 import { COOKIE } from "@/utils/constants"
 import { useAuthStore, useThemeStore } from "@/utils/stores"
 
 export const ProfileMenu = () => {
   const { setIsLoggedIn, user } = useAuthStore()
   const { mutateAsync, isPending } = usePostLogoutMutation()
-  const { setTheme, theme } = useThemeStore()
+  const { toggleTheme, theme } = useThemeStore()
 
   const logout = () => {
     mutateAsync({})
@@ -37,26 +35,16 @@ export const ProfileMenu = () => {
           <Avatar className="size-6 select-none">
             <AvatarImage src={user.avatarUrl} />
           </Avatar>
-          {user.login}
+          <p className="max-w-30 truncate">
+            dwadwadaw dwadwadawdawdwadw adwadwad
+          </p>
         </div>
         <ChevronsUpDown className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background">
         <DropdownMenuItem
-          asChild
-          className="hover:bg-accent hover:cursor-pointer"
-        >
-          <Link
-            className="flex w-full items-center gap-1"
-            to={routes.team.getHref()}
-          >
-            <Users className="text-foreground" />
-            Team
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem
           className="hover:bg-accent relative after:absolute after:inset-0 hover:cursor-pointer"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onClick={toggleTheme}
           onSelect={(event) => event.preventDefault()}
         >
           <Lamp className="text-foreground" />
