@@ -20,7 +20,7 @@ export const App = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-dvh items-center justify-center">
         <SpinnerIcon className="h-20 w-20 animate-spin" />
       </div>
     )
