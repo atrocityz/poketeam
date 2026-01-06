@@ -37,7 +37,7 @@ export const useLoginForm = () => {
           user: response.data.user,
         })
 
-        toast.success("Successful login to your account")
+        toast.success("Successful login to account")
       },
     },
   })

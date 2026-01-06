@@ -56,9 +56,19 @@ export class AuthController {
   @UseGuards(GoogleOAuthGuard)
   @Get('google/callback')
   async googleCallback(@Req() request, @Res() response: Response) {
-    await this.authService.loginWithOAuth(response, request.user.email);
+    try {
+      const result = await this.authService.loginWithOAuth(
+        response,
+        request.user.email,
+      );
 
-    response.redirect(`${process.env.FRONTEND_ORIGIN}`);
+      return this.sendOAuthSuccessResponse(response, result.accessToken);
+    } catch (error) {
+      return this.sendOAuthErrorResponse(
+        response,
+        error.message || 'Authentication failed',
+      );
+    }
   }
 
   @Get('github/login')
@@ -68,8 +78,88 @@ export class AuthController {
   @Get('github/callback')
   @UseGuards(GitHubOAuthGuard)
   async githubCallback(@Req() request, @Res() response: Response) {
-    await this.authService.loginWithOAuth(response, request.user.email);
+    try {
+      const result = await this.authService.loginWithOAuth(
+        response,
+        request.user.email,
+      );
 
-    response.redirect(`${process.env.FRONTEND_ORIGIN}`);
+      return this.sendOAuthSuccessResponse(response, result.accessToken);
+    } catch (error) {
+      return this.sendOAuthErrorResponse(
+        response,
+        error.message || 'Authentication failed',
+      );
+    }
+  }
+
+  private sendOAuthSuccessResponse(response: Response, accessToken: string) {
+    const html = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <title>OAuth Success</title>
+          <style>
+            body { font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f5f5f5; }
+            .message { text-align: center; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+          </style>
+        </head>
+        <body>
+          <div class="message">
+            <p>✓ Authorization successful</p>
+            <p style="color: #666; font-size: 14px;">This window will close automatically...</p>
+          </div>
+          <script>
+            if (window.opener) {
+              window.opener.postMessage(
+                { type: 'oauth-success', accessToken: '${accessToken}' },
+                '${process.env.FRONTEND_ORIGIN}'
+              );
+              window.close();
+            } else {
+              window.location.href = '${process.env.FRONTEND_ORIGIN}?accessToken=${accessToken}';
+            }
+          </script>
+        </body>
+      </html>
+    `;
+
+    response.setHeader('Content-Type', 'text/html');
+    response.send(html);
+  }
+
+  private sendOAuthErrorResponse(response: Response, errorMessage: string) {
+    const html = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <title>OAuth Error</title>
+          <style>
+            body { font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f5f5f5; }
+            .message { text-align: center; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+            .error { color: #dc2626; }
+            button { margin-top: 1rem; padding: 0.5rem 1rem; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; }
+            button:hover { background: #2563eb; }
+          </style>
+        </head>
+        <body>
+          <div class="message">
+            <p class="error">✕ ${errorMessage}</p>
+            <button onclick="window.close()">Close</button>
+          </div>
+          <script>
+            if (window.opener) {
+              window.opener.postMessage(
+                { type: 'oauth-error', error: '${errorMessage}' },
+                '${process.env.FRONTEND_ORIGIN}'
+              );
+            }
+          </script>
+        </body>
+      </html>
+    `;
+
+    response.setHeader('Content-Type', 'text/html');
+    response.send(html);
   }
 }

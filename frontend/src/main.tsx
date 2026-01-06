@@ -11,6 +11,14 @@ import { useAuthStore } from "./utils/stores"
 import "./main.css"
 
 const init = async () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const oauthAccessToken = urlParams.get("accessToken")
+
+  if (oauthAccessToken) {
+    Cookies.set(COOKIE.ACCESS_TOKEN, oauthAccessToken)
+    window.history.replaceState({}, document.title, window.location.pathname)
+  }
+
   const accessToken = Cookies.get(COOKIE.ACCESS_TOKEN)
   if (accessToken) {
     try {

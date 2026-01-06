@@ -1,8 +1,7 @@
-import Cookies from "js-cookie"
-
-import { GithubIcon, GoogleIcon } from "@/components/icons"
+import { GithubIcon, GoogleIcon, SpinnerIcon } from "@/components/icons"
 import { Button, FieldSeparator } from "@/components/ui"
-import { COOKIE } from "@/utils/constants"
+
+import { useOAuthPopup } from "./hooks"
 
 interface AuthButtonsContainerProps {
   isLoading: boolean
@@ -11,10 +10,9 @@ interface AuthButtonsContainerProps {
 export const AuthButtonsContainer = ({
   isLoading,
 }: AuthButtonsContainerProps) => {
-  const onOAuthButtonClick = (provider: "github" | "google") => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}/login`
-    Cookies.set(COOKIE.ACCESS_TOKEN, "token")
-  }
+  const { openOAuthPopup, loadingProvider, isOAuthLoading } = useOAuthPopup()
+
+  const isDisabled = isLoading || isOAuthLoading
 
   return (
     <div className="grid gap-4">
@@ -23,23 +21,31 @@ export const AuthButtonsContainer = ({
       <div className="grid gap-1.5">
         <Button
           aria-label="Sign in with GitHub"
-          disabled={isLoading}
+          disabled={isDisabled}
           type="button"
           variant="outline"
-          onClick={() => onOAuthButtonClick("github")}
+          onClick={() => openOAuthPopup("github")}
         >
-          <GithubIcon />
+          {loadingProvider === "github" ? (
+            <SpinnerIcon className="animate-spin" />
+          ) : (
+            <GithubIcon />
+          )}
           GitHub
         </Button>
 
         <Button
           aria-label="Sign in with Google"
-          disabled={isLoading}
+          disabled={isDisabled}
           type="button"
           variant="outline"
-          onClick={() => onOAuthButtonClick("google")}
+          onClick={() => openOAuthPopup("google")}
         >
-          <GoogleIcon />
+          {loadingProvider === "google" ? (
+            <SpinnerIcon className="animate-spin" />
+          ) : (
+            <GoogleIcon />
+          )}
           Google
         </Button>
       </div>
