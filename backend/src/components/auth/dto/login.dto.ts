@@ -10,6 +10,7 @@ import {
 export class LoginRequest {
   @ApiProperty({
     example: 'johndoe@gmail.com',
+    description: 'User email address',
   })
   @IsString({ message: 'Email must be string' })
   @IsNotEmpty({ message: 'Email is required' })
@@ -20,6 +21,7 @@ export class LoginRequest {
     example: 'iT}83jk5J',
     minLength: 6,
     maxLength: 128,
+    description: 'User password',
   })
   @IsString({ message: 'Password must be string' })
   @IsNotEmpty({ message: 'Password is required' })

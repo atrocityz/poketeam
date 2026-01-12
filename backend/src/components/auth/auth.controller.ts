@@ -14,17 +14,32 @@ import { AuthService } from './auth.service';
 import { LoginRequest } from './dto/login.dto';
 import { RegisterRequest } from './dto/register.dto';
 import { GitHubOAuthGuard, GoogleOAuthGuard } from './guards/auth.guard';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+  ApiBody,
+} from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiResponse({ status: 201, description: 'User successfully registered.' })
+  @ApiResponse({ status: 400, description: 'Validation error.' })
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() data: RegisterRequest) {
     return this.authService.register(data);
   }
 
+  @ApiOperation({ summary: 'Login user and return JWT tokens' })
+  @ApiResponse({ status: 200, description: 'User successfully logged in.' })
+  @ApiResponse({ status: 400, description: 'Invalid credentials.' })
+  @ApiBody({ type: LoginRequest })
   @Post('login')
   @HttpCode(HttpStatus.OK)
   login(
@@ -34,6 +49,10 @@ export class AuthController {
     return this.authService.login(response, data);
   }
 
+  @ApiOperation({ summary: 'Refresh JWT tokens' })
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Tokens refreshed.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   refresh(
@@ -43,16 +62,31 @@ export class AuthController {
     return this.authService.refresh(request, response);
   }
 
+  @ApiOperation({ summary: 'Logout user and clear tokens' })
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'User logged out.' })
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   logout(@Res({ passthrough: true }) response: Response) {
     return this.authService.logout(response);
   }
 
+  @ApiOperation({ summary: 'Start Google OAuth login flow' })
+  @ApiResponse({
+    status: 302,
+    description: 'Redirects to Google OAuth consent screen.',
+  })
   @UseGuards(GoogleOAuthGuard)
   @Get('google/login')
   googleLogin() {}
 
+  @ApiOperation({ summary: 'Google OAuth callback' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'OAuth login successful. Returns HTML with postMessage to frontend.',
+  })
+  @ApiResponse({ status: 400, description: 'OAuth error.' })
   @UseGuards(GoogleOAuthGuard)
   @Get('google/callback')
   async googleCallback(@Req() request, @Res() response: Response) {
@@ -71,10 +105,22 @@ export class AuthController {
     }
   }
 
+  @ApiOperation({ summary: 'Start GitHub OAuth login flow' })
+  @ApiResponse({
+    status: 302,
+    description: 'Redirects to GitHub OAuth consent screen.',
+  })
   @Get('github/login')
   @UseGuards(GitHubOAuthGuard)
   githubAuth() {}
 
+  @ApiOperation({ summary: 'GitHub OAuth callback' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'OAuth login successful. Returns HTML with postMessage to frontend.',
+  })
+  @ApiResponse({ status: 400, description: 'OAuth error.' })
   @Get('github/callback')
   @UseGuards(GitHubOAuthGuard)
   async githubCallback(@Req() request, @Res() response: Response) {
