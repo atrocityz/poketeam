@@ -115,11 +115,6 @@ export class AuthService {
     const user = await this.userService.findByEmail(data.email);
 
     if (user) {
-      await this.userService.update({
-        id: user.id,
-        data,
-      });
-
       return user;
     }
 

@@ -6,8 +6,8 @@ import type { PokemonEntity } from "@/../@types/myApi"
 import {
   useGetLastPokemonIdUrlQuery,
   useGetPokemonQuery,
-  useGetUserTeamQuery,
-  usePutUserTeamUpdateMutation,
+  useGetTeamQuery,
+  usePutTeamUpdateMutation,
 } from "@/utils/api/hooks"
 import { POKEMONS } from "@/utils/constants"
 import { QUERY_KEYS } from "@/utils/constants/queries"
@@ -20,8 +20,8 @@ export const usePokemonPage = () => {
     id: +(params.pokemonId as string),
   })
   const lastPokemonIdUrlQuery = useGetLastPokemonIdUrlQuery()
-  const getTeamQuery = useGetUserTeamQuery()
-  const putTeamMutation = usePutUserTeamUpdateMutation({
+  const getTeamQuery = useGetTeamQuery()
+  const putTeamMutation = usePutTeamUpdateMutation({
     options: {
       onMutate: async (variables) => {
         await queryClient.cancelQueries({

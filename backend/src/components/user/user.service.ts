@@ -32,15 +32,4 @@ export class UserService {
         },
       },
     });
-
-  update = async ({ id, data }: { id: User['id']; data: RegisterRequest }) =>
-    this.prismaService.user.update({
-      where: { id },
-      data: {
-        login: data.login,
-        email: data.email,
-        password: await hash(data.password),
-        avatarUrl: data.avatarUrl,
-      },
-    });
 }

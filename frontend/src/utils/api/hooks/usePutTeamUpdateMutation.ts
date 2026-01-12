@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query"
 
-import type { PutUpdateTeamRequestConfig } from "@/utils/api/requests/user/team/update"
+import type { PutUpdateTeamRequestConfig } from "@/utils/api/requests/team/update"
 
-import { putUpdateTeam } from "@/utils/api/requests/user/team/update"
+import { putUpdateTeam } from "@/utils/api/requests/team/update"
 import { QUERY_KEYS } from "@/utils/constants/queries"
 
-export const usePutUserTeamUpdateMutation = (
+export const usePutTeamUpdateMutation = (
   settings?: MutationSettings<PutUpdateTeamRequestConfig, typeof putUpdateTeam>,
 ) =>
   useMutation({

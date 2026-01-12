@@ -2,7 +2,7 @@ import type { AxiosRequestConfig } from "axios"
 
 import type { PokemonEntity, Team } from "@/../@types/myApi"
 
-import { apiWithAuth } from "../../../../instance"
+import { apiWithAuth } from "../../../instance"
 
 export interface PutUpdateTeamParams {
   pokemons: PokemonEntity[]
@@ -14,4 +14,4 @@ export interface PutUpdateTeamRequestConfig {
 }
 
 export const putUpdateTeam = ({ config, params }: PutUpdateTeamRequestConfig) =>
-  apiWithAuth.put<Team>(`user/team/update`, params, config)
+  apiWithAuth.put<Team>(`team/update`, params, config)

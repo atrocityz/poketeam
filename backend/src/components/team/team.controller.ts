@@ -12,7 +12,7 @@ import { Authorized } from '@/components/auth/decorators/authorized.decorator';
 import { TeamDto } from '@/components/team/dto/team.dto';
 import { Authorization } from '@/components/auth/decorators/authorization.decorator';
 
-@Controller('user/team')
+@Controller('team')
 export class TeamController {
   constructor(private teamService: TeamService) {}
 

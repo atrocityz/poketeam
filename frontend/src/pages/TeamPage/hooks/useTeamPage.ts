@@ -1,16 +1,13 @@
 import type { PokemonEntity } from "@/../@types/myApi"
 
-import {
-  useGetUserTeamQuery,
-  usePutUserTeamUpdateMutation,
-} from "@/utils/api/hooks"
+import { useGetTeamQuery, usePutTeamUpdateMutation } from "@/utils/api/hooks"
 import { POKEMONS } from "@/utils/constants"
 import { QUERY_KEYS } from "@/utils/constants/queries"
 import { queryClient } from "@/utils/lib"
 
 export const useTeamPage = () => {
-  const getTeamQuery = useGetUserTeamQuery()
-  const putTeamMutation = usePutUserTeamUpdateMutation({
+  const getTeamQuery = useGetTeamQuery()
+  const putTeamMutation = usePutTeamUpdateMutation({
     options: {
       onMutate: async (variables) => {
         await queryClient.cancelQueries({

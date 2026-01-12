@@ -68,7 +68,7 @@ bun run dev
 
 Backend will be available at: `http://localhost:3000`
 
-Swagger documentation: `http://localhost:3000/api/docs`
+Swagger documentation: `http://localhost:3000/docs`
 
 ### 3️⃣ Frontend Setup
 
@@ -127,18 +127,18 @@ bun run preview
 
 ```
 poketeam/
-├── backend/          # NestJS API server
-│   ├── prisma/      # Database schema and migrations
-│   └── src/         # Source code
-│       ├── components/  # Application modules
-│       ├── config/      # Configuration
-│       └── utils/       # Utilities
-└── frontend/        # React application
-    ├── src/         # Source code
-    │   ├── app/         # Root component
-    │   ├── components/  # UI components
-    │   ├── pages/       # Application pages
-    │   └── utils/       # Utilities and hooks
-    ├── @types/         # API Types
-    └── public/      # Static files
+├── backend/              # NestJS API server
+│   ├── prisma/           # Database schema and migrations
+│   └── src/              # Source code
+│       ├── components/   # Application modules
+│       ├── config/       # Configuration
+│       └── utils/        # Utilities
+└── frontend/             # React application
+    ├── src/              # Source code
+    │   ├── app/          # Root component
+    │   ├── components/   # UI components
+    │   ├── pages/        # Application pages
+    │   └── utils/        # Utilities and hooks
+    ├── @types/           # API Types
+    └── public/           # Static files
 ```
