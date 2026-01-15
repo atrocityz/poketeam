@@ -25,37 +25,34 @@ export const usePokemonPage = () => {
     options: {
       onMutate: async (variables) => {
         await queryClient.cancelQueries({
-          queryKey: [QUERY_KEYS.USER.GET_USER_TEAM],
+          queryKey: [QUERY_KEYS.TEAM.GET_TEAM],
         })
 
         const previousTeam = queryClient.getQueryData([
-          QUERY_KEYS.USER.GET_USER_TEAM,
+          QUERY_KEYS.TEAM.GET_TEAM,
         ])
 
-        queryClient.setQueryData(
-          [QUERY_KEYS.USER.GET_USER_TEAM],
-          (old: any) => ({
-            ...old,
-            data: {
-              ...old.data,
-              pokemons: variables.params.pokemons,
-            },
-          }),
-        )
+        queryClient.setQueryData([QUERY_KEYS.TEAM.GET_TEAM], (old: any) => ({
+          ...old,
+          data: {
+            ...old.data,
+            pokemons: variables.params.pokemons,
+          },
+        }))
 
         return { previousTeam }
       },
       onError: (_err, _variables, context) => {
         if (context?.previousTeam) {
           queryClient.setQueryData(
-            [QUERY_KEYS.USER.GET_USER_TEAM],
+            [QUERY_KEYS.TEAM.GET_TEAM],
             context.previousTeam,
           )
         }
       },
       onSettled: () => {
         queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.USER.GET_USER_TEAM],
+          queryKey: [QUERY_KEYS.TEAM.GET_TEAM],
         })
       },
     },

@@ -5,9 +5,11 @@ export const QUERY_KEYS = {
     GET_POKEMON: "getPokemon",
   },
   USER: {
-    GET_USER_TEAM: "getUserTeam",
-    PUT_USER_TEAM_UPDATE: "putUserTeamUpdate",
     GET_USER: "getUser",
+  },
+  TEAM: {
+    GET_TEAM: "getTeam",
+    PUT_TEAM_UPDATE: "putTeamUpdate",
   },
   AUTH: {
     POST_LOGIN_USER: "postLoginUser",

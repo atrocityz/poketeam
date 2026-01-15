@@ -9,7 +9,7 @@ export const usePutTeamUpdateMutation = (
   settings?: MutationSettings<PutUpdateTeamRequestConfig, typeof putUpdateTeam>,
 ) =>
   useMutation({
-    mutationKey: [QUERY_KEYS.USER.PUT_USER_TEAM_UPDATE],
+    mutationKey: [QUERY_KEYS.TEAM.PUT_TEAM_UPDATE],
     mutationFn: ({ params, config }) =>
       putUpdateTeam({ params, config: { ...settings?.config, ...config } }),
     ...settings?.options,
