@@ -1,0 +1,19 @@
+{
+  "name": "poketeam",
+  "version": "1.0.0",
+  "description": "Web application for creating and managing Pokémon teams",
+  "private": true,
+  "scripts": {
+    "dev": "bun scripts/dev.ts",
+    "install:all": "cd backend && bun install && cd ../frontend && bun install",
+    "setup:env": "cp backend/.env.template backend/.env && cp frontend/.env.template frontend/.env",
+    "db:generate": "cd backend && bunx prisma generate",
+    "db:push": "cd backend && bunx prisma db push",
+    "db:setup": "bun run db:generate && bun run db:push",
+    "setup": "bun run install:all && bun run db:generate"
+  },
+  "packageManager": "bun@1.3.4",
+  "devDependencies": {
+    "@types/bun": "^1.3.6"
+  }
+}
