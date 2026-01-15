@@ -34,12 +34,7 @@ export const PokemonPage = () => {
     useMotionCardTiltAnimation()
 
   return (
-    <div
-      style={{
-        perspective: "1000px",
-      }}
-      className="mx-auto flex max-w-fit min-w-full flex-col items-center gap-8 pt-4 md:min-w-[380px]"
-    >
+    <div className="mx-auto flex max-w-fit min-w-full flex-col items-center gap-8 pt-4 perspective-distant md:min-w-95">
       {(!state.pokemon || state.isPokemonQueryLoading) && (
         <PokemonCard className="min-w-full">
           <PokemonCardSkeletonBackground />
@@ -98,12 +93,8 @@ export const PokemonPage = () => {
 
       {state.isPokemonInTeam ? (
         <Button
-          disabled={
-            state.isPutTeamMutationLoading ||
-            state.isPokemonQueryLoading ||
-            state.isGetTeamQueryLoading
-          }
           className="w-full uppercase"
+          disabled={state.isPokemonQueryLoading || state.isGetTeamQueryLoading}
           size="lg"
           variant="destructive"
           onClick={() => {
@@ -111,18 +102,13 @@ export const PokemonPage = () => {
             functions.removePokemonFromTeam(state.pokemon.id)
           }}
         >
-          <LoaderSwap
-            isLoading={
-              state.isPutTeamMutationLoading || state.isGetTeamQueryLoading
-            }
-          >
+          <LoaderSwap isLoading={state.isGetTeamQueryLoading}>
             Remove from team
           </LoaderSwap>
         </Button>
       ) : (
         <Button
           disabled={
-            state.isPutTeamMutationLoading ||
             state.isTeamFull ||
             state.isPokemonQueryLoading ||
             state.isGetTeamQueryLoading
@@ -134,11 +120,7 @@ export const PokemonPage = () => {
             functions.addPokemonToTeam(state.pokemon)
           }}
         >
-          <LoaderSwap
-            isLoading={
-              state.isPutTeamMutationLoading || state.isGetTeamQueryLoading
-            }
-          >
+          <LoaderSwap isLoading={state.isGetTeamQueryLoading}>
             {state.isTeamFull ? "Team is full!" : "Add to team"}
           </LoaderSwap>
         </Button>
