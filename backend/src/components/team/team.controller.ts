@@ -6,11 +6,13 @@ import {
   HttpStatus,
   Put,
 } from '@nestjs/common';
-import { TeamService } from '@/components/team/team.service';
+
 import { User } from 'prisma/generated/client';
-import { Authorized } from '@/components/auth/decorators/authorized.decorator';
+
+import { Authorization, Authorized } from '@/common/decorators';
+import { TeamService } from '@/components/team/team.service';
 import { TeamDto } from '@/components/team/dto/team.dto';
-import { Authorization } from '@/components/auth/decorators/authorization.decorator';
+
 import {
   ApiTags,
   ApiOperation,

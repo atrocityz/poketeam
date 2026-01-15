@@ -1,5 +1,3 @@
-import { expireTimeToMilliseconds } from '@/utils/expireTimeToMilliseconds';
-import { isDev } from '@/utils/isDev';
 import {
   ConflictException,
   Injectable,
@@ -11,11 +9,14 @@ import { JwtService } from '@nestjs/jwt';
 import { verify } from 'argon2';
 import type { Request, Response } from 'express';
 import type { StringValue } from 'ms';
-import type { User } from '../../../prisma/generated/client';
+import type { User } from 'prisma/generated/client';
+
+import { expireTimeToMilliseconds, isDev } from '@/utils/helpers';
+import { UserService } from '@/components/user/user.service';
+
 import type { LoginRequest } from './dto/login.dto';
 import type { RegisterRequest } from './dto/register.dto';
-import type { JwtPayload } from './interfaces/jwt.interface';
-import { UserService } from '@/components/user/user.service';
+import type { JwtPayload } from './interfaces';
 
 @Injectable()
 export class AuthService {

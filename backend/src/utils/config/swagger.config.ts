@@ -1,6 +1,5 @@
-import { getSwaggerConfig } from '@/config/swagger.config';
 import { INestApplication } from '@nestjs/common';
-import { SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export const setupSwagger = (app: INestApplication) => {
   const config = getSwaggerConfig();
@@ -12,3 +11,11 @@ export const setupSwagger = (app: INestApplication) => {
     yamlDocumentUrl: '/swagger.yaml',
   });
 };
+
+export const getSwaggerConfig = () =>
+  new DocumentBuilder()
+    .setTitle('Awesome API')
+    .setDescription('A simple REST API built with NestJS')
+    .setVersion('1.0.0')
+    .addBearerAuth()
+    .build();

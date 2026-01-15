@@ -1,14 +1,18 @@
-import { getJwtConfig } from '@/config/jwt.config';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+
+import { getJwtConfig } from '@/utils/config';
+import { UserModule } from '@/components/user/user.module';
+
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { GithubOAuthStrategy } from './strategies/github.strategy';
-import { GoogleOauthStrategy } from './strategies/google.strategy';
-import { JwtStrategy } from './strategies/jwt.strategy';
-import { UserModule } from '@/components/user/user.module';
+import {
+  GithubOAuthStrategy,
+  GoogleOauthStrategy,
+  JwtStrategy,
+} from './strategies';
 
 @Module({
   imports: [

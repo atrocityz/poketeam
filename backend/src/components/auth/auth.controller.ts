@@ -11,8 +11,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { LoginRequest } from './dto/login.dto';
-import { RegisterRequest } from './dto/register.dto';
+import { LoginRequest, RegisterRequest } from './dto';
 import { GitHubOAuthGuard, GoogleOAuthGuard } from './guards/auth.guard';
 import {
   ApiTags,
